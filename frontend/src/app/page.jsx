@@ -61,7 +61,7 @@ const Home = () => {
           <a href="/landingpage" className="hover:text-gray-300 font-semibold">
             Home
           </a>
-          <a href="/(main)/about" className="hover:text-gray-300 font-semibold">
+          <a href="/about" className="hover:text-gray-300 font-semibold">
             About
           </a>
           <a href="/contact" className="hover:text-gray-300 font-semibold">
