@@ -59,43 +59,43 @@ const Home = () => {
         {/* Center: Navigation Links */}
         <div className="flex space-x-6">
           <a
-            href="/landingpage.html"
+            href="/landingpage"
             className="hover:text-gray-300 font-semibold"
           >
             Home
           </a>
           <a
-            href="/about.html"
+            href="/about"
             className="hover:text-gray-300 font-semibold"
           >
             About
           </a>
           <a
-            href="/contact.html"
+            href="/contact"
             className="hover:text-gray-300 font-semibold"
           >
             Contact Us
           </a>
-          <a href="#" className="hover:text-gray-300 font-semibold">
+          <a href="/cyber-threats" className="hover:text-gray-300 font-semibold">
             Cyber Threats
           </a>
-          <a href="#" className="hover:text-gray-300 font-semibold">
+          <a href="/data-breaches" className="hover:text-gray-300 font-semibold">
             Data Breaches
           </a>
-          <a href="#" className="hover:text-gray-300 font-semibold">
+          <a href="/phishing-alerts" className="hover:text-gray-300 font-semibold">
             Phishing Alerts
           </a>
-          <a href="#" className="hover:text-gray-300 font-semibold">
+          <a href="/privacy-security" className="hover:text-gray-300 font-semibold">
             Privacy &amp; Security
           </a>
-          <a href="#" className="hover:text-gray-300 font-semibold">
+          <a href="/hacking-news" className="hover:text-gray-300 font-semibold">
             Hacking News
           </a>
-          <a href="#" className="hover:text-gray-300 font-semibold">
+          <a href="/subscribe" className="hover:text-gray-300 font-semibold">
             Subscribe
           </a>
         </div>
-        {/* Right Side: Search Icon */}
+        {/* Right Side: Search Icon */}}
       </nav>
       {/* Breaking News Banner */}
       <div className="bg-gray-100 py-2 px-6 flex justify-center items-center">
