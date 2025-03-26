@@ -22,7 +22,7 @@ const Home = () => {
           <a href="#" className="hover:text-gray-900">
             English
           </a>{" "}
-          |
+      |
           <a href="#" className="hover:text-gray-900">
             हिंदी
           </a>{" "}
