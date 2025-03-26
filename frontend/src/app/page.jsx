@@ -65,7 +65,7 @@ const Home = () => {
             Home
           </a>
           <a
-            href="frontend\src\app\(main)\about"
+            href="/cyber-Aware/about.html"
             className="hover:text-gray-300 font-semibold"
           >
             About
