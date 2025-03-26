@@ -61,7 +61,7 @@ const Home = () => {
         </div>
       </div>
       {/* Navigation Bar */}
-      <nav className="bg-blue-900 text-white px-6 py-2 flex items-center justify-center">
+      <nav className="bg-sky-400 text-white px-6 py-2 flex items-center justify-center">
         {/* Left Side: Hamburger Menu */}
         {/* Center: Navigation Links */}
         <div className="flex space-x-6">
