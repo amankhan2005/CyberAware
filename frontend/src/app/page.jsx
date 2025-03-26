@@ -58,22 +58,13 @@ const Home = () => {
         {/* Left Side: Hamburger Menu */}
         {/* Center: Navigation Links */}
         <div className="flex space-x-6">
-          <a
-            href="/landingpage"
-            className="hover:text-gray-300 font-semibold"
-          >
+          <a href="/landingpage" className="hover:text-gray-300 font-semibold">
             Home
           </a>
-          <a
-            href="/about"
-            className="hover:text-gray-300 font-semibold"
-          >
+          <a href="/about" className="hover:text-gray-300 font-semibold">
             About
           </a>
-          <a
-            href="/contact"
-            className="hover:text-gray-300 font-semibold"
-          >
+          <a href="/contact" className="hover:text-gray-300 font-semibold">
             Contact Us
           </a>
           <a href="/cyber-threats" className="hover:text-gray-300 font-semibold">
