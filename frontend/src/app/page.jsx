@@ -59,19 +59,19 @@ const Home = () => {
         {/* Center: Navigation Links */}
         <div className="flex space-x-6">
           <a
-            href="/cyber-Aware/landingpage.html"
+            href="/landingpage.html"
             className="hover:text-gray-300 font-semibold"
           >
             Home
           </a>
           <a
-            href="/cyber-Aware/about.html"
+            href="/about.html"
             className="hover:text-gray-300 font-semibold"
           >
             About
           </a>
           <a
-            href="/cyber-Aware/contact.html"
+            href="/contact.html"
             className="hover:text-gray-300 font-semibold"
           >
             Contact Us
