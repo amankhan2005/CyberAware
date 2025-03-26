@@ -141,7 +141,7 @@ const About = () => {
           </div>
         </div>
         {/* Our Team */}
-        <div className="mb-16">
+        {/* <div className="mb-16">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-blue-800 mb-2">Meet Our Team</h2>
             <p className="text-gray-600">The experts behind CyberAware</p>
@@ -155,15 +155,8 @@ const About = () => {
                   className="w-full h-full object-cover" />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-blue-700">Arjun Sharma</h3>
-                <p className="text-blue-500 mb-2">
-                  Founder &amp; Cybersecurity Expert
-                </p>
-                {/* <p className="text-gray-600 text-sm">
-                  With over 15 years of experience in information security, Arjun
-                  leads our team in identifying and reporting on emerging cyber
-                  threats.
-                </p> */}
+                <h3 className="text-xl font-bold text-blue-700">Awaish khan</h3>
+                 
               </div>
             </div>
             <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
@@ -175,18 +168,13 @@ const About = () => {
                 />
               </div>        
                     <div className="p-6">
-                <h3 className="text-xl font-bold text-blue-700">Priya Verma</h3>
-                <p className="text-blue-500 mb-2">Senior Security Analyst</p>
-                {/* <p className="text-gray-600 text-sm">
-                  Priya specializes in digital forensics and helps break down
-                  complex security concepts into understandable advice for our
-                  readers.
-                </p> */}
+                <h3 className="text-xl font-bold text-blue-700">Aman khan</h3>
+                     
               </div>
             </div>
 
           </div>
-        </div>
+        </div> */}
         {/* Call to Action */}
         <div className="bg-gradient-to-r from-blue-700 to-blue-500 rounded-xl p-10 text-white text-center">
           <h2 className="text-3xl font-bold mb-4">
@@ -198,17 +186,17 @@ const About = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="contact.html"
+              href="/contact"
               className="bg-white text-blue-700 hover:bg-blue-50 px-8 py-3 rounded-lg shadow-md text-lg font-semibold transition-colors"
             >
               Contact Us
             </a>
-            <a
+            {/* <a
               href="#"
               className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-700 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
             >
               Subscribe
-            </a>
+            </a> */}
           </div>
         </div>
       </div></div>
