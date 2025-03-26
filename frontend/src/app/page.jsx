@@ -86,7 +86,7 @@ const Home = () => {
             Subscribe
           </a>
         </div>
-        {/* Right Side: Search Icon */}}
+        {/* Right Side: Search Icon */}
       </nav>
       {/* Breaking News Banner */}
       <div className="bg-gray-100 py-2 px-6 flex justify-center items-center">
