@@ -146,8 +146,8 @@ const About = () => {
                 <h2 className="text-3xl font-bold text-blue-800 mb-2">Meet Our Team</h2>
                 <p className="text-gray-600">The experts behind CyberAware</p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div className="grid  md:grid-cols-3 gap-8">
+                <div className="bg-white  rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="h-48 bg-gray-300" />
                     <div className="p-6">
                         <h3 className="text-xl font-bold text-blue-700">Arjun Sharma</h3>
@@ -173,17 +173,17 @@ const About = () => {
                         </p>
                     </div>
                 </div>
-                <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="h-48 bg-gray-300" />
-                    <div className="p-6">
+                {/* <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"> */}
+                    {/* <div className="h-48 bg-gray-300" /> */}
+                    {/* <div className="p-6">
                         <h3 className="text-xl font-bold text-blue-700">Raj Malhotra</h3>
                         <p className="text-blue-500 mb-2">Community Outreach Director</p>
                         <p className="text-gray-600 text-sm">
                             Raj works with local communities and organizations to deliver
                             cybersecurity awareness programs and educational workshops.
                         </p>
-                    </div>
-                </div>
+                    </div> */}
+                {/* </div> */}
             </div>
         </div>
         {/* Call to Action */}
