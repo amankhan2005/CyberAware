@@ -56,7 +56,7 @@ const Home = () => {
             <FontAwesomeIcon icon={faGoogle} className="text-xl" />
           </a>
           <a href="login.html" className="bg-red-500 text-white font-semibold flex items-center py-2 px-6 rounded-full hover:bg-red-600 transition-colors">
-            <FontAwesomeIcon icon={faUserCircle} className="text-xl mr-1" /> Sign in
+            <FontAwesomeIcon icon={faUserCircle} className="" /> Sign in
           </a>
         </div>
       </div>
