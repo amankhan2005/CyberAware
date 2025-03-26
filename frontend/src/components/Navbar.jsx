@@ -1,4 +1,7 @@
 import React from 'react'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faLinkedin, faGoogle, faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
 
@@ -41,7 +44,7 @@ const Navbar = () => {
                     <a href="#" className="text-gray-600 hover:text-gray-900">
                         <FontAwesomeIcon icon={faGoogle} className="text-xl" />
                     </a>
-                    <a href="login.html" className="bg-red-500 text-white font-semibold flex items-center py-2 px-6 rounded-full hover:bg-red-600 transition-colors">
+                    <a href="/login" className="bg-red-500 text-white font-semibold flex items-center py-2 px-6 rounded-full hover:bg-red-600 transition-colors">
                         <i className="fas fa-user-circle text-xl mr-1"></i> Sign in
                     </a>
                 </div>
@@ -51,7 +54,7 @@ const Navbar = () => {
                 {/* Left Side: Hamburger Menu */}
                 {/* Center: Navigation Links */}
                 <div className="flex space-x-6">
-                    <a href="/landingpage" className="hover:text-gray-300 font-semibold">
+                    <a href="/" className="hover:text-gray-300 font-semibold">
                         Home
                     </a>
                     <a href="/about" className="hover:text-gray-300 font-semibold">
@@ -60,7 +63,7 @@ const Navbar = () => {
                     <a href="/contact" className="hover:text-gray-300 font-semibold">
                         Contact Us
                     </a>
-                    <a href="/cyber-threats" className="hover:text-gray-300 font-semibold">
+                    {/* <a href="/cyber-threats" className="hover:text-gray-300 font-semibold">
                         Cyber Threats
                     </a>
                     <a href="/data-breaches" className="hover:text-gray-300 font-semibold">
@@ -77,10 +80,11 @@ const Navbar = () => {
                     </a>
                     <a href="/subscribe" className="hover:text-gray-300 font-semibold">
                         Subscribe
-                    </a>
+                    </a> */}
                 </div>
                 {/* Right Side: Search Icon */}
             </nav>
         </>
     )
 }
+export default Navbar;
