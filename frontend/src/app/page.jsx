@@ -19,13 +19,8 @@ const Home = () => {
       <div className="bg-gray-200 text-gray-600 text-sm py-2 px-6 flex justify-between items-center">
         <span>{currentDate}</span>
         <div className="space-x-2">
-          <a href="#" className="hover:text-gray-900">
-            English
-          </a>{" "}
-      |
-          <a href="#" className="hover:text-gray-900">
-            हिंदी
-          </a>{" "}
+        <a href="#" className="hover:text-gray-900">English</a> |
+        <a href="#" className="hover:text-gray-900">हिंदी</a>
           {/* <a href="#" class="hover:text-gray-900">தமிழ்</a> | */}
           
         </div>
