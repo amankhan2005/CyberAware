@@ -26,10 +26,8 @@ const Home = () => {
           <a href="#" className="hover:text-gray-900">
             हिंदी
           </a>{" "}
-          |{/* <a href="#" class="hover:text-gray-900">தமிழ்</a> | */}
-          <a href="#" className="text-blue-600 font-bold hover:underline">
-            Cyber News
-          </a>
+          {/* <a href="#" class="hover:text-gray-900">தமிழ்</a> | */}
+          
         </div>
       </div>
       {/* Logo, Social Icons & Sign-In */}
