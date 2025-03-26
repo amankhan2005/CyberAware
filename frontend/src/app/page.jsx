@@ -36,7 +36,7 @@ const Home = () => {
       <div className="bg-white py-4 px-6 flex items-center justify-between">
         {/* Logo Centered */}
         <div className="flex-1 flex flex-col justify-center">
-          <span className="text-sky-500 text-3xl font-bold">CYBERAWARE</span>
+          <span className="text-sky-600 text-3xl font-bold">CYBERAWARE</span>
           <span className="text-gray-600 font-semibold text-sm ml-2">
             Stay Secure, Stay Updated
           </span>
