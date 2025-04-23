@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <PrelineScript />
-        <Toaster />
+        <Toaster position="top-center"/>
         {/* <ImageSlider /> */}
         {children}
       </body>
