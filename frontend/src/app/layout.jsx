@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import PrelineScript from "@/components/PrelineScript";
 // import ImageSlider from "@/components/ImageSlider";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,8 @@ export default function RootLayout({ children }) {
         <PrelineScript />
         <Toaster position="top-center" />
         {/* <ImageSlider /> */}
+        <Toaster />
+        <Navbar />
         {children}
       </body>
     </html>
