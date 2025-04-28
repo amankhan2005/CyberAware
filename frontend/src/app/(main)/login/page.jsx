@@ -1,6 +1,8 @@
 'use client';
 import axios from 'axios';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import * as Yup from 'yup';
 import React from 'react'
 import toast from 'react-hot-toast';
 
@@ -35,7 +37,7 @@ const Login = () => {
               Don't have an account yet?
               <a
                 className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium"
-                href="../examples/html/signup.html"
+                href="/signup"
               >
                 Sign up here
               </a>
