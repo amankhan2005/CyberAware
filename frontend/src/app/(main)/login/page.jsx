@@ -29,12 +29,15 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8">
         {/* Logo and Heading */}
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-500">
-            CyberAware
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-4">
+            <span className="bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+               Login
+            </span>
           </h1>
-          <h2 className="mt-6 text-2xl font-bold tracking-tight text-white">
-            Sign in to your account
-          </h2>
+          <p className="text-slate-300 max-w-md mx-auto">
+            Sign in to access your account, and see what are the things going on in the cyber world.
+          </p>
+          
         </div>
 
         {/* Form */}
@@ -69,7 +72,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="group w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
+            className="w-full px-4 py-2.5 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
           >
             Sign in
           </button>
