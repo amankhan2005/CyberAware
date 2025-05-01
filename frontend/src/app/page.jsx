@@ -31,6 +31,7 @@ const Home = () => {
           Tips to Stay Safe Online | 📢 Government Issues New Cyber Laws
         </marquee>
       </div>
+
       <section className="relative flex items-center justify-center overflow-hidden shadow-lg">
         {/* Swiper Container */}
         <ImageSlider />
@@ -309,77 +310,6 @@ const Home = () => {
         </div>
       </section>
 
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* About Section */}
-            <div>
-              <h2 className="text-xl font-bold">CyberAware</h2>
-              <p className="text-gray-400 mt-2">
-                Stay updated with the latest cybersecurity news, tips, and trends to
-                keep yourself protected online.
-              </p>
-            </div>
-            {/* Quick Links */}
-            <div>
-              <h2 className="text-xl font-bold">Quick Links</h2>
-              <ul className="mt-2 space-y-2">
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-gray-200">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-gray-200">
-                    News
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-gray-200">
-                    Cybersecurity Tips
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-gray-200">
-                    Privacy &amp; Security
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-gray-200">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-            {/* Social Media */}
-            <div>
-              <h2 className="text-xl font-bold">Follow Us</h2>
-              <div className="flex mt-2 space-x-4">
-                <a href="#" className="text-gray-400 hover:text-blue-400">
-                  <i className="fab fa-facebook text-2xl" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-sky-400">
-                  <i className="fab fa-twitter text-2xl" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-red-400">
-                  <i className="fab fa-youtube text-2xl" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-pink-400">
-                  <i className="fab fa-instagram text-2xl" />
-                </a>
-              </div>
-            </div>
-          </div>
-          {/* Divider */}
-          <hr className="my-6 border-gray-700" />
-          {/* Copyright */}
-          <div className="text-center text-gray-400 text-sm">
-            © 2025 CyberAware. All rights reserved.
-          </div>
-        </div>
-      </footer>
-
-      {/* FontAwesome for Icons */}
     </>
   )
 }

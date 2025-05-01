@@ -42,8 +42,8 @@ const About = () => {
               about creating a safer digital environment.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Founded in 2023, we've been at the forefront of delivering
-              easy-to-understand cybersecurity news, alerts, and expert advice to
+              Founded in 2025, we've been at the forefront of delivering
+              easy-to-understand cybersecurity ne ws, alerts, and expert advice to
               help protect individuals and businesses from evolving digital threats.
             </p>
           </div>
