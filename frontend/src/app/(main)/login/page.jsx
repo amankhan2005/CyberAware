@@ -60,7 +60,7 @@ const Login = () => {
                 className="appearance-none relative block w-full px-4 py-3 rounded-md bg-[#1e293b] border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm">
-                <a href="#" className="text-indigo-400 hover:underline">
+                <a href="#" className="text-teal-400 hover:underline">
                   Forgot password?
                 </a>
               </div>
@@ -78,8 +78,14 @@ const Login = () => {
         {/* Footer */}
         <p className="mt-6 text-center text-sm text-slate-400">
   Don’t have an account?{' '}
-  <a href="/signup" className="text-indigo-400 hover:underline font-medium">
+  <a href="/signup" className="text-teal-400 hover:underline font-medium">
     Register here
+  </a>
+</p>
+<p className="mt-6  text-lg  text-center  text-slate-400">
+  Are you a expert? {' '}
+  <a href="/expert_login" className=" text-teal-400 hover:underline font-medium">
+    Click here
   </a>
 </p>
 

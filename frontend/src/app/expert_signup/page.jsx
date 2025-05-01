@@ -408,7 +408,7 @@ const ExpertSignupPage = () => {
 
         <div className="mt-8 text-center">
           <p className="text-slate-400 text-sm">
-            Already have an expert account? <Link href="/login" className="text-teal-400 hover:text-teal-300">Sign in here</Link>
+            Already have an expert account? <Link href="/expert_login" className="text-teal-400 hover:text-teal-300">Sign in here</Link>
           </p>
         </div>
       </div>

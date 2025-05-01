@@ -99,7 +99,7 @@ const Signup = () => {
         {/* Footer */}
         <p className="mt-4 text-center text-sm text-gray-400">
           Already have an account?{' '}
-          <a href="/login" className="text-indigo-400 font-medium hover:underline">
+          <a href="/login" className=" text-teal-400 font-medium hover:underline">
             Login here
           </a>
         </p>
