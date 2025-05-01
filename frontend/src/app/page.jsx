@@ -16,8 +16,6 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
-
       {/* Breaking News Banner */}
       <div className="bg-gray-100 py-2 px-6 flex justify-center items-center">
         <span className="bg-red-600 text-white px-3 py-1 text-sm font-semibold rounded-full mr-4">
