@@ -31,8 +31,8 @@ const Footer = () => {
             <div className="flex space-x-4 pt-2">
               {[
                 {
-                  name: 'Twitter',
-                  path: 'M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5 0-.278-.028-.556-.08-.83A7.72 7.72 0 0023 3z'
+                  name: 'X',
+                  path: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'
                 },
                 {
                   name: 'LinkedIn',
@@ -83,54 +83,81 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info - spans 3 columns */}
+          {/* Questions section - replaces the Newsletter section */}
           <div className="lg:col-span-3 space-y-5">
             <h4 className="text-base font-semibold text-white relative inline-block">
-              Contact Us
+              Frequently Asked Questions
               <span className="absolute -bottom-1 left-0 w-12 h-0.5 bg-teal-400"></span>
             </h4>
             <div className="space-y-3">
-              <a href="mailto:contact@cyberaware.com" className="flex items-center space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
-                <span className="p-1.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
+              <a href="/faq#basics" className="flex items-start space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
+                <span className="p-1.5 mt-0.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
-                <span>contact@cyberaware.com</span>
+                <span>How can I protect myself from phishing?</span>
               </a>
-              <a href="tel:+15551234567" className="flex items-center space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
-                <span className="p-1.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
+              <a href="/faq#password" className="flex items-start space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
+                <span className="p-1.5 mt-0.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </span>
-                <span>+1 (555) 123-4567</span>
+                <span>What makes a strong password?</span>
+              </a>
+              <a href="/faq#reporting" className="flex items-start space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
+                <span className="p-1.5 mt-0.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </span>
+                <span>How do I report a cybersecurity incident?</span>
               </a>
             </div>
           </div>
 
-          {/* Newsletter - spans 3 columns */}
+          {/* Resources Section - filling the rightmost space */}
           <div className="lg:col-span-3 space-y-5">
             <h4 className="text-base font-semibold text-white relative inline-block">
-              Stay Updated
+              Resources
               <span className="absolute -bottom-1 left-0 w-12 h-0.5 bg-teal-400"></span>
             </h4>
-            <form className="space-y-3">
-              <div className="relative">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border border-slate-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full px-4 py-2.5 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium relative overflow-hidden group"
-              >
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-teal-400 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-x-0 group-hover:scale-x-100 origin-left"></span>
-                <span className="relative">Subscribe</span>
-              </button>
-            </form>
+            <div className="space-y-3">
+              <a href="/resources/tools" className="flex items-start space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
+                <span className="p-1.5 mt-0.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </span>
+                <span>Security Tools</span>
+              </a>
+              <a href="/resources/guides" className="flex items-start space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
+                <span className="p-1.5 mt-0.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </span>
+                <span>Security Guides</span>
+              </a>
+              <a href="/resources/blog" className="flex items-start space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
+                <span className="p-1.5 mt-0.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                </span>
+                <span>Blog & Articles</span>
+              </a>
+              <a href="/resources/videos" className="flex items-start space-x-3 text-sm text-slate-300 hover:text-white transition-colors duration-300 group">
+                <span className="p-1.5 mt-0.5 rounded-full bg-slate-800/40 border border-slate-700/40 group-hover:border-teal-500/50 group-hover:bg-teal-900/20 transition-all duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </span>
+                <span>Video Tutorials</span>
+              </a>
+            </div>
           </div>
         </div>
 

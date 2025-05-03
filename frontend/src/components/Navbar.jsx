@@ -5,6 +5,16 @@ import Link from 'next/link';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Navigation items array with their paths
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Phishing & Attacks', path: '/phishing_and_attacks' },
+    { name: 'About', path: '/about' },
+    { name: 'Services', path: '/services' },
+    { name: 'News', path: '/news' },
+    { name: 'Contact', path: '/contact' }
+  ];
+
   return (
     <nav className="relative bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
       {/* Subtle geometric pattern overlay */}
@@ -29,14 +39,14 @@ const Navbar = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {['Home', 'About', 'Services', 'News', 'Contact'].map((item) => (
+            {navItems.map((item) => (
               <Link 
-                key={item} 
-                href={`/${item === 'Home' ? '' : item.toLowerCase()}`}
+                key={item.name} 
+                href={item.path}
                 className="text-slate-300 hover:text-white transition-colors duration-300 text-sm flex items-center group relative px-1 py-2"
               >
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-400 group-hover:w-full transition-all duration-300"></span>
-                {item}
+                {item.name}
               </Link>
             ))}
             
@@ -77,15 +87,15 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-slate-800/70 pt-4 space-y-3">
-            {['Home', 'About', 'Services', 'News', 'Contact'].map((item) => (
+            {navItems.map((item) => (
               <Link 
-                key={item} 
-                href={`/${item === 'Home' ? '' : item.toLowerCase()}`}
+                key={item.name} 
+                href={item.path}
                 className="block text-slate-300 hover:text-white transition-colors duration-300 text-sm py-2 group flex items-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <span className="inline-block w-0 group-hover:w-2 h-[1px] bg-teal-400 mr-0 group-hover:mr-2 transition-all duration-300"></span>
-                {item}
+                {item.name}
               </Link>
             ))}
             
