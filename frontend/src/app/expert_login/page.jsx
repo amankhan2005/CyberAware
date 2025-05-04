@@ -58,7 +58,7 @@ const ExpertLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
+    <div className="min-h-screen relative bg-gradient-to-br from-indigo-950 to-black text-white">
       {/* Subtle geometric pattern overlay */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{ 

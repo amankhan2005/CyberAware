@@ -108,7 +108,7 @@ const ExpertSignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
+    <div className="min-h-screen relative bg-gradient-to-br from-indigo-950 to-black text-white">
       {/* Subtle geometric pattern overlay */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{ 
@@ -120,17 +120,17 @@ const ExpertSignupPage = () => {
       <div className="relative max-w-6xl mx-auto px-6 py-12 z-10">
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-4">
-            <span className="bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-teal-400 via-indigo-400 to-teal-200 bg-clip-text text-transparent">
               Join Our Cybersecurity Expert Network
             </span>
           </h1>
-          <p className="text-slate-300 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Share your expertise, contribute insights, and help individuals and organizations improve their cybersecurity posture. 
             Fill out the form below to create your expert profile.
           </p>
         </div>
 
-        <div className="backdrop-blur-sm bg-slate-900/50 rounded-xl border border-slate-700/50 p-6 md:p-8 max-w-4xl mx-auto">
+        <div className="backdrop-blur-sm bg-gradient-to-br from-indigo-800/80 to-indigo-900/80 rounded-xl border border-indigo-700/40 p-6 md:p-8 max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Personal Information Section */}
             <div>
@@ -142,7 +142,7 @@ const ExpertSignupPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* First Name */}
                 <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="firstName" className="block text-sm font-medium text-indigo-200 mb-1">
                     First Name *
                   </label>
                   <input
@@ -151,7 +151,7 @@ const ExpertSignupPage = () => {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border ${errors.firstName ? 'border-red-500' : 'border-slate-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.firstName ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="John"
                   />
                   {errors.firstName && <p className="mt-1 text-sm text-red-400">{errors.firstName}</p>}
@@ -159,7 +159,7 @@ const ExpertSignupPage = () => {
 
                 {/* Last Name */}
                 <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="lastName" className="block text-sm font-medium text-indigo-200 mb-1">
                     Last Name *
                   </label>
                   <input
@@ -168,7 +168,7 @@ const ExpertSignupPage = () => {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border ${errors.lastName ? 'border-red-500' : 'border-slate-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.lastName ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="Doe"
                   />
                   {errors.lastName && <p className="mt-1 text-sm text-red-400">{errors.lastName}</p>}
@@ -176,7 +176,7 @@ const ExpertSignupPage = () => {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-indigo-200 mb-1">
                     Email Address *
                   </label>
                   <input
@@ -185,7 +185,7 @@ const ExpertSignupPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border ${errors.email ? 'border-red-500' : 'border-slate-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.email ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="john.doe@example.com"
                   />
                   {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
@@ -193,7 +193,7 @@ const ExpertSignupPage = () => {
 
                 {/* LinkedIn */}
                 <div>
-                  <label htmlFor="linkedIn" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="linkedIn" className="block text-sm font-medium text-indigo-200 mb-1">
                     LinkedIn Profile
                   </label>
                   <input
@@ -202,14 +202,14 @@ const ExpertSignupPage = () => {
                     name="linkedIn"
                     value={formData.linkedIn}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border border-slate-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500"
+                    className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300"
                     placeholder="https://linkedin.com/in/johndoe"
                   />
                 </div>
 
                 {/* Password */}
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="password" className="block text-sm font-medium text-indigo-200 mb-1">
                     Password *
                   </label>
                   <input
@@ -218,7 +218,7 @@ const ExpertSignupPage = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border ${errors.password ? 'border-red-500' : 'border-slate-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.password ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="••••••••"
                   />
                   {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password}</p>}
@@ -226,7 +226,7 @@ const ExpertSignupPage = () => {
 
                 {/* Confirm Password */}
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-indigo-200 mb-1">
                     Confirm Password *
                   </label>
                   <input
@@ -235,7 +235,7 @@ const ExpertSignupPage = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border ${errors.confirmPassword ? 'border-red-500' : 'border-slate-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.confirmPassword ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="••••••••"
                   />
                   {errors.confirmPassword && <p className="mt-1 text-sm text-red-400">{errors.confirmPassword}</p>}
@@ -253,7 +253,7 @@ const ExpertSignupPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Years of Experience */}
                 <div>
-                  <label htmlFor="yearsExperience" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="yearsExperience" className="block text-sm font-medium text-indigo-200 mb-1">
                     Years of Experience *
                   </label>
                   <select
@@ -261,20 +261,20 @@ const ExpertSignupPage = () => {
                     name="yearsExperience"
                     value={formData.yearsExperience}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border ${errors.yearsExperience ? 'border-red-500' : 'border-slate-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.yearsExperience ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                   >
-                    <option value="" className="bg-slate-800">Select experience</option>
-                    <option value="1-3" className="bg-slate-800">1-3 years</option>
-                    <option value="3-5" className="bg-slate-800">3-5 years</option>
-                    <option value="5-10" className="bg-slate-800">5-10 years</option>
-                    <option value="10+" className="bg-slate-800">10+ years</option>
+                    <option value="" className="bg-indigo-950">Select experience</option>
+                    <option value="1-3" className="bg-indigo-950">1-3 years</option>
+                    <option value="3-5" className="bg-indigo-950">3-5 years</option>
+                    <option value="5-10" className="bg-indigo-950">5-10 years</option>
+                    <option value="10+" className="bg-indigo-950">10+ years</option>
                   </select>
                   {errors.yearsExperience && <p className="mt-1 text-sm text-red-400">{errors.yearsExperience}</p>}
                 </div>
 
                 {/* Job Title */}
                 <div>
-                  <label htmlFor="jobTitle" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="jobTitle" className="block text-sm font-medium text-indigo-200 mb-1">
                     Current Job Title
                   </label>
                   <input
@@ -283,14 +283,14 @@ const ExpertSignupPage = () => {
                     name="jobTitle"
                     value={formData.jobTitle}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border border-slate-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500"
+                    className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300"
                     placeholder="Security Engineer"
                   />
                 </div>
 
                 {/* Company */}
                 <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="company" className="block text-sm font-medium text-indigo-200 mb-1">
                     Company/Organization
                   </label>
                   <input
@@ -299,14 +299,14 @@ const ExpertSignupPage = () => {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border border-slate-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500"
+                    className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300"
                     placeholder="Acme Cybersecurity"
                   />
                 </div>
 
                 {/* Certifications */}
                 <div>
-                  <label htmlFor="certifications" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="certifications" className="block text-sm font-medium text-indigo-200 mb-1">
                     Certifications
                   </label>
                   <input
@@ -315,7 +315,7 @@ const ExpertSignupPage = () => {
                     name="certifications"
                     value={formData.certifications}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border border-slate-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500"
+                    className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300"
                     placeholder="CISSP, CEH, CISM, etc."
                   />
                 </div>
@@ -323,7 +323,7 @@ const ExpertSignupPage = () => {
 
               {/* Areas of Expertise */}
               <div className="mt-6">
-                <label className="block text-sm font-medium text-slate-300 mb-2">
+                <label className="block text-sm font-medium text-indigo-200 mb-2">
                   Areas of Expertise *
                 </label>
                 {errors.expertise && <p className="mb-2 text-sm text-red-400">{errors.expertise}</p>}
@@ -335,9 +335,9 @@ const ExpertSignupPage = () => {
                         id={`expertise-${area}`}
                         checked={formData.expertise.includes(area)}
                         onChange={() => handleExpertiseChange(area)}
-                        className="h-4 w-4 text-teal-500 focus:ring-teal-400 rounded bg-slate-800 border-slate-600"
+                        className="h-4 w-4 text-teal-500 focus:ring-teal-400 rounded bg-indigo-950 border-indigo-700"
                       />
-                      <label htmlFor={`expertise-${area}`} className="ml-2 text-sm text-slate-300">
+                      <label htmlFor={`expertise-${area}`} className="ml-2 text-sm text-indigo-200">
                         {area}
                       </label>
                     </div>
@@ -347,7 +347,7 @@ const ExpertSignupPage = () => {
 
               {/* Bio */}
               <div className="mt-6">
-                <label htmlFor="bio" className="block text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="bio" className="block text-sm font-medium text-indigo-200 mb-1">
                   Professional Bio
                 </label>
                 <textarea
@@ -356,7 +356,7 @@ const ExpertSignupPage = () => {
                   value={formData.bio}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border border-slate-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500"
+                  className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300"
                   placeholder="Tell us about your experience, expertise, and what you're passionate about in the cybersecurity field..."
                 ></textarea>
               </div>
@@ -369,12 +369,12 @@ const ExpertSignupPage = () => {
                   <input
                     id="terms"
                     type="checkbox"
-                    className="h-4 w-4 text-teal-500 focus:ring-teal-400 rounded bg-slate-800 border-slate-600"
+                    className="h-4 w-4 text-teal-500 focus:ring-teal-400 rounded bg-indigo-950 border-indigo-700"
                     required
                   />
                 </div>
                 <div className="ml-3 text-sm">
-                  <label htmlFor="terms" className="text-slate-300">
+                  <label htmlFor="terms" className="text-indigo-200">
                     I agree to the <Link href="/terms" className="text-teal-400 hover:text-teal-300">Terms of Service</Link> and <Link href="/privacy" className="text-teal-400 hover:text-teal-300">Privacy Policy</Link>
                   </label>
                 </div>
@@ -407,7 +407,7 @@ const ExpertSignupPage = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-slate-400 text-sm">
+          <p className="text-indigo-400 text-sm">
             Already have an expert account? <Link href="/expert_login" className="text-teal-400 hover:text-teal-300">Sign in here</Link>
           </p>
         </div>
