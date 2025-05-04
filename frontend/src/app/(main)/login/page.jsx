@@ -1,4 +1,4 @@
- 'use client';
+'use client';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
@@ -25,16 +25,16 @@ const Login = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black flex items-center justify-center px-4">
       <div className="max-w-md w-full space-y-8">
         {/* Logo and Heading */}
         <div className="text-center">
         <h1 className="text-3xl md:text-4xl font-extrabold mb-4">
-            <span className="bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-teal-400 via-indigo-400 to-teal-200 bg-clip-text text-transparent">
                Login
             </span>
           </h1>
-          <p className="text-slate-300 max-w-md mx-auto">
+          <p className="text-white max-w-md mx-auto">
             Sign in to access your account, and see what are the things going on in the cyber world.
           </p>
           
@@ -50,7 +50,7 @@ const Login = () => {
               onChange={loginForm.handleChange}
               required
               placeholder="Email address"
-              className="appearance-none relative block w-full px-4 py-3 rounded-md bg-[#1e293b] border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="appearance-none relative block w-full px-4 py-3 rounded-md bg-indigo-950/50 border border-indigo-700/40 text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
             <div className="relative">
               <input
@@ -60,7 +60,7 @@ const Login = () => {
                 onChange={loginForm.handleChange}
                 required
                 placeholder="Password"
-                className="appearance-none relative block w-full px-4 py-3 rounded-md bg-[#1e293b] border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="appearance-none relative block w-full px-4 py-3 rounded-md bg-indigo-950/50 border border-indigo-700/40 text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm">
                 <a href="#" className="text-teal-400 hover:underline">
@@ -79,13 +79,13 @@ const Login = () => {
         </form>
 
         {/* Footer */}
-        <p className="mt-6 text-center text-sm text-slate-400">
-  Don’t have an account?{' '}
+        <p className="mt-6 text-center text-sm text-indigo-200">
+  Don't have an account?{' '}
   <a href="/signup" className="text-teal-400 hover:underline font-medium">
     Register here
   </a>
 </p>
-<p className="mt-6  text-lg  text-center  text-slate-400">
+<p className="mt-6  text-lg  text-center  text-indigo-200">
   Are you a expert? {' '}
   <a href="/expert_login" className=" text-teal-400 hover:underline font-medium">
     Click here

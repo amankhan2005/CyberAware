@@ -10,7 +10,7 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'Phishing & Attacks', path: '/phishing_and_attacks' },
     { name: 'About', path: '/about' },
-    { name: 'Services', path: '/services' },
+    { name: 'Blogs & Articles', path: '/blogs_and_articles' },
     { name: 'News', path: '/news' },
     { name: 'Contact', path: '/contact' }
   ];
@@ -91,7 +91,7 @@ const Navbar = () => {
               <Link 
                 key={item.name} 
                 href={item.path}
-                className=" text-slate-300 hover:text-white transition-colors duration-300 text-sm py-2 group flex items-center"
+                className="text-slate-300 hover:text-white transition-colors duration-300 text-sm py-2 group flex items-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <span className="inline-block w-0 group-hover:w-2 h-[1px] bg-teal-400 mr-0 group-hover:mr-2 transition-all duration-300"></span>
