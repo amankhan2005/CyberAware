@@ -4,13 +4,12 @@ const Article = require('../models/articleModel'); // adjust path as needed
 
 // Create Article
 router.post('/add', async (req, res) => {
-  try {
-    const data = req.body;
-    const article = await Article.create(data);
-    res.status(201).json(article);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  new Article(req.body).save()
+  .then((result) => {
+    res.status(200).json(result);
+  }).catch((err) => {
+    res.status(500).json({ message: 'Internal server error' });
+  });
 });
 
 // Get All Articles
