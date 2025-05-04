@@ -168,9 +168,9 @@ const Footer = () => {
               © {new Date().getFullYear()} CyberAware. All rights reserved.
             </div>
             <div className="flex space-x-5 text-xs text-slate-400">
-              <a href="#privacy" className="hover:text-teal-400 transition-colors duration-300">Privacy Policy</a>
-              <a href="#terms" className="hover:text-teal-400 transition-colors duration-300">Terms of Service</a>
-              <a href="#cookies" className="hover:text-teal-400 transition-colors duration-300">Cookie Policy</a>
+              <a href="/privacy_policy" className="hover:text-teal-400 transition-colors duration-300">Privacy Policy</a>
+              <a href="/terms_condition" className="hover:text-teal-400 transition-colors duration-300">Terms of Service</a>
+              <a href="/cookies_policy" className="hover:text-teal-400 transition-colors duration-300">Cookie Policy</a>
             </div>
           </div>
         </div>
