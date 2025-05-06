@@ -2,11 +2,12 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch, faFilter, faCalendar, faUser, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons"
+import { faSearch, faFilter, faCalendar, faUser, faChevronDown, faChevronUp, faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 
 const BlogsAndArticles = () => {
   // State for filtering and search
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
   const [expandedArticles, setExpandedArticles] = useState({})
 
   // Toggle article expansion
@@ -24,7 +25,7 @@ const BlogsAndArticles = () => {
       title: "The Rise of Cyber Threats in India: Analyzing the Landscape",
       summary: "Over the past decade, India has witnessed a sharp uptick in cyber-attacks targeting individuals, businesses, and critical infrastructure. Factors driving this trend include rapid digital adoption, regulatory gaps, and increasing sophistication of threat actors.",
       author: "CyberAware Team",
-      date: "June 15, 2024",
+      date: "April 11, 2025",
       category: "Threat Analysis",
       content: [
         {
@@ -88,8 +89,8 @@ const BlogsAndArticles = () => {
       id: 2,
       title: "Data Protection Laws in India: An Overview of the IT Act and Beyond",
       summary: "India's data protection regime has evolved from the rudimentary Information Technology Act, 2000, to the landmark Digital Personal Data Protection Act, 2023.",
-      author: "Legal Team",
-      date: "June 10, 2024",
+      author: "CyberAware Team",
+      date: "April 10, 2025",
       category: "Legislation",
       content: [
         {
@@ -153,8 +154,8 @@ const BlogsAndArticles = () => {
       id: 3,
       title: "Cybersecurity Challenges for Indian Startups",
       summary: "Indian startups—especially in fintech, healthtech and edtech—face acute cybersecurity challenges driven by limited budgets, low awareness, regulatory complexity and rapidly evolving threats.",
-      author: "Startup Advisory Team",
-      date: "May 25, 2024",
+      author: "CyberAware Team",
+      date: "April 25, 2025",
       category: "Business Security",
       content: [
         {
@@ -217,8 +218,8 @@ const BlogsAndArticles = () => {
       id: 4,
       title: "Cyber Hygiene for the Common Indian Internet User",
       summary: "Everyday internet users in India face increasing risks—from phishing and identity theft to financial fraud—driven by rapid digital adoption and often limited awareness.",
-      author: "Security Education Team",
-      date: "May 15, 2024",
+      author: "CyberAware Team",
+      date: "April 15, 2025] ",
       category: "Personal Security",
       content: [
         {
@@ -283,8 +284,8 @@ const BlogsAndArticles = () => {
       id: 5,
       title: "The Growing Threat of Cyberattacks on Critical Infrastructure in India",
       summary: "Critical infrastructure in India—including energy grids, transportation networks, and healthcare systems—has become an increasingly attractive target for cyber adversaries.",
-      author: "Critical Infrastructure Team",
-      date: "May 5, 2024",
+      author: "CyberAware Team",
+      date: "May 5, 2025",
       category: "Critical Infrastructure",
       content: [
         {
@@ -348,15 +349,214 @@ const BlogsAndArticles = () => {
           text: "Securing India's critical infrastructure against cyber threats demands a multi-layered strategy: modernizing legacy systems, enforcing robust policy frameworks, harnessing AI-driven detection, and nurturing skilled talent through collaborative initiatives. With rising stakes—economic stability, public safety, and national security—India must move decisively from reactive firefighting to proactive resilience building."
         }
       ]
+    },
+    {
+      id: 6,
+      title: "AI-Powered Cyber Threats: The New Frontier in Indian Cybersecurity",
+      summary: "As artificial intelligence becomes more sophisticated, cybercriminals are leveraging these technologies to launch more effective attacks against Indian organizations and individuals.",
+      author: "CyberAware Team",
+      date: "April 25, 2025",
+      category: "Emerging Threats",
+      content: [
+        {
+          sectionTitle: "The AI Threat Landscape",
+          text: "Artificial intelligence and machine learning are revolutionizing cyberattacks in India, with threat actors utilizing these technologies to bypass traditional security measures and automate sophisticated attacks at unprecedented scale."
+        },
+        {
+          sectionTitle: "Common AI-Enhanced Attack Vectors",
+          subsections: [
+            {
+              title: "Advanced Phishing Campaigns",
+              text: "AI tools now generate hyper-personalized phishing emails in fluent Hindi, Bengali, Tamil and other regional languages, increasing click rates by 35% compared to generic phishing attempts. These emails analyze social media profiles to reference personal details and mimic writing styles of colleagues or family members."
+            },
+            {
+              title: "Deepfakes in Social Engineering",
+              text: "Voice cloning technology has enabled scammers to impersonate executives in real-time phone calls to authorize fraudulent transfers. In 2023, an Indian corporation lost ₹15 crore after an AI-generated voice mimicking the CEO convinced the finance director to wire funds to a fraudulent account."
+            },
+            {
+              title: "Intelligent Malware",
+              text: "Next-generation malware using reinforcement learning techniques can adapt to evade detection, alter behavior based on environment analysis, and identify high-value targets within networks. These programs demonstrate rudimentary decision-making to maximize damage while minimizing detection."
+            }
+          ]
+        },
+        {
+          sectionTitle: "Defensive Applications of AI",
+          subsections: [
+            {
+              title: "Behavioral Analytics",
+              text: "AI-powered security platforms can establish baseline user behaviors and identify anomalies indicating compromise. Financial institutions in India have reported 60% improvement in fraud detection through these systems with significant reduction in false positives."
+            },
+            {
+              title: "Automated Threat Hunting",
+              text: "Machine learning models trained on vast threat intelligence datasets can proactively search networks for indicators of compromise that might evade rule-based detection systems. These systems help address India's cybersecurity talent shortage by automating routine threat hunting tasks."
+            }
+          ]
+        },
+        {
+          sectionTitle: "Policy and Regulatory Considerations",
+          text: "India's cybersecurity policy framework requires updating to address the unique challenges posed by AI-enabled threats. The National Cybersecurity Strategy must incorporate specific provisions for AI governance in security contexts, including potential restrictions on certain applications of generative AI technology that could threaten national security."
+        },
+        {
+          sectionTitle: "Conclusion",
+          text: "As AI capabilities continue advancing, the arms race between attackers and defenders will intensify. Indian organizations must invest in AI-powered security solutions while simultaneously developing security frameworks specifically designed to counter AI-enhanced threats. Collaborative efforts between government, industry, and academia will be essential to maintain resilience against this new generation of cyber threats."
+        }
+      ]
+    },
+    {
+      id: 7,
+      title: "IoT Security Risks in Smart Cities: Lessons for India's Urban Development",
+      summary: "As India aggressively pursues smart city initiatives, the proliferation of IoT devices creates significant cybersecurity vulnerabilities that must be addressed to ensure public safety and data protection.",
+      author: "CyberAware Team",
+      date: "April 15, 2025",
+      category: "Infrastructure Security",
+      content: [
+        {
+          sectionTitle: "Smart City Development in India",
+          text: "The Indian government's Smart Cities Mission has connected over 7.5 million IoT devices across 100 cities, from traffic management systems to public utilities monitors. While these technologies enhance urban efficiency, they also introduce substantial attack surfaces with potentially serious consequences if compromised."
+        },
+        {
+          sectionTitle: "Critical Vulnerabilities",
+          subsections: [
+            {
+              title: "Insecure Communications Protocols",
+              text: "Many IoT devices deployed in Indian smart cities utilize unencrypted communications or outdated protocols. A 2023 security audit of five major smart city implementations revealed that 38% of devices used plaintext communications for sensitive data, while 45% utilized communications protocols with known vulnerabilities."
+            },
+            {
+              title: "Default Credentials",
+              text: "Municipal IoT deployments frequently retain factory-default passwords, creating easy entry points for attackers. The Shodan search engine currently lists over 15,000 exposed devices in Indian smart cities with default credentials, from traffic light controllers to environmental monitoring systems."
+            },
+            {
+              title: "Limited Update Mechanisms",
+              text: "Many IoT devices lack automated update capabilities or have update mechanisms that themselves create security risks. Devices deployed in Indian municipal infrastructure average 3.2 years between firmware updates, leaving critical vulnerabilities unpatched."
+            }
+          ]
+        },
+        {
+          sectionTitle: "Potential Impact Scenarios",
+          subsections: [
+            {
+              title: "Traffic System Manipulation",
+              text: "Compromised traffic management systems could cause gridlock by manipulating traffic signals, potentially hampering emergency services response or facilitating criminal activity. Security researchers demonstrated the ability to control traffic signals in three Indian cities during controlled tests in 2023."
+            },
+            {
+              title: "Surveillance System Access",
+              text: "Unauthorized access to the extensive CCTV networks in smart cities creates privacy risks and enables criminal reconnaissance. In 2022, a private security firm identified unauthorized access to over 1,500 CCTV cameras in a major metropolitan area."
+            },
+            {
+              title: "Utility System Disruption",
+              text: "Smart grid and water management systems could be targeted to cause service disruptions or, in extreme cases, infrastructure damage. A 2023 tabletop exercise conducted by CERT-In demonstrated how attackers could potentially disrupt water distribution to entire neighborhoods."
+            }
+          ]
+        },
+        {
+          sectionTitle: "Security Guidelines for Smart City Implementation",
+          subsections: [
+            {
+              title: "Security by Design",
+              text: "All RFPs for smart city technologies must include specific security requirements and undergo independent security verification before deployment. The Ministry of Housing and Urban Affairs has developed a security framework that should be mandatory for all implementations."
+            },
+            {
+              title: "Network Segmentation",
+              text: "Critical infrastructure systems should operate on isolated networks with strictly controlled access points and continuous monitoring. Implementing zero-trust architecture principles can significantly reduce the impact of any single compromise."
+            },
+            {
+              title: "Regular Security Assessments",
+              text: "Quarterly security audits and penetration testing should be mandatory for all smart city deployments, with findings addressed through a formal remediation process."
+            }
+          ]
+        },
+        {
+          sectionTitle: "Conclusion",
+          text: "India's smart city initiatives promise tremendous benefits for urban management and quality of life, but they must integrate cybersecurity as a foundational element rather than an afterthought. By establishing strong security governance, implementing technical safeguards, and creating public-private partnerships focused on security, India can build smart cities that remain resilient against evolving cyber threats."
+        }
+      ]
+    },
+    {
+      id: 8,
+      title: "Securing India's Digital Payment Ecosystem: UPI, Mobile Banking and Beyond",
+      summary: "India's digital payment revolution has transformed financial accessibility, but also created new security challenges that require constant vigilance from users, providers, and regulators.",
+      author: "CyberAware Team",
+      date: "April 5, 2025",
+      category: "Financial Security",
+      content: [
+        {
+          sectionTitle: "India's Digital Payment Transformation",
+          text: "With over 10 billion monthly UPI transactions and 325 million active users, India has built the world's most advanced real-time payment infrastructure. The convenience of instant transactions has revolutionized commerce, but also attracted sophisticated threat actors targeting this massive financial ecosystem."
+        },
+        {
+          sectionTitle: "Common Attack Vectors",
+          subsections: [
+            {
+              title: "QR Code Fraud",
+              text: "Fraudsters deploy manipulated QR codes in public places that redirect payments to attacker-controlled accounts. The Indian Cybercrime Coordination Centre reported 82,000 QR code fraud cases in 2023, with average losses of ₹12,500 per victim."
+            },
+            {
+              title: "SIM Swapping",
+              text: "Attackers use social engineering to obtain duplicate SIM cards, then intercept OTPs to take over banking and payment accounts. Telecom providers have implemented enhanced verification, but social engineering techniques continue to evolve."
+            },
+            {
+              title: "Banking Trojans",
+              text: "Mobile malware specifically targeting banking applications can overlay fake screens to steal credentials or hijack sessions. Banking trojans like EventBot and FluBot have specifically targeted Indian banks with over 25,000 infections detected monthly."
+            }
+          ]
+        },
+        {
+          sectionTitle: "Defensive Measures",
+          subsections: [
+            {
+              title: "Multi-Factor Authentication Evolution",
+              text: "The RBI's tokenization mandate and push for device binding have strengthened authentication, reducing fraud in card transactions by 35% since implementation. Biometric verification is now used in 65% of mobile banking apps, adding an additional security layer."
+            },
+            {
+              title: "AI-Powered Fraud Detection",
+              text: "Indian payment processors now deploy sophisticated real-time transaction monitoring using machine learning to identify suspicious patterns. These systems analyze over 2,000 parameters per transaction with detection rates reaching 92% for fraudulent attempts."
+            },
+            {
+              title: "Educational Initiatives",
+              text: "The \"Digital Payment Suraksha\" campaign launched by NPCI has reached over 50 million citizens with basic security awareness. Banks have implemented mandatory security tutorials before activating UPI and net banking services."
+            }
+          ]
+        },
+        {
+          sectionTitle: "Regulatory Framework",
+          text: "The RBI's Digital Payment Security Controls Directive (2021) established comprehensive security requirements for payment service providers. Regulations mandate end-to-end encryption, 24/7 fraud monitoring, and customer liability limits. The upcoming Digital India Trust Agency (DITA) will standardize digital payment security across the ecosystem."
+        },
+        {
+          sectionTitle: "Best Practices for Consumers",
+          subsections: [
+            {
+              title: "App Hygiene",
+              text: "Only download banking and payment apps from official app stores, verify developer credentials, and check permissions requested. Enable app-level locks where available and disable autofill for sensitive financial information."
+            },
+            {
+              title: "Transaction Verification",
+              text: "Before completing payments, verify recipient details and amounts. Enable transaction limits and notifications for all payment types. Consider using a separate device for high-value transactions where possible."
+            },
+            {
+              title: "Rapid Response to Incidents",
+              text: "If fraud is suspected, immediately contact both the bank and NPCI through official channels, file a report on the Cyber Crime Portal, and request transaction reversal within the golden hour (usually 2-4 hours) when recovery is most likely."
+            }
+          ]
+        },
+        {
+          sectionTitle: "Future Developments",
+          text: "The Central Bank Digital Currency (e₹) pilot will introduce new security paradigms based on blockchain technology. Meanwhile, AI-powered voice recognition and behavioral biometrics are being tested by major banks to create truly seamless yet secure authentication methods that don't compromise convenience."
+        }
+      ]
     }
   ]
 
-  // Filter articles based on search query
-  const filteredArticles = articles.filter(article => 
-    article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    article.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    article.category.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  // Filter articles based on search query and category
+  const filteredArticles = articles.filter(article => {
+    const matchesSearch = 
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.category.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesCategory = selectedCategory === '' || article.category === selectedCategory;
+    
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black">
@@ -405,25 +605,36 @@ const BlogsAndArticles = () => {
               </div>
             </div>
             
-            {/* Filter */}
+            {/* Filter and Create New Article */}
             <div className="flex space-x-3">
               <div className="flex-1">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FontAwesomeIcon icon={faFilter} className="text-indigo-300" />
                   </div>
-                  <select className="block w-full pl-10 pr-3 py-3 bg-indigo-950/50 border border-indigo-700/40 rounded-lg text-white appearance-none focus:outline-none focus:ring-2 focus:ring-teal-500">
+                  <select 
+                    className="block w-full pl-10 pr-3 py-3 bg-indigo-950/50 border border-indigo-700/40 rounded-lg text-white appearance-none focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
                     <option value="">Filter by Category</option>
-                    <option value="threat-analysis">Threat Analysis</option>
-                    <option value="legislation">Legislation</option>
-                    <option value="business-security">Business Security</option>
-                    <option value="personal-security">Personal Security</option>
+                    <option value="Threat Analysis">Threat Analysis</option>
+                    <option value="Legislation">Legislation</option>
+                    <option value="Business Security">Business Security</option>
+                    <option value="Personal Security">Personal Security</option>
+                    <option value="Critical Infrastructure">Critical Infrastructure</option>
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                     <FontAwesomeIcon icon={faChevronDown} className="text-indigo-300" />
                   </div>
                 </div>
               </div>
+              
+              {/* Create New Article Button */}
+              <Link href="/expert/add_article" className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 font-medium shadow-lg hover:shadow-teal-500/20">
+                <FontAwesomeIcon icon={faPenToSquare} className="mr-2" />
+                <span>Write Article</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -432,78 +643,89 @@ const BlogsAndArticles = () => {
       {/* Articles Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-8">
-          {/* Articles will map here */}
-          {articles.map((article) => (
-            <div key={article.id} className="bg-gradient-to-br from-indigo-800/70 to-indigo-900/70 rounded-xl p-8 border border-indigo-700/40 shadow-xl">
-              <div className="flex flex-col space-y-4">
-                <div>
-                  <div className="flex items-center space-x-3 mb-3">
-                    <span className="bg-indigo-900/30 text-teal-300 text-xs font-medium px-2.5 py-1 rounded-full">
-                      {article.category}
-                    </span>
-                    <div className="flex items-center text-indigo-300 text-sm">
-                      <FontAwesomeIcon icon={faCalendar} className="mr-1" />
-                      {article.date}
-                    </div>
-                    <div className="flex items-center text-indigo-300 text-sm">
-                      <FontAwesomeIcon icon={faUser} className="mr-1" />
-                      {article.author}
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-bold text-white mb-2">{article.title}</h2>
-                  <p className="text-indigo-200 mb-4">{article.summary}</p>
-                  
-                  <button 
-                    onClick={() => toggleArticle(article.id)} 
-                    className="text-teal-400 hover:text-teal-300 font-medium flex items-center"
-                  >
-                    {expandedArticles[article.id] ? 'Read Less' : 'Read More'} 
-                    <FontAwesomeIcon 
-                      icon={expandedArticles[article.id] ? faChevronUp : faChevronDown} 
-                      className="ml-2"
-                    />
-                  </button>
-                </div>
-
-                {/* Expanded Content */}
-                {expandedArticles[article.id] && (
-                  <div className="mt-6 border-t border-indigo-700/40 pt-6 text-white">
-                    {article.content.map((section, idx) => (
-                      <div key={idx} className="mb-6">
-                        {section.sectionTitle && (
-                          <h3 className="text-xl font-bold text-white mb-3">{section.sectionTitle}</h3>
-                        )}
-                        
-                        {section.text && (
-                          <p className="text-indigo-200 mb-4 whitespace-pre-line">{section.text}</p>
-                        )}
-                        
-                        {section.subsections && (
-                          <div className="ml-6 mt-4 space-y-4">
-                            {section.subsections.map((subsection, subIdx) => (
-                              <div key={subIdx}>
-                                <h4 className="text-lg font-semibold text-teal-300 mb-2">{subsection.title}</h4>
-                                <p className="text-indigo-200 whitespace-pre-line">{subsection.text}</p>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                    
-                    <div className="flex justify-center mt-6">
-                      <button 
-                        onClick={() => toggleArticle(article.id)}
-                        className="px-6 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg hover:from-teal-400 hover:to-indigo-400 transition-all duration-300"
-                      >
-                        Close Article
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
+          {filteredArticles.length === 0 ? (
+            <div className="bg-gradient-to-br from-indigo-800/70 to-indigo-900/70 rounded-xl p-8 border border-indigo-700/40 shadow-xl text-center">
+              <p className="text-white text-xl">No articles found matching your search criteria.</p>
+              <button 
+                onClick={() => {setSearchQuery(''); setSelectedCategory('');}}
+                className="mt-4 px-6 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg hover:from-teal-400 hover:to-indigo-400 transition-all duration-300"
+              >
+                Clear Filters
+              </button>
             </div>
-          ))}
+          ) : (
+            filteredArticles.map((article) => (
+              <div key={article.id} className="bg-gradient-to-br from-indigo-800/70 to-indigo-900/70 rounded-xl p-8 border border-indigo-700/40 shadow-xl">
+                <div className="flex flex-col space-y-4">
+                  <div>
+                    <div className="flex items-center space-x-3 mb-3">
+                      <span className="bg-indigo-900/30 text-teal-300 text-xs font-medium px-2.5 py-1 rounded-full">
+                        {article.category}
+                      </span>
+                      <div className="flex items-center text-indigo-300 text-sm">
+                        <FontAwesomeIcon icon={faCalendar} className="mr-1" />
+                        {article.date}
+                      </div>
+                      <div className="flex items-center text-indigo-300 text-sm">
+                        <FontAwesomeIcon icon={faUser} className="mr-1" />
+                        {article.author}
+                      </div>
+                    </div>
+                    <h2 className="text-2xl font-bold text-white mb-2">{article.title}</h2>
+                    <p className="text-indigo-200 mb-4">{article.summary}</p>
+                    
+                    <button 
+                      onClick={() => toggleArticle(article.id)} 
+                      className="text-teal-400 hover:text-teal-300 font-medium flex items-center"
+                    >
+                      {expandedArticles[article.id] ? 'Read Less' : 'Read More'} 
+                      <FontAwesomeIcon 
+                        icon={expandedArticles[article.id] ? faChevronUp : faChevronDown} 
+                        className="ml-2"
+                      />
+                    </button>
+                  </div>
+
+                  {/* Expanded Content */}
+                  {expandedArticles[article.id] && (
+                    <div className="mt-6 border-t border-indigo-700/40 pt-6 text-white">
+                      {article.content.map((section, idx) => (
+                        <div key={idx} className="mb-6">
+                          {section.sectionTitle && (
+                            <h3 className="text-xl font-bold text-white mb-3">{section.sectionTitle}</h3>
+                          )}
+                          
+                          {section.text && (
+                            <p className="text-indigo-200 mb-4 whitespace-pre-line">{section.text}</p>
+                          )}
+                          
+                          {section.subsections && (
+                            <div className="ml-6 mt-4 space-y-4">
+                              {section.subsections.map((subsection, subIdx) => (
+                                <div key={subIdx}>
+                                  <h4 className="text-lg font-semibold text-teal-300 mb-2">{subsection.title}</h4>
+                                  <p className="text-indigo-200 whitespace-pre-line">{subsection.text}</p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      
+                      <div className="flex justify-center mt-6">
+                        <button 
+                          onClick={() => toggleArticle(article.id)}
+                          className="px-6 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg hover:from-teal-400 hover:to-indigo-400 transition-all duration-300"
+                        >
+                          Close Article
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ const ExpertSignupPage = () => {
     expertise: [],
     certifications: '',
     linkedIn: '',
-    bio: '',
+    bio: '',  
   });
 
   const [errors, setErrors] = useState({});
@@ -100,7 +100,7 @@ const ExpertSignupPage = () => {
       setTimeout(() => {
         console.log('Form submitted successfully', formData);
         setIsSubmitting(false);
-        router.push('/expert_signup/success');
+        router.push('/expert_login');
       }, 1000);
     } else {
       setErrors(validationErrors);

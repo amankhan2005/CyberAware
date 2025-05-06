@@ -17,7 +17,7 @@ app.use(express.json()) //to parse json data
 app.use('/user', UserRouter);
 app.use('/expert', expertRouter);
 app.use('/articles', articleRouter);
-app.use('/news', newsRouter);
+app.use('/news', newsRouter);   
 app.use('/query', QueryRouter);
 
 
