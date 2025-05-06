@@ -2,60 +2,32 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useFormik } from 'formik';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const ExpertLoginPage = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false
-  });
-  
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
+  const expertLogin = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+  },
+  onSubmit: (values) => {
+    axios.post('http://localhost:5000/expert/authenticate', values)
+    .then((result) => {
+      console.log(result.data);
+      toast.success('Login successful! Redirecting...');
+      localStorage.setItem('expert', result.data.token);
+      expertLogin.resetForm();
+      router.push('/expert/dashboard');
+    }).catch((err) => {
+      console.log(err);
+      toast.error('Invalid email or password. Please try again.');
     });
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email address is invalid';
-    }
-    
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    }
-    
-    return newErrors;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-    
-    if (Object.keys(validationErrors).length === 0) {
-      setIsSubmitting(true);
-      
-      // Here we would normally make an API call to authenticate the user
-      // Simulating API call with setTimeout
-      setTimeout(() => {
-        console.log('Login submitted successfully', formData);
-        setIsSubmitting(false);
-        router.push('/expert/dashboard'); // Redirect to expert dashboard
-      }, 1000);
-    } else {
-      setErrors(validationErrors);
-    }
-  };
+  }
+})
 
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-indigo-950 to-black text-white">
@@ -80,7 +52,7 @@ const ExpertLoginPage = () => {
         </div>
 
         <div className="backdrop-blur-sm bg-slate-900/50 rounded-xl border border-slate-700/50 p-6 md:p-8 w-full max-w-md">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={expertLogin.handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
@@ -90,12 +62,11 @@ const ExpertLoginPage = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border ${errors.email ? 'border-red-500' : 'border-slate-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
+                value={expertLogin.values.email}
+                onChange={expertLogin.handleChange}
+                className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
                 placeholder="you@example.com"
               />
-              {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
             </div>
 
             {/* Password */}
@@ -112,12 +83,11 @@ const ExpertLoginPage = () => {
                 type="password"
                 id="password"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border ${errors.password ? 'border-red-500' : 'border-slate-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
+                value={expertLogin.values.password}
+                onChange={expertLogin.handleChange}
+                className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
                 placeholder="••••••••"
               />
-              {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password}</p>}
             </div>
 
             {/* Remember Me */}
@@ -126,8 +96,7 @@ const ExpertLoginPage = () => {
                 id="rememberMe"
                 name="rememberMe"
                 type="checkbox"
-                checked={formData.rememberMe}
-                onChange={handleChange}
+                required
                 className="h-4 w-4 text-teal-500 focus:ring-teal-400 rounded bg-slate-800 border-slate-600"
               />
               <label htmlFor="rememberMe" className="ml-2 text-sm text-slate-300">
@@ -138,23 +107,9 @@ const ExpertLoginPage = () => {
             {/* Login Button */}
             <button
               type="submit"
-              disabled={isSubmitting}
               className="w-full px-4 py-2.5 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-teal-400 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-x-0 group-hover:scale-x-100 origin-left"></span>
-              <span className="relative flex items-center justify-center">
-                {isSubmitting ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Signing in...
-                  </>
-                ) : (
-                  'Sign In'
-                )}
-              </span>
+              Login
             </button>
           </form>
         </div>

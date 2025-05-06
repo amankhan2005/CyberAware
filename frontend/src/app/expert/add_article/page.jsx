@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 import * as Yup from 'yup';
+import { jwtDecode } from 'jwt-decode';
 
 // API base URL - can be configured based on environment
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -21,13 +22,17 @@ const AddArticle = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formErrors, setFormErrors] = useState({});
 
+    let decodedExpert;
+
     useEffect(() => {
         // Get the expert data from sessionStorage
         try {
-            const expert = JSON.parse(sessionStorage.getItem('expert'));
-            if (expert) {
-                console.log("Expert data from session:", expert);
-                setExpertData(expert);
+            const expert = localStorage.getItem('expert');
+            decodedExpert = jwtDecode(expert);
+            console.log("Decoded expert data:", decodedExpert);
+            if (decodedExpert) {
+                console.log("Expert data from session:", decodedExpert);
+                setExpertData(decodedExpert);
             } else {
                 console.warn("No expert data found in sessionStorage");
                 toast.error("Please login as an expert first");

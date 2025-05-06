@@ -1,5 +1,6 @@
 const express = require('express');
 const Model = require('../models/expertModel');
+const jwt = require('jsonwebtoken'); //importing jsonwebtoken
 const router = express.Router();
 
 // Add a new expert
@@ -73,21 +74,32 @@ router.put('/update/:id', (req, res) => {
 });
 
 // Login expert
-router.post('/login', (req, res) => {
-    Model.findOne({email: req.body.email})
-    .then((result) => {
-        if(!result) return res.status(401).json({message: "Invalid credentials"});
+router.post('/authenticate', (req, res) => {
+    Model.findOne(req.body)
+        .then((result) => {
+            if(result){
+                // email and password match
+                // generate token
 
-        // Password comparison (in a real app, use bcrypt)
-        if(req.body.password === result.password){
-            res.status(200).json(result);
-        } else {
-            res.status(401).json({message: "Invalid credentials"});
-        }
-    }).catch((err) => {
-        console.error(err);
-        res.status(500).json({message: "Internal Server Error"});
-    });
+                const { _id, email, password} = result;
+                const payload = { _id, email, password};
+
+                jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1d'}, (err, token) => {
+                    if(err){
+                        console.log(err);
+                        res.status(500).json(err);
+                    }else{
+                        res.status(200).json({token});
+                    }
+                } )
+
+            } else {
+                res.status(401).json({message: 'Invalid Credentials'});
+            }
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json({message: 'Internal Server Error'});
+        });
 });
 
 module.exports = router;

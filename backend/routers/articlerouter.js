@@ -72,7 +72,7 @@ router.post('/add', async (req, res) => {
 // Get All Articles
 router.get('/getall', async (req, res) => {
   try {
-    const articles = await Article.find().populate('expertId');
+    const articles = await Article.find()
     res.json(articles);
   } catch (err) {
     res.status(500).json({ error: err.message });
