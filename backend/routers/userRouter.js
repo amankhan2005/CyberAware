@@ -69,8 +69,8 @@ router.post('/authenticate', (req, res) => {
                 // email and password match
                 // generate token
 
-                const { _id, email, password} = result;
-                const payload = { _id, email, password};
+                const { _id, name, email } = result;
+                const payload = { _id, name, email};
 
                 jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1d'}, (err, token) => {
                     if(err){

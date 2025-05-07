@@ -1,7 +1,11 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 const ExpertLoginPage = () => {
   const router = useRouter();
@@ -13,6 +17,14 @@ const ExpertLoginPage = () => {
   
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    // Check if already logged in
+    const expert = sessionStorage.getItem('expert');
+    if (expert) {
+      router.push('/expert/dashboard');
+    }
+  }, [router]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -38,23 +50,82 @@ const ExpertLoginPage = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
+      setErrors({});
       
-      // Here we would normally make an API call to authenticate the user
-      // Simulating API call with setTimeout
-      setTimeout(() => {
-        console.log('Login submitted successfully', formData);
+      try {
+        // Log the request
+        console.log(`Sending login request to ${API_BASE_URL}/expert/login`, {
+          email: formData.email,
+          password: formData.password
+        });
+        
+        // Make API call to authenticate the expert
+        const response = await axios.post(`${API_BASE_URL}/expert/login`, {
+          email: formData.email,
+          password: formData.password
+        });
+
+        console.log('Login response:', response);
+
+        if (response.status === 200 && response.data) {
+          // Save expert data to session storage
+          console.log('Login successful, expert data:', response.data);
+          sessionStorage.setItem('expert', JSON.stringify(response.data));
+          
+          // Show success message
+          toast.success('Login successful!');
+          
+          // Redirect to dashboard
+          router.push('/expert/dashboard');
+        } else {
+          toast.error('Login failed. Please check your credentials.');
+          setIsSubmitting(false);
+        }
+      } catch (error) {
+        console.error('Login error details:', error);
+        
+        if (error.response) {
+          // If the server responded with an error message
+          console.error('Server error response:', error.response.data);
+          toast.error(error.response.data?.message || 'Authentication failed');
+          
+          if (error.response.status === 401) {
+            setErrors({ 
+              auth: 'Invalid email or password' 
+            });
+          }
+        } else if (error.request) {
+          // Request was made but no response received
+          console.error('No response received:', error.request);
+          toast.error('Server not responding. Please try again later.');
+        } else {
+          // Error setting up the request
+          console.error('Request setup error:', error.message);
+          toast.error('Network error. Please try again later.');
+        }
+        
         setIsSubmitting(false);
-        router.push('/expert/dashboard'); // Redirect to expert dashboard
-      }, 1000);
+      }
     } else {
       setErrors(validationErrors);
     }
+  };
+
+  // For testing/debugging only
+  const quickLogin = () => {
+    // Use test credentials
+    setFormData({
+      email: 'expert@test.com',
+      password: 'password123'
+    });
+    
+    // You can call handleSubmit here if you want auto-submit
   };
 
   return (
@@ -80,6 +151,12 @@ const ExpertLoginPage = () => {
         </div>
 
         <div className="backdrop-blur-sm bg-slate-900/50 rounded-xl border border-slate-700/50 p-6 md:p-8 w-full max-w-md">
+          {errors.auth && (
+            <div className="mb-4 p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
+              <p className="text-red-400 text-sm">{errors.auth}</p>
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
@@ -104,7 +181,7 @@ const ExpertLoginPage = () => {
                 <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1">
                   Password
                 </label>
-                <Link href="/forgot-password" className="text-sm text-teal-400 hover:text-teal-300">
+                <Link href="/expert/forgot-password" className="text-sm text-teal-400 hover:text-teal-300">
                   Forgot password?
                 </Link>
               </div>
@@ -135,6 +212,17 @@ const ExpertLoginPage = () => {
               </label>
             </div>
 
+            {/* Dev-only feature, remove in production */}
+            <div className="text-center">
+              <button 
+                type="button" 
+                onClick={quickLogin}
+                className="text-sm text-indigo-400 hover:text-indigo-300"
+              >
+                Use test account
+              </button>
+            </div>
+
             {/* Login Button */}
             <button
               type="submit"
@@ -163,7 +251,7 @@ const ExpertLoginPage = () => {
         <div className="mt-8 text-center">
           <p className="text-slate-400 text-sm">
             Don't have an expert account?{' '}
-            <Link href="/expert_signup" className="text-teal-400 hover:text-teal-300">
+            <Link href="/expert-signup" className="text-teal-400 hover:text-teal-300">
               Create one here
             </Link>
           </p>

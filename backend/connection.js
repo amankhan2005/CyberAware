@@ -1,14 +1,48 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-const url = process.env.DB_URL
+const url = process.env.DB_URL || 'mongodb://localhost:27017/cyberaware'
 
-mongoose.connect(url)
-.then((result) => {
-    console.log('database connected');
+const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+        console.log(`MongoDB Connected: ${conn.connection.host}`)
+    } catch (error) {
+        console.error(`Error: ${error.message}`)
+        process.exit(1)
+    }
+}
+
+// Handle connection events
+mongoose.connection.on('connected', () => {
+    console.log('Mongoose connected to DB')
 })
-.catch((err) => {
-    console.log(err);
-});
 
-module.exports = mongoose;
+mongoose.connection.on('error', (err) => {
+    console.error('Mongoose connection error:', err)
+})
+
+mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose connection disconnected')
+})
+
+// Handle application termination
+process.on('SIGINT', async () => {
+    try {
+        await mongoose.connection.close()
+        console.log('Mongoose connection closed through app termination')
+        process.exit(0)
+    } catch (err) {
+        console.error('Error during mongoose connection closure:', err)
+        process.exit(1)
+    }
+})
+
+// Export both the connection function and mongoose
+module.exports = {
+    connectDB,
+    mongoose
+}

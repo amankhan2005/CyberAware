@@ -24,7 +24,7 @@ const Signup = () => {
     },
     onSubmit: async (values, { resetForm }) => {
       try {
-        const result = await axios.post('http://localhost:5000/user/add', values);
+        const result = await axios.post('http://localhost:5000/users/add', values);
         toast.success('User Created Successfully !!');
         resetForm();
         router.push('/login');
