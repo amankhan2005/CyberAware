@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 import * as Yup from 'yup';
+import { jwtDecode } from 'jwt-decode';
 
 // API base URL - can be configured based on environment
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -21,20 +22,28 @@ const AddArticle = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formErrors, setFormErrors] = useState({});
 
+    let decodedToken;
+
     useEffect(() => {
-        // Get the expert data from sessionStorage
+        // Get the expert data from localStorage
         try {
-            const expert = JSON.parse(sessionStorage.getItem('expert'));
+            const expert = localStorage.getItem('expert-token');
             if (expert) {
-                console.log("Expert data from session:", expert);
-                setExpertData(expert);
+                decodedToken = jwtDecode(expert);
+                console.log("Expert data from localStorage:", decodedToken);
+                setExpertData(decodedToken);
+                // Set expertId in form values
+                articleForm.setFieldValue('expertId', decodedToken._id);
             } else {
-                console.warn("No expert data found in sessionStorage");
+                console.warn("No expert data found in localStorage");
                 toast.error("Please login as an expert first");
-                // Redirect logic could go here
+                // Redirect to login page
+                window.location.href = '/expert_login';
             }
         } catch (error) {
-            console.error("Error reading expert data from session:", error);
+            console.error("Error reading expert data from localStorage:", error);
+            toast.error("Error reading expert data. Please login again.");
+            window.location.href = '/expert_login';
         }
     }, []);
 
@@ -44,7 +53,8 @@ const AddArticle = () => {
         description: Yup.string().required('Description is required'),
         image: Yup.string().required('Cover image is required'),
         category: Yup.string().required('Category is required'),
-        content: Yup.string().required('Content is required')
+        content: Yup.string().required('Content is required'),
+        expertId: Yup.string().required('Expert ID is required')
     });
 
     const articleForm = useFormik({
@@ -54,10 +64,10 @@ const AddArticle = () => {
             image: '',
             category: '',
             content: '',
-            expertId: expertData?._id || '',
+            expertId: decodedToken._id
         },
         validationSchema,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             setIsSubmitting(true);
             setFormErrors({});
 
@@ -77,36 +87,28 @@ const AddArticle = () => {
                 return;
             }
             
-            axios.post(`${API_BASE_URL}/articles/add`, submitData)
-                .then((res) => {
-                    console.log("Article submission successful:", res.data);
-                    toast.success('Article added successfully!');
-                    articleForm.resetForm();
-                    setIsSubmitting(false);
-                })
-                .catch((err) => {
-                    console.error("Article submission error:", err);
-                    console.error("Error response:", err.response?.data);
-                    
-                    // Handle validation errors
-                    if (err.response?.data?.errors) {
-                        setFormErrors(err.response.data.errors);
-                        toast.error('Please correct the errors in your form');
-                    } else {
-                        toast.error('Failed to add article: ' + (err.response?.data?.message || err.message || 'Server error'));
-                    }
-                    setIsSubmitting(false);
-                });
+            try {
+                const response = await axios.post(`${API_BASE_URL}/articles/add`, submitData);
+                console.log("Article submission successful:", response.data);
+                toast.success('Article added successfully!');
+                articleForm.resetForm();
+                // Redirect to articles list or dashboard
+                window.location.href = '/expert/dashboard';
+            } catch (err) {
+                console.error("Article submission error:", err);
+                console.error("Error response:", err.response?.data);
+                
+                if (err.response?.data?.errors) {
+                    setFormErrors(err.response.data.errors);
+                    toast.error('Please correct the errors in your form');
+                } else {
+                    toast.error('Failed to add article: ' + (err.response?.data?.message || err.message || 'Server error'));
+                }
+            } finally {
+                setIsSubmitting(false);
+            }
         }
     });
-
-    // Update expertId whenever expertData changes
-    useEffect(() => {
-        if (expertData?._id) {
-            console.log("Setting expertId:", expertData._id);
-            articleForm.setFieldValue('expertId', expertData._id);
-        }
-    }, [expertData]);
 
     const upload = (e) => {
         const file = e.target.files[0];

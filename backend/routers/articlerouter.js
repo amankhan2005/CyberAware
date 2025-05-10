@@ -11,14 +11,23 @@ router.post('/add', async (req, res) => {
     // Validate required fields
     const { title, description, image, category, content, expertId } = req.body;
     
-    if (!title || !description || !image || !category || !content || !expertId) {
+    if (!expertId) {
+      console.error('Missing expertId');
+      return res.status(401).json({ 
+        message: 'Authentication required. Please login as an expert.',
+        errors: {
+          expertId: 'Expert ID is required. Please login again.'
+        }
+      });
+    }
+    
+    if (!title || !description || !image || !category || !content) {
       console.error('Missing required fields:', {
         title: !!title,
         description: !!description, 
         image: !!image,
         category: !!category,
-        content: !!content,
-        expertId: !!expertId
+        content: !!content
       });
       return res.status(400).json({ 
         message: 'Missing required fields',
@@ -27,8 +36,7 @@ router.post('/add', async (req, res) => {
           description: !description ? 'Description is required' : undefined,
           image: !image ? 'Image is required' : undefined,
           category: !category ? 'Category is required' : undefined,
-          content: !content ? 'Content is required' : undefined,
-          expertId: !expertId ? 'Expert ID is required' : undefined
+          content: !content ? 'Content is required' : undefined
         }
       });
     }
@@ -37,7 +45,12 @@ router.post('/add', async (req, res) => {
     const expertExists = await Expert.findById(expertId);
     if (!expertExists) {
       console.error('Expert not found with ID:', expertId);
-      return res.status(404).json({ message: 'Expert not found' });
+      return res.status(404).json({ 
+        message: 'Expert not found',
+        errors: {
+          expertId: 'Invalid expert ID. Please login again.'
+        }
+      });
     }
     
     const newArticle = await new Article(req.body).save();
@@ -45,11 +58,14 @@ router.post('/add', async (req, res) => {
     
     // Update the expert's articles array
     await Expert.findByIdAndUpdate(
-      req.body.expertId,
+      expertId,
       { $push: { articles: newArticle._id } }
     );
     
-    res.status(200).json(newArticle);
+    res.status(201).json({
+      message: 'Article created successfully',
+      article: newArticle
+    });
   } catch (err) {
     console.error('Error in /articles/add:', err);
     
@@ -65,7 +81,10 @@ router.post('/add', async (req, res) => {
       });
     }
     
-    res.status(500).json({ message: 'Internal server error', error: err.message });
+    res.status(500).json({ 
+      message: 'Internal server error', 
+      error: err.message 
+    });
   }
 });
 
@@ -224,5 +243,38 @@ router.post('/comment/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
+
+router.post('/login', (req, res) => {
+  Model.findOne(req.body)
+      .then((result) => {
+          if(result){
+              // email and password match
+              // generate token
+
+              const { _id, firstName, lastName, email } = result;
+              const payload = { _id, firstName, lastName, email};
+
+              jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1d'}, (err, token) => {
+                  if(err){
+                      console.log(err);
+                      res.status(500).json(err);
+                  }else{
+                      res.status(200).json({token});
+                  }
+              } )
+
+          } else {
+              res.status(401).json({message: 'Invalid Credentials'});
+          }
+      }).catch((err) => {
+          console.log(err);
+          res.status(500).json({message: 'Internal Server Error'});
+      });
+});
+
+
+
 
 module.exports = router;

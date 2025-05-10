@@ -5,21 +5,21 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const expertSchema = new Schema({
   firstName: {
     type: String,
-    // required: true,
+    required: true,
     trim: true,
     minlength: 2,
     maxlength: 50
   },
   lastName: {
     type: String,
-    // required: true,
+    required: true,
     trim: true,
     minlength: 2,
     maxlength: 50
   },
   email: {
     type: String,
-    // required: true,
+    required: true,
     unique: true,
     trim: true,
     lowercase: true,
@@ -27,19 +27,28 @@ const expertSchema = new Schema({
   },
   password: {
     type: String,
-    // required: true,
+    required: true,
     minlength: 6
   },
   profileImage: {
     type: String,
     default: ''
   },
-  jobTitle: { type: String },
-  company: { type: String, default: '' },
-  yearsExperience: { type: String},
+  jobTitle: { 
+    type: String,
+    required: true 
+  },
+  company: { 
+    type: String, 
+    default: '' 
+  },
+  yearsExperience: { 
+    type: String,
+    required: true 
+  },
   expertise: [{
     type: String,
-    // required: true
+    required: true
   }],
   certifications: { type: String, default: '' },
   bio: {

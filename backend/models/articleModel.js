@@ -39,7 +39,7 @@ const articleSchema = new Schema({
   },
   expertId: {
     type: ObjectId,
-    ref: 'User',
+    ref: 'Expert',
     required: true
   },
   likes: [{

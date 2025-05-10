@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { jwtDecode } from 'jwt-decode';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faFileAlt, 
@@ -35,14 +36,16 @@ const ExpertDashboard = () => {
     queriesAnswered: 0
   });
   const [isLoading, setIsLoading] = useState(true);
-
+  
+  let decodedToken;
   useEffect(() => {
     // Check if expert is logged in
-    const expert = JSON.parse(sessionStorage.getItem('expert'));
+    const expert = localStorage.getItem('expert-token');
+    decodedToken = jwtDecode(expert);
     
     if (!expert) {
       toast.error('Please login to access the dashboard');
-      router.push('/expert/expert_login');
+      router.push('/expert_login');
       return;
     }
     
@@ -51,7 +54,7 @@ const ExpertDashboard = () => {
     // Fetch expert's articles
     const fetchArticles = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/articles/expert/${expert._id}`);
+        const res = await axios.get(`${API_BASE_URL}/articles/expert/${decodedToken._id}`);
         setArticles(res.data);
         
         // Calculate statistics
@@ -76,7 +79,7 @@ const ExpertDashboard = () => {
     const fetchQueries = async () => {
       try {
         // This is a placeholder - implement the actual endpoint
-        const res = await axios.get(`${API_BASE_URL}/query/expert/${expert._id}`);
+        const res = await axios.get(`${API_BASE_URL}/query/expert/${decodedToken._id}`);
         setQueries(res.data || []);
         
         // Update statistics

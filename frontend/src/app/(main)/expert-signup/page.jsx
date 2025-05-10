@@ -88,20 +88,36 @@ const ExpertSignupPage = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
       
-      // Here we would normally make an API call to create the user account
-      // Simulating API call with setTimeout
-      setTimeout(() => {
-        console.log('Form submitted successfully', formData);
-        setIsSubmitting(false);
+      try {
+        const response = await fetch('http://localhost:5000/experts/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        console.log(response.data);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to create account');
+        }
+
+        const data = await response.json();
+        console.log('Account created successfully:', data);
         router.push('/expert_login');
-      }, 1000);
+      } catch (error) {
+        console.error('Error creating account:', error);
+        setErrors({ submit: error.message });
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       setErrors(validationErrors);
     }
