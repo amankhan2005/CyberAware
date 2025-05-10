@@ -1,10 +1,10 @@
 import React from 'react'
-import Navbar from './Navbar';
+import Navbar from './AdminNavbar';
 
 const Layout = ({ children }) => {
     return (
         <>
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
         </>
     )

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faLinkedin, faGoogle, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faUserCircle, faShieldAlt, faLaptopCode, faUserLock, faQuoteLeft, faNewspaper, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Navbar from '@/components/Navbar';
 
 const Home = () => {
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -175,6 +176,8 @@ const Home = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black">
       {/* Breaking News Banner */}
       <div className="bg-gradient-to-r from-red-600 to-red-800 py-2 px-6 text-white">
@@ -531,6 +534,7 @@ const Home = () => {
 
      
     </div>
+    </>
   );
 };
 
