@@ -64,7 +64,7 @@ const AddArticle = () => {
             image: '',
             category: '',
             content: '',
-            expertId: decodedToken._id
+            expertId: decodedToken?._id
         },
         validationSchema,
         onSubmit: async (values) => {
