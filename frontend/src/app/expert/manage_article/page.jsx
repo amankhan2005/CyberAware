@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { use, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { jwtDecode } from 'jwt-decode';
 
 const mockArticles = Array.from({ length: 10 }, (_, i) => ({
   id: i + 1,
@@ -14,16 +15,24 @@ const mockArticles = Array.from({ length: 10 }, (_, i) => ({
 const ManageArticles = () => {
   const [articles, setArticles] = useState([]);
 
+  const token = localStorage.getItem('expert-token');
+  const decodedToken = jwtDecode(token);
+
+  const userId = decodedToken._id;
+  console.log('Decoded Token:', userId);
+
+
   const fetchArticles = async () => {
-    const res = await axios.get('http://localhost:5000/articles/getall');
-    console.log('Response:', res.data);
-    if (res.status === 200) {
-      setArticles(res.data);
-      console.log('Articles fetched successfully:', res.data);
-      toast.success('Articles fetched successfully!');
-    } else {
-      console.error('Failed to fetch articles');
-        toast.error('Failed to fetch articles!');
+    try {
+      const res = await axios.get(`http://localhost:5000/experts/${userId}/articles`);
+      if (res.status === 200) {
+        setArticles(res.data);
+        console.log('Articles fetched successfully:', res.data);
+        toast.success('Articles fetched successfully!');
+      }
+    } catch (error) {
+      console.error('Failed to fetch articles:', error);
+      toast.error(error.response?.data?.message || 'Failed to fetch articles!');
     }
   }
 
