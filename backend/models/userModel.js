@@ -48,7 +48,7 @@ const userSchema = new Schema({
 });
 
 // Add indexes for better query performance
-userSchema.index({ email: 1 });
+// userSchema.index({ email: 1 }); // Removed duplicate index
 userSchema.index({ role: 1 });
 
 // Add a method to check if an ID is valid

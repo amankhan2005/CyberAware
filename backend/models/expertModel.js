@@ -79,7 +79,7 @@ const expertSchema = new Schema({
 });
 
 // Add indexes
-expertSchema.index({ email: 1 });
+// expertSchema.index({ email: 1 }); // Removed duplicate index
 expertSchema.index({ expertise: 1 });
 
 const Expert = mongoose.model('Expert', expertSchema);

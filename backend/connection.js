@@ -1,14 +1,11 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-const url = process.env.DB_URL || 'mongodb://localhost:27017/cyberaware'
+const url = process.env.DB_URL
 
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(url, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
+        const conn = await mongoose.connect(url)
         console.log(`MongoDB Connected: ${conn.connection.host}`)
     } catch (error) {
         console.error(`Error: ${error.message}`)
