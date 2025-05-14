@@ -3,55 +3,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Modal component
-const ArticleModal = ({ article, isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true" onClick={onClose}></div>
-
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-        <div className="inline-block align-bottom bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
-          <div className="absolute top-0 right-0 pt-4 pr-4">
-            <button
-              type="button"
-              className="text-gray-400 hover:text-white focus:outline-none"
-              onClick={onClose}
-            >
-              <span className="sr-only">Close</span>
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          <div className="px-6 pt-12 pb-8">
-            <div className="mb-4">
-              <span className="bg-red-900/30 text-red-400 text-xs font-medium px-2.5 py-1 rounded-full">
-                {article.category}
-              </span>
-              <span className="ml-2 text-sm text-gray-400">{article.readTime} • {article.date}</span>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-4">{article.title}</h3>
-            <div 
-              className="prose prose-invert max-w-none prose-red"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const PhishingAndAttacksPage = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedArticle, setSelectedArticle] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Articles data
   const articles = [
@@ -430,16 +384,6 @@ const PhishingAndAttacksPage = () => {
     return categoryMatch && searchMatch;
   });
 
-  const handleReadMore = (article) => {
-    setSelectedArticle(article);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedArticle(null);
-  };
-
   const categories = [
     { id: 'all', label: 'All Attacks' },
     { id: 'phishing', label: 'Phishing' },
@@ -577,10 +521,7 @@ const PhishingAndAttacksPage = () => {
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">{article.title}</h3>
                     <p className="text-gray-400 mb-4 flex-1">{article.preview}</p>
-                    <button 
-                      onClick={() => handleReadMore(article)}
-                      className="mt-auto text-red-400 hover:text-red-300 text-sm font-medium flex items-center"
-                    >
+                    <button className="mt-auto text-red-400 hover:text-red-300 text-sm font-medium flex items-center">
                       Read more
                       <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -604,12 +545,33 @@ const PhishingAndAttacksPage = () => {
         )}
       </div>
 
-      {/* Modal */}
-      <ArticleModal 
-        article={selectedArticle} 
-        isOpen={isModalOpen} 
-        onClose={closeModal} 
-      />
+      {/* Footer */}
+      {/* <footer className="bg-gray-900 text-gray-400 py-12 mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="mb-6 md:mb-0">
+              <h3 className="text-xl font-bold text-white mb-2">CyberAware</h3>
+              <p className="text-sm">Protecting individuals and organizations from cyber threats</p>
+            </div>
+            
+            <div className="flex space-x-6">
+              <Link href="/privacy-policy" className="text-sm hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-sm hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+              <Link href="/contact" className="text-sm hover:text-white transition-colors">
+                Contact Us
+              </Link>
+            </div>
+          </div>
+          
+          <div className="mt-8 pt-8 border-t border-gray-800 text-sm text-center">
+            &copy; {new Date().getFullYear()} CyberAware. All rights reserved.
+          </div>
+        </div>
+      </footer> */}
     </div>
   );
 };
