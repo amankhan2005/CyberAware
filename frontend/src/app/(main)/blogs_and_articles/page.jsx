@@ -631,10 +631,10 @@ const BlogsAndArticles = () => {
               </div>
               
               {/* Create New Article Button */}
-              <Link href="/expert/add_article" className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 font-medium shadow-lg hover:shadow-teal-500/20">
+              {/* <Link href="/expert/add_article" className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 font-medium shadow-lg hover:shadow-teal-500/20">
                 <FontAwesomeIcon icon={faPenToSquare} className="mr-2" />
                 <span>Write Article</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
