@@ -16,7 +16,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="relative bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
+    <nav className="relative bg-gradient-to-br from-slate-950 to-indigo-950 text-white z-40">
       {/* Subtle geometric pattern overlay */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -86,7 +86,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-slate-800/70 pt-4 space-y-3">
+          <div className="md:hidden mt-4 pb-4 border-t border-slate-800/70 pt-4 space-y-3 z-50 absolute left-0 right-0 bg-gradient-to-br from-slate-950 to-indigo-950 shadow-xl rounded-b-xl">
             {navItems.map((item) => (
               <Link
                 key={item.name}
