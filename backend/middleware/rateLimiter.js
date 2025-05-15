@@ -24,16 +24,17 @@ const authLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-// Stricter limiter for incident reporting
+// Rate limiter for incident routes
 const incidentLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 hour
-    max: 3, // Limit each IP to 3 incident reports per hour
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per 15 minutes
     message: {
         success: false,
-        message: 'Too many incident reports, please try again after an hour'
+        message: 'Too many requests, please try again after 15 minutes'
     },
     standardHeaders: true,
     legacyHeaders: false,
+    skip: (req) => req.path === '/all' && req.method === 'GET', // Skip rate limiting for GET /incidents/all
 });
 
 module.exports = {

@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 const Contact = () => {
   return (
@@ -7,18 +8,30 @@ const Contact = () => {
       <div className="bg-gradient-to-br from-indigo-800/80 to-indigo-900/80 text-white shadow-lg rounded-2xl p-10 max-w-xl w-full border border-indigo-700/40">
         <h1 className="text-3xl font-extrabold text-center mb-2">
           Contact <span className="bg-gradient-to-r from-teal-400 via-indigo-400 to-teal-200 bg-clip-text text-transparent">CyberAware</span>
-        </h1>
-        <p className="text-center text-indigo-200 mb-6">
+        </h1>        <p className="text-center text-indigo-200 mb-6">
           Have questions or need assistance? Reach out to us!
         </p>
 
-        <form className="space-y-5">
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message')
+          };
+          
+          // Here you would typically send the data to your backend
+          // For now, we'll just show a success message
+          toast.success('Message sent successfully! We\'ll get back to you soon.');
+          e.target.reset();
+        }} className="space-y-5">
           <div>
             <label htmlFor="name" className="block text-sm mb-1 text-indigo-200 font-medium">
               Full Name
             </label>
-            <input
-              id="name"
+            <input              id="name"
+              name="name"
               type="text"
               placeholder="Enter your full name"
               required
@@ -29,8 +42,8 @@ const Contact = () => {
             <label htmlFor="email" className="block text-sm mb-1 text-indigo-200 font-medium">
               Email Address
             </label>
-            <input
-              id="email"
+            <input              id="email"
+              name="email"
               type="email"
               placeholder="Enter your email"
               required
@@ -41,8 +54,8 @@ const Contact = () => {
             <label htmlFor="message" className="block text-sm mb-1 text-indigo-200 font-medium">
               Your Message
             </label>
-            <textarea
-              id="message"
+            <textarea              id="message"
+              name="message"
               rows={4}
               placeholder="Type your message here..."
               required
