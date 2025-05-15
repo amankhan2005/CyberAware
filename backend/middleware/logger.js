@@ -11,6 +11,5 @@ const errorLogger = (err, req, res, next) => {
 };
 
 module.exports = {
-    requestLogger,
-    errorLogger
+    // Logging removed
 };

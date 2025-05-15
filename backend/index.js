@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./connection');
-const { requestLogger, errorLogger } = require('./middleware/logger');
 const { apiLimiter, authLimiter, incidentLimiter } = require('./middleware/rateLimiter');
 const UserRouter = require('./routers/userRouter'); //importing user router
 const articleRouter = require('./routers/articlerouter'); //importing article router
@@ -30,9 +29,6 @@ app.use('/api', apiLimiter);
 app.use('/auth', authLimiter);
 app.use('/incidents', incidentLimiter);
 
-// Request logging
-app.use(requestLogger);
-
 // Routes
 app.use('/users', UserRouter);
 app.use('/experts', expertRouter);
@@ -53,9 +49,6 @@ app.use((req, res) => {
         message: 'Route not found'
     });
 });
-
-// Error logging
-app.use(errorLogger);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
