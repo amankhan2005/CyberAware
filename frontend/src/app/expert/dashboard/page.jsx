@@ -78,19 +78,20 @@ const ExpertDashboard = () => {
     // Fetch pending queries
     const fetchQueries = async () => {
       try {
-        // This is a placeholder - implement the actual endpoint
-        const res = await axios.get(`${API_BASE_URL}/query/expert/${decodedToken._id}`);
-        setQueries(res.data || []);
-        
+        // Correct endpoint for expert's queries
+        const res = await axios.get(`${API_BASE_URL}/queries/getall`, {
+          params: { expertId: decodedToken._id },
+        });
+        setQueries(res.data.data || []);
+
         // Update statistics
-        const answeredQueries = res.data?.filter(q => q.solution)?.length || 0;
+        const answeredQueries = res.data.data?.filter(q => q.solution)?.length || 0;
         setStatistics(prev => ({
           ...prev,
           queriesAnswered: answeredQueries
         }));
       } catch (error) {
         console.error('Error fetching queries:', error);
-        // Don't show an error toast as the query endpoint might not be implemented yet
         setQueries([]);
       } finally {
         setIsLoading(false);
@@ -390,4 +391,4 @@ const ExpertDashboard = () => {
   );
 };
 
-export default ExpertDashboard; 
+export default ExpertDashboard;
