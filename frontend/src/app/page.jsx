@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faLinkedin, faGoogle, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faUserCircle, faShieldAlt, faLaptopCode, faUserLock, faQuoteLeft, faNewspaper, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Navbar from '@/components/Navbar';
 
 const Home = () => {
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -175,6 +176,8 @@ const Home = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black">
       {/* Breaking News Banner */}
       <div className="bg-gradient-to-r from-red-600 to-red-800 py-2 px-6 text-white">
@@ -314,7 +317,29 @@ const Home = () => {
           </div>
         </div>
       </div>
-
+ {/* Stats Section */}
+ <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-gradient-to-br from-indigo-800 to-indigo-900 p-6 rounded-xl border border-indigo-700/40 shadow-xl">
+            <div className="text-teal-400 mb-2">
+              <h3 className="text-xl font-bold text-white">70%</h3>
+              <p className="text-indigo-200/80">Increase in Cyber Attacks in UP</p>
+            </div>
+          </div>
+          <div className="bg-gradient-to-br from-indigo-800 to-indigo-900 p-6 rounded-xl border border-indigo-700/40 shadow-xl">
+            <div className="text-teal-400 mb-2">
+              <h3 className="text-xl font-bold text-white">₹1,800 Crore</h3>
+              <p className="text-indigo-200/80">Financial Losses to Cybercrime in India</p>
+            </div>
+          </div>
+          <div className="bg-gradient-to-br from-indigo-800 to-indigo-900 p-6 rounded-xl border border-indigo-700/40 shadow-xl">
+            <div className="text-teal-400 mb-2">
+              <h3 className="text-xl font-bold text-white">85%</h3>
+              <p className="text-indigo-200/80">Of Breaches Involve Human Element</p>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Testimonials Slider Section */}
       <div className="bg-gradient-to-br from-indigo-800 to-indigo-700 py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -507,30 +532,9 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-gradient-to-br from-indigo-800 to-indigo-900 p-6 rounded-xl border border-indigo-700/40 shadow-xl">
-            <div className="text-teal-400 mb-2">
-              <h3 className="text-xl font-bold text-white">70%</h3>
-              <p className="text-indigo-200/80">Increase in Cyber Attacks in UP</p>
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-indigo-800 to-indigo-900 p-6 rounded-xl border border-indigo-700/40 shadow-xl">
-            <div className="text-teal-400 mb-2">
-              <h3 className="text-xl font-bold text-white">₹1,800 Crore</h3>
-              <p className="text-indigo-200/80">Financial Losses to Cybercrime in India</p>
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-indigo-800 to-indigo-900 p-6 rounded-xl border border-indigo-700/40 shadow-xl">
-            <div className="text-teal-400 mb-2">
-              <h3 className="text-xl font-bold text-white">85%</h3>
-              <p className="text-indigo-200/80">Of Breaches Involve Human Element</p>
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </div>
+    </>
   );
 };
 

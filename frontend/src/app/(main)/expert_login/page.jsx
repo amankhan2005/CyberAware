@@ -1,7 +1,8 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import axios from 'axios';
@@ -29,6 +30,38 @@ const ExpertLoginPage = () => {
   }
 })
 
+=======
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useFormik } from 'formik';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
+const ExpertLoginPage = () => {
+  const router = useRouter();
+ 
+
+  const loginForm = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+
+    },
+    onSubmit: (values) => {
+      axios.post(`${API_BASE_URL}/experts/login`, values)
+        .then((response) => {
+          toast.success('Login Successful');
+          console.log(response.data);
+          localStorage.setItem('expert-token', response.data.token);
+          // localStorage.setItem('user', JSON.stringify(response.data.user));
+          router.push('/expert/dashboard');
+        })
+        .catch((error) => {
+          toast.error('Login Failed: ' + error.response.data.message || 'Invalid credentials');
+        });
+    }
+  })
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-indigo-950 to-black text-white">
       {/* Subtle geometric pattern overlay */}
@@ -52,7 +85,13 @@ const ExpertLoginPage = () => {
         </div>
 
         <div className="backdrop-blur-sm bg-slate-900/50 rounded-xl border border-slate-700/50 p-6 md:p-8 w-full max-w-md">
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
           <form onSubmit={expertLogin.handleSubmit} className="space-y-6">
+=======
+
+          
+          <form onSubmit={loginForm.handleSubmit} className="space-y-6">
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
@@ -62,8 +101,13 @@ const ExpertLoginPage = () => {
                 type="email"
                 id="email"
                 name="email"
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
                 value={expertLogin.values.email}
                 onChange={expertLogin.handleChange}
+=======
+                value={loginForm.values.email}
+                onChange={loginForm.handleChange}
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
                 className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
                 placeholder="you@example.com"
               />
@@ -75,7 +119,7 @@ const ExpertLoginPage = () => {
                 <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1">
                   Password
                 </label>
-                <Link href="/forgot-password" className="text-sm text-teal-400 hover:text-teal-300">
+                <Link href="/expert/forgot-password" className="text-sm text-teal-400 hover:text-teal-300">
                   Forgot password?
                 </Link>
               </div>
@@ -83,8 +127,13 @@ const ExpertLoginPage = () => {
                 type="password"
                 id="password"
                 name="password"
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
                 value={expertLogin.values.password}
                 onChange={expertLogin.handleChange}
+=======
+                value={loginForm.values.password}
+                onChange={loginForm.handleChange}
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
                 className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
                 placeholder="••••••••"
               />
@@ -109,7 +158,11 @@ const ExpertLoginPage = () => {
               type="submit"
               className="w-full px-4 py-2.5 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
             >
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
               Login
+=======
+              Sign in              
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
             </button>
           </form>
         </div>
@@ -118,7 +171,7 @@ const ExpertLoginPage = () => {
         <div className="mt-8 text-center">
           <p className="text-slate-400 text-sm">
             Don't have an expert account?{' '}
-            <Link href="/expert_signup" className="text-teal-400 hover:text-teal-300">
+            <Link href="/expert-signup" className="text-teal-400 hover:text-teal-300">
               Create one here
             </Link>
           </p>

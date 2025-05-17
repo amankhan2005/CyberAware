@@ -1,24 +1,70 @@
-const { Schema, model, Types } = require('../connection');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const commentSchema = new Schema({
-  userId: { type: Types.ObjectId, ref: 'users' },
-  expertId: { type: Types.ObjectId, ref: 'experts' },
+  userId: { type: ObjectId, ref: 'User' },
+  expertId: { type: ObjectId, ref: 'User' },
   text: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
 });
 
 const articleSchema = new Schema({
-  title: { type: String, required: true },
-  expertId: { type: Types.ObjectId, ref: 'experts', required: true },
-  image: { type: String, required: true },
-  category: { type: String, required: true },
-  description: { type: String, required: true },
-  content: { type: String, required: true },
-  views: { type: Number, default: 0 },
-  likes: [{ type: Types.ObjectId, ref: 'users' }], // Users who liked the article
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 5,
+    maxlength: 200
+  },
+  description: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 50,
+    maxlength: 500
+  },
+  content: {
+    type: String,
+    required: true,
+    minlength: 100
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
+  expertId: {
+    type: ObjectId,
+    ref: 'Expert',
+    required: true
+  },
+  likes: [{
+    type: ObjectId,
+    ref: 'User'
+  }],
+  views: {
+    type: Number,
+    default: 0
+  },
   comments: [commentSchema],
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  status: {
+    type: String,
+    enum: ['draft', 'published', 'archived'],
+    default: 'published'
+  }
+}, {
+  timestamps: true
 });
 
-module.exports = model('articles', articleSchema);
+// Add indexes
+articleSchema.index({ title: 'text', description: 'text' });
+articleSchema.index({ category: 1 });
+articleSchema.index({ expertId: 1 });
+
+const Article = mongoose.model('Article', articleSchema);
+
+module.exports = Article;

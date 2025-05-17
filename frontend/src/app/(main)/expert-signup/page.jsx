@@ -96,6 +96,7 @@ const ExpertSignupPage = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
+<<<<<<< HEAD:frontend/src/app/expert_signup/page.jsx
       setErrors({});
 
       try {
@@ -113,6 +114,29 @@ const ExpertSignupPage = () => {
         } else {
           toast.error('Failed to create account. Please try again later.');
         }
+=======
+      
+      try {
+        const response = await fetch('http://localhost:5000/experts/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        console.log(response.data);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to create account');
+        }
+
+        const data = await response.json();
+        console.log('Account created successfully:', data);
+        router.push('/expert_login');
+      } catch (error) {
+        console.error('Error creating account:', error);
+        setErrors({ submit: error.message });
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert-signup/page.jsx
       } finally {
         setIsSubmitting(false);
       }

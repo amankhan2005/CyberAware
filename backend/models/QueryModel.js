@@ -1,11 +1,42 @@
-const { Schema, model, Types } = require('../connection');
+const { Schema, model } = require('mongoose');
 
 const querySchema = new Schema({
-  userId: { type: Types.ObjectId, ref: 'users', required: true },
-  doubt: { type: String, required: true },
-  solution: { type: String }, // optional initially, filled by expert later
-  expertId: { type: Types.ObjectId, ref: 'experts' }, // optional until expert responds
-  createdAt: { type: Date, default: Date.now },
+    subject: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 5,
+        maxlength: 100
+    },
+    message: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 20,
+        maxlength: 1000
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'in_progress', 'resolved'],
+        default: 'pending'
+    },
+    responses: [{
+        message: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
+    }]
+}, {
+    timestamps: true
 });
 
-module.exports = model('queries', querySchema);
+// Add basic indexes
+querySchema.index({ subject: 'text', message: 'text' });
+querySchema.index({ status: 1 });
+
+module.exports = model('Query', querySchema);
