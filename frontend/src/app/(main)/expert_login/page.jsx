@@ -2,6 +2,35 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
+import { useFormik } from 'formik';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+
+const ExpertLoginPage = () => {
+  const router = useRouter();
+
+  const expertLogin = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+  },
+  onSubmit: (values) => {
+    axios.post('http://localhost:5000/expert/authenticate', values)
+    .then((result) => {
+      console.log(result.data);
+      toast.success('Login successful! Redirecting...');
+      localStorage.setItem('expert', result.data.token);
+      expertLogin.resetForm();
+      router.push('/expert/dashboard');
+    }).catch((err) => {
+      console.log(err);
+      toast.error('Invalid email or password. Please try again.');
+    });
+  }
+})
+
+=======
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useFormik } from 'formik';
@@ -32,6 +61,7 @@ const ExpertLoginPage = () => {
         });
     }
   })
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-indigo-950 to-black text-white">
       {/* Subtle geometric pattern overlay */}
@@ -55,9 +85,13 @@ const ExpertLoginPage = () => {
         </div>
 
         <div className="backdrop-blur-sm bg-slate-900/50 rounded-xl border border-slate-700/50 p-6 md:p-8 w-full max-w-md">
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
+          <form onSubmit={expertLogin.handleSubmit} className="space-y-6">
+=======
 
           
           <form onSubmit={loginForm.handleSubmit} className="space-y-6">
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
@@ -67,8 +101,13 @@ const ExpertLoginPage = () => {
                 type="email"
                 id="email"
                 name="email"
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
+                value={expertLogin.values.email}
+                onChange={expertLogin.handleChange}
+=======
                 value={loginForm.values.email}
                 onChange={loginForm.handleChange}
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
                 className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
                 placeholder="you@example.com"
               />
@@ -88,8 +127,13 @@ const ExpertLoginPage = () => {
                 type="password"
                 id="password"
                 name="password"
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
+                value={expertLogin.values.password}
+                onChange={expertLogin.handleChange}
+=======
                 value={loginForm.values.password}
                 onChange={loginForm.handleChange}
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
                 className={`w-full px-4 py-2.5 rounded-lg bg-slate-800/40 border focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-slate-500`}
                 placeholder="••••••••"
               />
@@ -114,7 +158,11 @@ const ExpertLoginPage = () => {
               type="submit"
               className="w-full px-4 py-2.5 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
             >
+<<<<<<< HEAD:frontend/src/app/expert_login/page.jsx
+              Login
+=======
               Sign in              
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert_login/page.jsx
             </button>
           </form>
         </div>

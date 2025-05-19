@@ -1,7 +1,9 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const ExpertSignupPage = () => {
   const router = useRouter();
@@ -17,7 +19,7 @@ const ExpertSignupPage = () => {
     expertise: [],
     certifications: '',
     linkedIn: '',
-    bio: '',  
+    bio: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -33,46 +35,46 @@ const ExpertSignupPage = () => {
     'Risk Management',
     'Compliance',
     'Digital Forensics',
-    'Malware Analysis'
+    'Malware Analysis',
   ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleExpertiseChange = (area) => {
     const newExpertise = formData.expertise.includes(area)
-      ? formData.expertise.filter(item => item !== area)
+      ? formData.expertise.filter((item) => item !== area)
       : [...formData.expertise, area];
-    
+
     setFormData({
       ...formData,
-      expertise: newExpertise
+      expertise: newExpertise,
     });
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
-    
+
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email address is invalid';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
@@ -91,9 +93,28 @@ const ExpertSignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
-    
+
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
+<<<<<<< HEAD:frontend/src/app/expert_signup/page.jsx
+      setErrors({});
+
+      try {
+        const response = await axios.post(`http://localhost5000/experts/add`, formData);
+        toast.success('Account created successfully!');
+        console.log('Signup response:', response.data);
+
+        // Redirect to login page after successful signup
+        router.push('/expert_login');
+      } catch (error) {
+        console.error('Signup error:', error);
+        if (error.response?.data?.errors) {
+          setErrors(error.response.data.errors);
+          toast.error('Please correct the errors in your form');
+        } else {
+          toast.error('Failed to create account. Please try again later.');
+        }
+=======
       
       try {
         const response = await fetch('http://localhost:5000/experts/add', {
@@ -115,6 +136,7 @@ const ExpertSignupPage = () => {
       } catch (error) {
         console.error('Error creating account:', error);
         setErrors({ submit: error.message });
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert-signup/page.jsx
       } finally {
         setIsSubmitting(false);
       }
@@ -125,12 +147,15 @@ const ExpertSignupPage = () => {
 
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-indigo-950 to-black text-white">
-      {/* Subtle geometric pattern overlay */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{ 
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-          backgroundSize: '60px 60px'
-        }}></div>
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+            backgroundSize: '60px 60px',
+          }}
+        ></div>
       </div>
 
       <div className="relative max-w-6xl mx-auto px-6 py-12 z-10">
@@ -141,7 +166,7 @@ const ExpertSignupPage = () => {
             </span>
           </h1>
           <p className="text-white max-w-2xl mx-auto">
-            Share your expertise, contribute insights, and help individuals and organizations improve their cybersecurity posture. 
+            Share your expertise, contribute insights, and help individuals and organizations improve their cybersecurity posture.
             Fill out the form below to create your expert profile.
           </p>
         </div>
@@ -154,7 +179,7 @@ const ExpertSignupPage = () => {
                 Personal Information
                 <span className="absolute -bottom-1 left-0 w-12 h-0.5 bg-teal-400"></span>
               </h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* First Name */}
                 <div>
@@ -167,7 +192,9 @@ const ExpertSignupPage = () => {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.firstName ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${
+                      errors.firstName ? 'border-red-500' : 'border-indigo-700/40'
+                    } focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="John"
                   />
                   {errors.firstName && <p className="mt-1 text-sm text-red-400">{errors.firstName}</p>}
@@ -184,7 +211,9 @@ const ExpertSignupPage = () => {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.lastName ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${
+                      errors.lastName ? 'border-red-500' : 'border-indigo-700/40'
+                    } focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="Doe"
                   />
                   {errors.lastName && <p className="mt-1 text-sm text-red-400">{errors.lastName}</p>}
@@ -201,7 +230,9 @@ const ExpertSignupPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.email ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${
+                      errors.email ? 'border-red-500' : 'border-indigo-700/40'
+                    } focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="john.doe@example.com"
                   />
                   {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
@@ -234,7 +265,9 @@ const ExpertSignupPage = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.password ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${
+                      errors.password ? 'border-red-500' : 'border-indigo-700/40'
+                    } focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="••••••••"
                   />
                   {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password}</p>}
@@ -251,7 +284,9 @@ const ExpertSignupPage = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.confirmPassword ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${
+                      errors.confirmPassword ? 'border-red-500' : 'border-indigo-700/40'
+                    } focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                     placeholder="••••••••"
                   />
                   {errors.confirmPassword && <p className="mt-1 text-sm text-red-400">{errors.confirmPassword}</p>}
@@ -265,7 +300,7 @@ const ExpertSignupPage = () => {
                 Professional Information
                 <span className="absolute -bottom-1 left-0 w-12 h-0.5 bg-teal-400"></span>
               </h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Years of Experience */}
                 <div>
@@ -277,7 +312,9 @@ const ExpertSignupPage = () => {
                     name="yearsExperience"
                     value={formData.yearsExperience}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${errors.yearsExperience ? 'border-red-500' : 'border-indigo-700/40'} focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
+                    className={`w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border ${
+                      errors.yearsExperience ? 'border-red-500' : 'border-indigo-700/40'
+                    } focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-sm text-white placeholder-indigo-300`}
                   >
                     <option value="" className="bg-indigo-950">Select experience</option>
                     <option value="1-3" className="bg-indigo-950">1-3 years</option>

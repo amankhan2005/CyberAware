@@ -22,11 +22,23 @@ const AddArticle = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formErrors, setFormErrors] = useState({});
 
+<<<<<<< HEAD
+    let decodedExpert;
+=======
     let decodedToken;
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1
 
     useEffect(() => {
         // Get the expert data from localStorage
         try {
+<<<<<<< HEAD
+            const expert = localStorage.getItem('expert');
+            decodedExpert = jwtDecode(expert);
+            console.log("Decoded expert data:", decodedExpert);
+            if (decodedExpert) {
+                console.log("Expert data from session:", decodedExpert);
+                setExpertData(decodedExpert);
+=======
             const expert = localStorage.getItem('expert-token');
             if (expert) {
                 decodedToken = jwtDecode(expert);
@@ -34,6 +46,7 @@ const AddArticle = () => {
                 setExpertData(decodedToken);
                 // Set expertId in form values
                 articleForm.setFieldValue('expertId', decodedToken._id);
+>>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1
             } else {
                 console.warn("No expert data found in localStorage");
                 toast.error("Please login as an expert first");

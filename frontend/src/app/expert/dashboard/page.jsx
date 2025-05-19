@@ -24,6 +24,80 @@
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
+const ExpertDashboard = () => {
+  const router = useRouter();
+  const [expertData, setExpertData] = useState(null);
+  const [articles, setArticles] = useState([]);
+  const [queries, setQueries] = useState([]);
+  const [statistics, setStatistics] = useState({
+    articlesCount: 0,
+    totalViews: 0,
+    totalLikes: 0,
+    queriesAnswered: 0
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    // Check if expert is logged in
+    const expert = localStorage.getItem('expert-token');
+    if (!expert) {
+      toast.error('Please login to access the dashboard');
+      router.push('/expert_login');
+      return;
+    }
+    let decodedToken;
+    try {
+      decodedToken = jwtDecode(expert);
+    } catch (e) {
+      toast.error('Invalid token, please login again.');
+      router.push('/expert_login');
+      return;
+    }
+    setExpertData(decodedToken);
+    // Fetch expert's articles
+    const fetchArticles = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/articles/expert/${decodedToken._id}`);
+        setArticles(res.data);
+        // Calculate statistics
+        if (res.data && res.data.length > 0) {
+          const views = res.data.reduce((sum, article) => sum + (article.views || 0), 0);
+          const likes = res.data.reduce((sum, article) => sum + (article.likes?.length || 0), 0);
+          setStatistics(prev => ({
+            ...prev,
+            articlesCount: res.data.length,
+            totalViews: views,
+            totalLikes: likes
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        toast.error('Failed to load articles');
+      }
+    };
+    // Fetch pending queries
+    const fetchQueries = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/queries/getall`, {
+          params: { expertId: decodedToken._id },
+        });
+        setQueries(res.data.data || []);
+        // Update statistics
+        const answeredQueries = res.data.data?.filter(q => q.solution)?.length || 0;
+        setStatistics(prev => ({
+          ...prev,
+          queriesAnswered: answeredQueries
+        }));
+      } catch (error) {
+        console.error('Error fetching queries:', error);
+        setQueries([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchArticles();
+    fetchQueries();
+  }, [router]);
   const ExpertDashboard = () => {
     const router = useRouter();
     const [expertData, setExpertData] = useState(null);
@@ -390,4 +464,5 @@
     );
   };
 
+export default ExpertDashboard;
   export default ExpertDashboard; 
