@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jwt_decode from '@/utils/jwt_decode';
+import { toast } from 'react-hot-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
@@ -39,22 +40,50 @@ const Profile = () => {
     fetchUserData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
+      <div className="text-red-500 bg-gray-800/50 p-4 rounded-lg shadow-lg">Error: {error}</div>
+    </div>
+  );
 
   return (
-    <div className="max-w-xl mx-auto bg-white rounded-lg shadow-md p-8 mt-10">
-      <h1 className="text-2xl font-bold mb-4 text-indigo-800">User Profile</h1>
-      {userData ? (
-        <div>
-          <p><span className="font-semibold text-indigo-700">Name:</span> {userData.name}</p>
-          <p><span className="font-semibold text-indigo-700">Email:</span> {userData.email}</p>
-          {userData.city && <p><span className="font-semibold text-indigo-700">City:</span> {userData.city}</p>}
-          {/* Add more user fields as necessary */}
-        </div>
-      ) : (
-        <div>No user data available</div>
-      )}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4">
+      <div className="max-w-xl mx-auto bg-gray-800/50 rounded-lg shadow-xl p-8">
+        <h1 className="text-3xl font-bold mb-6 text-white">User Profile</h1>
+        {userData ? (
+          <div className="space-y-4">
+            <div className="flex items-center justify-center mb-8">
+              <div className="w-24 h-24 rounded-full bg-indigo-600 flex items-center justify-center">
+                <span className="text-3xl text-white">{userData.name ? userData.name[0].toUpperCase() : '?'}</span>
+              </div>
+            </div>
+            <div className="grid gap-4">
+              <div className="bg-gray-700/50 p-4 rounded-lg">
+                <p className="text-indigo-400 text-sm">Name</p>
+                <p className="text-white font-medium">{userData.name}</p>
+              </div>
+              <div className="bg-gray-700/50 p-4 rounded-lg">
+                <p className="text-indigo-400 text-sm">Email</p>
+                <p className="text-white font-medium">{userData.email}</p>
+              </div>
+              {userData.city && (
+                <div className="bg-gray-700/50 p-4 rounded-lg">
+                  <p className="text-indigo-400 text-sm">City</p>
+                  <p className="text-white font-medium">{userData.city}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="text-white text-center">No user data available</div>
+        )}
+      </div>
     </div>
   );
 };
