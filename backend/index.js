@@ -3,11 +3,7 @@ const cors = require('cors');
 const { connectDB } = require('./connection');
 const { apiLimiter, authLimiter, incidentLimiter } = require('./middleware/rateLimiter');
 const UserRouter = require('./routers/userRouter'); //importing user router
-<<<<<<< HEAD
 const articleRouter = require('./routers/articleRouter'); //importing article router
-=======
-const articleRouter = require('./routers/articlerouter'); //importing article router
->>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1
 const expertRouter = require('./routers/expertrouter');   //importing expert router
 const newsRouter = require('./routers/newsRouter'); //importing news router
 const QueryRouter = require('./routers/QueryRouter'); //importing Query router
