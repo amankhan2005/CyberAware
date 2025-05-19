@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
 import axios from 'axios';
+import jwt_decode from '@/utils/jwt_decode';
 
 const validationSchema = Yup.object({
     subject: Yup.string()
@@ -39,13 +40,25 @@ const QueriesPage = () => {
         initialValues: {
             subject: '',
             message: '',
-            priority: 'medium',
             tags: []
         },
         validationSchema,
         onSubmit: async (values, { resetForm }) => {
             try {
-                const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/queries/create`, values);
+                // Get user ID from token
+                const token = localStorage.getItem('token');
+                let userId = null;
+                if (token) {
+                    const decoded = jwt_decode(token);
+                    userId = decoded._id || decoded.id;
+                }
+                if (!userId) {
+                    toast.error('User not authenticated. Please login.');
+                    return;
+                }
+                const payload = { ...values, user: userId };
+                const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+                const response = await axios.post(`${API_URL}/queries/create`, payload);
                 if (response.data.success) {
                     toast.success('Query submitted successfully');
                     resetForm();
@@ -139,21 +152,6 @@ const QueriesPage = () => {
                         {formik.touched.message && formik.errors.message && (
                             <p className="mt-1 text-sm text-red-400">{formik.errors.message}</p>
                         )}
-                    </div>
-                    <div>
-                        <label htmlFor="priority" className="block text-sm font-medium text-indigo-200 mb-1">
-                            Priority
-                        </label>
-                        <select
-                            id="priority"
-                            {...formik.getFieldProps('priority')}
-                            className="w-full px-4 py-2 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white"
-                        >
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                            <option value="urgent">Urgent</option>
-                        </select>
                     </div>
                     <button
                         type="submit"

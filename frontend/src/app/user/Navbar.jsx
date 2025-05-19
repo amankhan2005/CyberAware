@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { name: 'Dashboard', path: '/user/dashboard' },
+  { name: 'Home', path: '/' },
   { name: 'Profile', path: '/user/profile' },
   { name: 'Report Incident', path: '/user/report-incident' },
   { name: 'Queries', path: '/user/queries' }

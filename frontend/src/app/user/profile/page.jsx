@@ -72,12 +72,6 @@ const Profile = () => {
                 <p className="text-indigo-400 text-sm">Email</p>
                 <p className="text-white font-medium">{userData.email}</p>
               </div>
-              {userData.city && (
-                <div className="bg-gray-700/50 p-4 rounded-lg">
-                  <p className="text-indigo-400 text-sm">City</p>
-                  <p className="text-white font-medium">{userData.city}</p>
-                </div>
-              )}
             </div>
           </div>
         ) : (

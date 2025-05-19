@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -7,8 +7,12 @@ import toast from 'react-hot-toast';
 import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faExclamationTriangle, faShieldAlt, faUserSecret, faLock, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from 'next/navigation';
 
 const ReportIncident = () => {
+
+    const router = useRouter();
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Form validation schema
@@ -77,6 +81,14 @@ const ReportIncident = () => {
         { value: 'high', label: 'High - Significant impact, data breach' },
         { value: 'critical', label: 'Critical - Severe impact, major data breach' },
     ];
+
+
+    useEffect(() => {
+        const token = localStorage.getItem('user');
+        if (!token) {
+            router.push('/login');
+        }
+    }, []);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black text-white">

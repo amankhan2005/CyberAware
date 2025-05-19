@@ -63,7 +63,8 @@ const schemas = {
         subject: Joi.string().required().min(5).max(100),
         message: Joi.string().required().min(20).max(1000),
         priority: Joi.string().valid('low', 'medium', 'high', 'urgent').default('medium'),
-        tags: Joi.array().items(Joi.string().trim()).max(5)
+        tags: Joi.array().items(Joi.string().trim()).max(5),
+        user: Joi.string().required()
     }),
 
     queryResponse: Joi.object({

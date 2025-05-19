@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Query = require('../models/queryModel');
+const Query = require('../models/QueryModel');
 const { validate, schemas } = require('../middleware/validate');
 
 // Create a new query
 router.post('/create', validate(schemas.query), (req, res) => {
-    Query.create(req.body)
+    new Query(req.body).save()
         .then(query => {
             res.status(201).json({
                 success: true,

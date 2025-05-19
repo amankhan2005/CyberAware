@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-const express = require('express');
-const Model = require('../models/expertModel');
-const jwt = require('jsonwebtoken'); //importing jsonwebtoken
-=======
 const express = require("express");
 const Model = require("../models/expertModel");
->>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1
 const router = express.Router();
 const jwt = require("jsonwebtoken"); 
 
@@ -83,34 +77,6 @@ router.put("/update/:id", (req, res) => {
 });
 
 // Login expert
-<<<<<<< HEAD
-router.post('/authenticate', (req, res) => {
-    Model.findOne(req.body)
-        .then((result) => {
-            if(result){
-                // email and password match
-                // generate token
-
-                const { _id, email, password} = result;
-                const payload = { _id, email, password};
-
-                jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1d'}, (err, token) => {
-                    if(err){
-                        console.log(err);
-                        res.status(500).json(err);
-                    }else{
-                        res.status(200).json({token});
-                    }
-                } )
-
-            } else {
-                res.status(401).json({message: 'Invalid Credentials'});
-            }
-        }).catch((err) => {
-            console.log(err);
-            res.status(500).json({message: 'Internal Server Error'});
-        });
-=======
 router.post("/login", (req, res) => {
   Model.findOne(req.body)
     .then((result) => {
@@ -142,7 +108,6 @@ router.post("/login", (req, res) => {
       console.log(err);
       res.status(500).json({ message: "Internal Server Error" });
     });
->>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1
 });
 
 module.exports = router;

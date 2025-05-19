@@ -15,6 +15,11 @@ const querySchema = new Schema({
         minlength: 20,
         maxlength: 1000
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     status: {
         type: String,
         enum: ['pending', 'in_progress', 'resolved'],
@@ -23,7 +28,7 @@ const querySchema = new Schema({
     responses: [{
         message: {
             type: String,
-            required: true,
+            // required: true,
             trim: true
         },
         createdAt: {
