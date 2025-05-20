@@ -13,8 +13,8 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 // Dynamically import JoditEditor with ssr disabled
 const JoditEditor = dynamic(() => import('jodit-react'), {
-  ssr: false,
-  loading: () => <p className="text-indigo-300 italic">Loading editor...</p>
+    ssr: false,
+    loading: () => <p className="text-indigo-300 italic">Loading editor...</p>
 });
 
 const AddArticle = () => {
@@ -27,31 +27,23 @@ const AddArticle = () => {
     useEffect(() => {
         // Get the expert data from localStorage
         try {
-            const expert = localStorage.getItem('expert');
-            decodedExpert = jwtDecode(expert);
-            console.log("Decoded expert data:", decodedExpert);
-            if (decodedExpert) {
-                console.log("Expert data from session:", decodedExpert);
-                setExpertData(decodedExpert);
-             const expert = localStorage.getItem('expert-token');
+            const expert = localStorage.getItem('expert-token');
             if (expert) {
-                decodedToken = jwtDecode(expert);
-                console.log("Expert data from localStorage:", decodedToken);
-                setExpertData(decodedToken);
-                // Set expertId in form values
-                articleForm.setFieldValue('expertId', decodedToken._id);
-             } else {
+                const decoded = jwtDecode(expert);
+                console.log("Decoded expert data:", decoded);
+                setExpertData(decoded);
+            } else {
                 console.warn("No expert data found in localStorage");
                 toast.error("Please login as an expert first");
                 // Redirect to login page
                 window.location.href = '/expert_login';
             }
-        }} catch (error) {
+        } catch (error) {
             console.error("Error reading expert data from localStorage:", error);
             toast.error("Error reading expert data. Please login again.");
             window.location.href = '/expert_login';
-}
-}, [])
+        }
+    }, []);
 
 
     // Form validation schema
@@ -83,17 +75,17 @@ const AddArticle = () => {
                 ...values,
                 expertId: expertData?._id
             };
-            
+
             // Debug log
             console.log("Submitting article data:", submitData);
-            
+
             if (!submitData.expertId) {
                 console.error("Missing expertId in submission data");
                 toast.error("Expert ID is missing. Please login again.");
                 setIsSubmitting(false);
                 return;
             }
-            
+
             try {
                 const response = await axios.post(`${API_BASE_URL}/articles/add`, submitData);
                 console.log("Article submission successful:", response.data);
@@ -104,7 +96,7 @@ const AddArticle = () => {
             } catch (err) {
                 console.error("Article submission error:", err);
                 console.error("Error response:", err.response?.data);
-                
+
                 if (err.response?.data?.errors) {
                     setFormErrors(err.response.data.errors);
                     toast.error('Please correct the errors in your form');
@@ -120,7 +112,7 @@ const AddArticle = () => {
     const upload = (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        
+
         toast.loading('Uploading image...');
         const fd = new FormData();
         fd.append('file', file);
@@ -161,7 +153,7 @@ const AddArticle = () => {
         <div className="min-h-screen relative bg-gradient-to-br from-indigo-950 to-black text-white">
             {/* Subtle geometric pattern overlay */}
             <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0" style={{ 
+                <div className="absolute inset-0" style={{
                     backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
                     backgroundSize: '60px 60px'
                 }}></div>
@@ -265,7 +257,7 @@ const AddArticle = () => {
                                 Article Content *
                             </label>
                             <div className="min-h-[300px] rounded-lg overflow-hidden">
-                                <JoditEditor 
+                                <JoditEditor
                                     value={articleForm.values.content}
                                     onChange={newContent => articleForm.setFieldValue('content', newContent)}
                                     config={{
