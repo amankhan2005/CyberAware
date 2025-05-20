@@ -4,9 +4,10 @@ const { connectDB } = require('./connection');
 const { apiLimiter, authLimiter, incidentLimiter } = require('./middleware/rateLimiter');
 const UserRouter = require('./routers/userRouter'); //importing user router
 const articleRouter = require('./routers/articlerouter'); //importing article router
+const articleRouter = require('./routers/articleRouter'); //importing article router
 const expertRouter = require('./routers/expertrouter');   //importing expert router
 const newsRouter = require('./routers/newsRouter'); //importing news router
-const QueryRouter = require('./routers/QueryRouter'); //importing Query router
+const QueryRouter = require('./routers/Queryrouter'); //importing Query router
 const incidentRouter = require('./routers/incidentRouter'); //importing incident router
 
 const app = express();

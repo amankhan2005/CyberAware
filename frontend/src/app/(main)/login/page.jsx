@@ -18,7 +18,7 @@ const Login = () => {
         toast.success('Login Successful');
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.token));
-        router.push('/user/profile');
+        router.push('/');
       } catch (err) {
         toast.error('Login Failed');
       }
