@@ -83,7 +83,7 @@ const Footer = () => {
             </ul>
             <div className="mt-4">
               <Link 
-                href="/queries"
+                href="/user/queries"
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg hover:from-teal-400 hover:to-indigo-400 transition-all duration-300 text-sm font-medium group shadow-lg hover:shadow-xl hover:-translate-y-0.5"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
