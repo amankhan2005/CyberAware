@@ -96,25 +96,6 @@ const ExpertSignupPage = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
-<<<<<<< HEAD:frontend/src/app/expert_signup/page.jsx
-      setErrors({});
-
-      try {
-        const response = await axios.post(`http://localhost5000/experts/add`, formData);
-        toast.success('Account created successfully!');
-        console.log('Signup response:', response.data);
-
-        // Redirect to login page after successful signup
-        router.push('/expert_login');
-      } catch (error) {
-        console.error('Signup error:', error);
-        if (error.response?.data?.errors) {
-          setErrors(error.response.data.errors);
-          toast.error('Please correct the errors in your form');
-        } else {
-          toast.error('Failed to create account. Please try again later.');
-        }
-=======
       
       try {
         const response = await fetch('http://localhost:5000/experts/add', {
@@ -136,7 +117,6 @@ const ExpertSignupPage = () => {
       } catch (error) {
         console.error('Error creating account:', error);
         setErrors({ submit: error.message });
->>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1:frontend/src/app/(main)/expert-signup/page.jsx
       } finally {
         setIsSubmitting(false);
       }

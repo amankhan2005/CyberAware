@@ -38,16 +38,14 @@ const AddArticle = () => {
             if (decodedExpert) {
                 console.log("Expert data from session:", decodedExpert);
                 setExpertData(decodedExpert);
-=======
-            const expert = localStorage.getItem('expert-token');
+             const expert = localStorage.getItem('expert-token');
             if (expert) {
                 decodedToken = jwtDecode(expert);
                 console.log("Expert data from localStorage:", decodedToken);
                 setExpertData(decodedToken);
                 // Set expertId in form values
                 articleForm.setFieldValue('expertId', decodedToken._id);
->>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1
-            } else {
+             } else {
                 console.warn("No expert data found in localStorage");
                 toast.error("Please login as an expert first");
                 // Redirect to login page

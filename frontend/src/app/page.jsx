@@ -217,7 +217,7 @@ const Home = () => {
               <Link href="/phishing_and_attacks" className="px-6 py-3 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 font-medium shadow-lg hover:shadow-teal-500/20">
                 Explore Cyber Threats
               </Link>
-              <Link href="/report-incident" className="px-6 py-3 bg-indigo-800 text-white rounded-lg font-medium hover:bg-indigo-700 transition duration-300">
+              <Link href="/report_incident" className="px-6 py-3 bg-indigo-800 text-white rounded-lg font-medium hover:bg-indigo-700 transition duration-300">
                 Report an Incident
               </Link>
             </div>
