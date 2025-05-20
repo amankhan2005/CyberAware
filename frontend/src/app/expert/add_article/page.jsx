@@ -22,16 +22,11 @@ const AddArticle = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formErrors, setFormErrors] = useState({});
 
-<<<<<<< HEAD
-    let decodedExpert;
-=======
     let decodedToken;
->>>>>>> 921c4cc5b33d0b707393bc99164ee8a8f9155db1
 
     useEffect(() => {
         // Get the expert data from localStorage
         try {
-<<<<<<< HEAD
             const expert = localStorage.getItem('expert');
             decodedExpert = jwtDecode(expert);
             console.log("Decoded expert data:", decodedExpert);
@@ -51,12 +46,13 @@ const AddArticle = () => {
                 // Redirect to login page
                 window.location.href = '/expert_login';
             }
-        } catch (error) {
+        }} catch (error) {
             console.error("Error reading expert data from localStorage:", error);
             toast.error("Error reading expert data. Please login again.");
             window.location.href = '/expert_login';
-        }
-    }, []);
+}
+}, [])
+
 
     // Form validation schema
     const validationSchema = Yup.object({
