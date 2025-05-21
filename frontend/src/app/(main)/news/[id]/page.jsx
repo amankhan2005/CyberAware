@@ -9,7 +9,8 @@ import Link from 'next/link';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 const NewsArticle = () => {    const { id } = useParams();
-    const router = useRouter();    const [article, setArticle] = useState(null);
+    const router = useRouter();
+    const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -17,7 +18,9 @@ const NewsArticle = () => {    const { id } = useParams();
         if (!dateString) return 'Date not available';
         const date = new Date(dateString);
         return isValid(date) ? format(date, 'MMM d, yyyy') : 'Invalid date';
-    };    const fetchArticle = async () => {
+    };
+    
+    const fetchArticle = async () => {
         try {
             setLoading(true);
             // Use the correct endpoint that matches the backend route
@@ -43,8 +46,7 @@ const NewsArticle = () => {    const { id } = useParams();
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
-            </div>
-        );
+            </div>        );
     }
 
     if (error) {
@@ -53,7 +55,9 @@ const NewsArticle = () => {    const { id } = useParams();
                 <div className="text-red-500">{error}</div>
             </div>
         );
-    }    if (!article) {
+    }
+    
+    if (!article) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-gray-500">Article not found</div>
@@ -70,7 +74,8 @@ const NewsArticle = () => {    const { id } = useParams();
                 {/* Main Content */}
                 <div className="flex flex-col md:flex-row gap-8">
                     {/* Article Content */}
-                    <div className="flex-grow max-w-4xl">                        {/* Header */}
+                    <div className="flex-grow max-w-4xl">
+                        {/* Header */}
                         <div className="bg-gray-800 rounded-lg p-6 mb-8">
                             <h1 className="text-4xl font-bold mb-5 text-white">{article.title}</h1>
                             <div className="flex items-center justify-between mb-4">
@@ -90,16 +95,17 @@ const NewsArticle = () => {    const { id } = useParams();
 
                         {/* Article Body */}
                         <article className="bg-gray-800 rounded-lg p-6 mb-8">
-                            <img 
-                                src={article.image} 
+                            <img
+                                src={article.image}
                                 alt={article.title}
                                 className="w-full h-auto object-cover rounded-lg mb-8"
                             />
-                            <div 
-                                dangerouslySetInnerHTML={{ __html: article.content }} 
-                                className="prose prose-invert lg:prose-xl max-w-none"
+                            <div
+                                dangerouslySetInnerHTML={{ __html: article.content }}
+                                className="prose prose-invert lg:prose-xl max-w-none text-white"
                             />
-                        </article>                        {/* Interactions */}
+                        </article>                        
+                        {/* Interactions */}
                         <div className="flex items-center gap-4 my-8">
                             <Link
                                 href="/news"
@@ -122,18 +128,19 @@ const NewsArticle = () => {    const { id } = useParams();
                                 </svg>
                             </a>
                         </div>
-                    </div>                    {/* Sidebar */}
+                    </div>                    
+                    {/* Sidebar */}
                     <div className="md:w-80 flex-shrink-0">
                         <div className="sticky top-20 bg-gray-800 rounded-lg p-6">
                             {/* Source Info */}
                             <div className="border-b border-gray-700 pb-4 mb-4">
                                 <h3 className="text-xl font-medium text-white mb-2">About the Source</h3>
                                 <p className="text-sm text-gray-300 mb-4">{authorName}</p>
-                                
+
                                 {article.sourceUrl && (
-                                    <a 
-                                        href={article.sourceUrl} 
-                                        target="_blank" 
+                                    <a
+                                        href={article.sourceUrl}
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center text-blue-400 hover:text-blue-300"
                                     >
@@ -144,7 +151,7 @@ const NewsArticle = () => {    const { id } = useParams();
                                     </a>
                                 )}
                             </div>
-                            
+
                             {/* Category Info */}
                             <div className="mb-6">
                                 <h3 className="text-lg font-medium text-white mb-3">Category</h3>
@@ -154,7 +161,7 @@ const NewsArticle = () => {    const { id } = useParams();
                                     </span>
                                 </div>
                             </div>
-                            
+
                             {/* Back to News */}
                             <div>
                                 <button
