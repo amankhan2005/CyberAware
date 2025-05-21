@@ -1,0 +1,9 @@
+SAMPLE NEWS ARTICLES:
+
+1. [Other] New Research Reveals Top Cyber Threats Facing Indian Businesses in 2024
+2. [Data Breach] Hackers Steal Sensitive Data from Klocko, Waelchi and Rice's Indian Operations
+3. [Ransomware] New Ransomware Strain Encrypts Aadhar and KYC Data in Targeted Indian Attacks
+4. [Industry News] Auer, Homenick and Mohr Partners with Skiles - Thiel to Strengthen India's Cyber Defenses
+5. [Other] Experts Warn of Rising Cloud Attacks in India
+
+Total articles generated: 50

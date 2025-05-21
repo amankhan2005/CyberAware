@@ -2,10 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "CyberAware Backend API",
-  "main": "index.js",
-  "scripts": {
+  "main": "index.js",  "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "generate-news": "node scripts/generateNewsData.js",
+    "create-admin": "node scripts/createAdminUser.js",
+    "check-news": "node scripts/checkNewsData.js"
   },
   "keywords": [
     "cybersecurity",
@@ -16,6 +18,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

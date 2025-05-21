@@ -4,17 +4,14 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { format, isValid } from 'date-fns';
 import { toast } from 'react-hot-toast';
+import Link from 'next/link';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-const NewsArticle = () => {
-    const { id } = useParams();
-    const router = useRouter();
-    const [article, setArticle] = useState(null);
+const NewsArticle = () => {    const { id } = useParams();
+    const router = useRouter();    const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [claps, setClaps] = useState(0);
-    const [isFollowing, setIsFollowing] = useState(false);
 
     const formatDate = (dateString) => {
         if (!dateString) return 'Date not available';
@@ -23,12 +20,11 @@ const NewsArticle = () => {
     };    const fetchArticle = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(`${API_URL}/news/${id}`);
+            // Use the correct endpoint that matches the backend route
+            const res = await axios.get(`${API_URL}/news/getbyid/${id}`);
             if (res.data && res.data.data) {
                 setArticle(res.data.data);
-                setClaps(res.data.data.claps || 0);
-                // Update view count
-                await axios.post(`${API_URL}/news/${id}/view`);
+                // View count is already updated by backend when fetching article
             }
         } catch (err) {
             console.error('Error fetching article:', err);
@@ -36,55 +32,6 @@ const NewsArticle = () => {
             toast.error('Failed to load article');
         } finally {
             setLoading(false);
-        }
-    };    const handleClap = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            await axios.post(`${API_URL}/news/${id}/clap`, {}, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            setClaps(prev => prev + 1);
-            toast.success('Thanks for your appreciation!');
-        } catch (err) {
-            console.error('Error updating claps:', err);
-            if (err.response?.status === 401) {
-                toast.error('Please login to clap');
-                router.push('/login');
-            } else {
-                toast.error('Failed to update claps');
-            }
-        }
-    };    const handleFollow = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                toast.error('Please login to follow experts');
-                router.push('/login');
-                return;
-            }
-
-            if (isFollowing) {
-                await axios.post(`${API_URL}/news/${article.expertId._id}/unfollow`, {}, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                toast.success('Unfollowed successfully');
-            } else {
-                await axios.post(`${API_URL}/news/${article.expertId._id}/follow`, {}, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                toast.success('Following successfully');
-            }
-            setIsFollowing(!isFollowing);
-        } catch (err) {
-            console.error('Error updating follow status:', err);
-            if (err.response?.status === 401) {
-                toast.error('Please login to follow experts');
-                router.push('/login');
-            } else {
-                toast.error('Failed to update follow status');
-            }
         }
     };
 
@@ -106,9 +53,7 @@ const NewsArticle = () => {
                 <div className="text-red-500">{error}</div>
             </div>
         );
-    }
-
-    if (!article) {
+    }    if (!article) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-gray-500">Article not found</div>
@@ -116,9 +61,8 @@ const NewsArticle = () => {
         );
     }
 
-    const authorName = article.expertId ? 
-        `${article.expertId.firstName} ${article.expertId.lastName}` : 
-        'Unknown Author';
+    // Use the source as the author name instead of expert
+    const authorName = article.source || 'Unknown Source';
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-8 px-4 sm:px-6 lg:px-8">
@@ -126,34 +70,21 @@ const NewsArticle = () => {
                 {/* Main Content */}
                 <div className="flex flex-col md:flex-row gap-8">
                     {/* Article Content */}
-                    <div className="flex-grow max-w-4xl">
-                        {/* Header */}
+                    <div className="flex-grow max-w-4xl">                        {/* Header */}
                         <div className="bg-gray-800 rounded-lg p-6 mb-8">
                             <h1 className="text-4xl font-bold mb-5 text-white">{article.title}</h1>
-                            <div className="flex items-center gap-4 mb-4">
+                            <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
-                                    <img 
-                                        src={article.expertId?.profileImage || '/expert.jpg'} 
-                                        alt={authorName}
-                                        className="w-10 h-10 rounded-full border-2 border-blue-500"
-                                    />
                                     <div>
-                                        <p className="font-medium text-white capitalize">{authorName}</p>
+                                        <p className="font-medium text-white">Source: {authorName}</p>
                                         <p className="text-sm text-gray-400">
                                             {formatDate(article.createdAt)} · {article.views || 0} views
                                         </p>
                                     </div>
                                 </div>
-                                <button 
-                                    className={`px-4 py-2 rounded-full transition-colors ${
-                                        isFollowing 
-                                            ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
-                                            : 'bg-blue-600 text-white hover:bg-blue-700'
-                                    }`}
-                                    onClick={handleFollow}
-                                >
-                                    {isFollowing ? 'Following' : 'Follow'}
-                                </button>
+                                <span className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">
+                                    {article.category}
+                                </span>
                             </div>
                         </div>
 
@@ -168,61 +99,74 @@ const NewsArticle = () => {
                                 dangerouslySetInnerHTML={{ __html: article.content }} 
                                 className="prose prose-invert lg:prose-xl max-w-none"
                             />
-                        </article>
-
-                        {/* Interactions */}
+                        </article>                        {/* Interactions */}
                         <div className="flex items-center gap-4 my-8">
-                            <button 
+                            <Link
+                                href="/news"
                                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition-colors"
-                                onClick={handleClap}
                             >
-                                👏 {claps.toLocaleString()}
-                            </button>
-                            <span className="text-gray-400">{article.comments?.length || 0} responses</span>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Back to News
+                            </Link>
+                            <a
+                                href={article.sourceUrl || '#'}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                            >
+                                Visit Source
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                            </a>
                         </div>
-                    </div>
-
-                    {/* Sidebar */}
+                    </div>                    {/* Sidebar */}
                     <div className="md:w-80 flex-shrink-0">
                         <div className="sticky top-20 bg-gray-800 rounded-lg p-6">
-                            {/* Author Info */}
+                            {/* Source Info */}
                             <div className="border-b border-gray-700 pb-4 mb-4">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <img 
-                                        src={article.expertId?.profileImage || '/expert.jpg'} 
-                                        alt={authorName}
-                                        className="w-14 h-14 rounded-full border-2 border-blue-500"
-                                    />
-                                    <div>
-                                        <p className="font-medium text-white capitalize">{authorName}</p>
-                                        <p className="text-sm text-gray-400">
-                                            {article.expertId?.articles?.length || 0} articles
-                                        </p>
-                                    </div>
-                                </div>
-                                <p className="text-sm text-gray-300">{article.expertId?.bio || 'No bio available'}</p>
+                                <h3 className="text-xl font-medium text-white mb-2">About the Source</h3>
+                                <p className="text-sm text-gray-300 mb-4">{authorName}</p>
+                                
+                                {article.sourceUrl && (
+                                    <a 
+                                        href={article.sourceUrl} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center text-blue-400 hover:text-blue-300"
+                                    >
+                                        Visit Source Website
+                                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                        </svg>
+                                    </a>
+                                )}
                             </div>
-
-                            {/* More Articles */}
-                            {article.expertId?.articles?.length > 0 && (
-                                <div>
-                                    <h3 className="font-medium text-white mb-4">More from {authorName}</h3>
-                                    <div className="space-y-4">
-                                        {article.expertId.articles.slice(0, 3).map(relatedArticle => (
-                                            <div 
-                                                key={relatedArticle._id} 
-                                                className="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
-                                                onClick={() => router.push(`/news/${relatedArticle._id}`)}
-                                            >
-                                                <p className="font-medium text-sm text-white">{relatedArticle.title}</p>
-                                                <p className="text-sm text-gray-400">
-                                                    {formatDate(relatedArticle.createdAt)}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </div>
+                            
+                            {/* Category Info */}
+                            <div className="mb-6">
+                                <h3 className="text-lg font-medium text-white mb-3">Category</h3>
+                                <div className="flex">
+                                    <span className="bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full text-sm">
+                                        {article.category}
+                                    </span>
                                 </div>
-                            )}
+                            </div>
+                            
+                            {/* Back to News */}
+                            <div>
+                                <button
+                                    onClick={() => router.push('/news')}
+                                    className="w-full py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg flex items-center justify-center"
+                                >
+                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                    </svg>
+                                    Back to News
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
