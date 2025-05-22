@@ -142,27 +142,25 @@ router.patch('/updatestatus/:id', (req, res) => {
             success: false,
             message: 'Invalid status'
         });
-    }
-
-    Query.findById(req.params.id)
-        .then(query => {
-            if (!query) {
+    }    Query.findByIdAndUpdate(
+        req.params.id, 
+        { status: status }, 
+        { new: true, runValidators: false } // Return updated document, but don't run validators that might check for user
+    )
+        .then(updatedQuery => {
+            if (!updatedQuery) {
                 return res.status(404).json({
                     success: false,
                     message: 'Query not found'
                 });
             }
-
-            query.status = status;
-            return query.save();
-        })
-        .then(updatedQuery => {
+            
             res.json({
                 success: true,
                 data: updatedQuery
             });
-        })
-        .catch(err => {
+        })        .catch(err => {
+            console.error('Error updating query status:', err);
             res.status(500).json({
                 success: false,
                 message: 'Error updating query status',

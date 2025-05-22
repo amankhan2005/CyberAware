@@ -15,15 +15,17 @@ const AdminDashboard = () => {
         resolved: 0
     });
 
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
     // Fetch queries and calculate stats
     const fetchQueries = () => {
         setLoading(true);
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/queries/getall`)
+        axios.get(`${API_BASE_URL}/queries/getall`)
             .then((res) => {
                 if (res.data.success) {
                     const data = res.data.data;
                     setQueries(data);
-                    
+
                     // Calculate stats
                     const stats = {
                         total: data.length,
@@ -40,32 +42,36 @@ const AdminDashboard = () => {
             .finally(() => {
                 setLoading(false);
             });
-    };
-
-    useEffect(() => {
+    }; useEffect(() => {
         fetchQueries();
     }, []);
 
     // Handle status update
     const handleStatusUpdate = (queryId, newStatus) => {
-        axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/queries/updatestatus/${queryId}`, {
+        axios.patch(`${API_BASE_URL}/queries/updatestatus/${queryId}`, {
             status: newStatus
         })
-        .then((res) => {
-            if (res.data.success) {
-                toast.success('Status updated successfully');
-                fetchQueries();
-            }
-        })
-        .catch((err) => {
-            toast.error(err.response?.data?.message || 'Error updating status');
-        });
+            .then((res) => {
+                if (res.data.success) {
+                    toast.success('Status updated successfully');
+                    fetchQueries();
+                }
+            }).catch((err) => {
+                const errorMessage = err.response?.data?.message || 'Error updating status';
+                toast.error(errorMessage);
+                console.error('Status update error:', {
+                    message: errorMessage,
+                    response: err.response?.data,
+                    status: err.response?.status,
+                    fullError: err
+                });
+            });
     };
 
     // Handle query deletion
     const handleDelete = (queryId) => {
         if (window.confirm('Are you sure you want to delete this query?')) {
-            axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/queries/delete/${queryId}`)
+            axios.delete(`${API_BASE_URL}/queries/delete/${queryId}`)
                 .then((res) => {
                     if (res.data.success) {
                         toast.success('Query deleted successfully');
@@ -80,13 +86,13 @@ const AdminDashboard = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black text-white">
-            <AdminNavbar />
+            {/* <AdminNavbar /> */}
             <div className="p-6">
                 {/* Header */}
                 <div className="max-w-7xl mx-auto mb-8">
                     <h1 className="text-3xl font-bold mb-2">
                         <span className="bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
-                            Admin Dashboard
+                            Dashboard
                         </span>
                     </h1>
                     <p className="text-slate-300">Manage and monitor all aspects of the platform</p>
@@ -116,8 +122,8 @@ const AdminDashboard = () => {
                 <div className="max-w-7xl mx-auto bg-indigo-950/40 backdrop-blur-sm rounded-xl border border-indigo-800/30 p-6">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-xl font-semibold text-indigo-200">Recent Queries</h2>
-                        <Link 
-                            href="/admin/queries" 
+                        <Link
+                            href="/admin/queries"
                             className="px-4 py-2 bg-teal-500/20 text-teal-400 rounded-lg hover:bg-teal-500/30 transition-colors text-sm"
                         >
                             View All

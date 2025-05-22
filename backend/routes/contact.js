@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Contact = require('../models/contactModel');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 
 // Create a new contact message
 router.post('/', async (req, res) => {

@@ -88,7 +88,9 @@ const ReportIncident = () => {
         if (!token) {
             router.push('/login');
         }
-    }, []);    return (
+    }, []);
+    
+    return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black text-white relative pt-6">
             {/* Subtle geometric pattern overlay */}
             <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -122,8 +124,8 @@ const ReportIncident = () => {
                                     <div
                                         key={type.value}
                                         className={`relative rounded-lg border p-4 cursor-pointer transition-all duration-200 ${formik.values.incidentType === type.value
-                                                ? 'border-teal-500 bg-teal-500/10'
-                                                : 'border-indigo-700/40 hover:border-teal-500/50'
+                                            ? 'border-teal-500 bg-teal-500/10'
+                                            : 'border-indigo-700/40 hover:border-teal-500/50'
                                             }`}
                                         onClick={() => formik.setFieldValue('incidentType', type.value)}
                                     >
@@ -139,8 +141,8 @@ const ReportIncident = () => {
                                             <FontAwesomeIcon
                                                 icon={type.icon}
                                                 className={`w-5 h-5 ${formik.values.incidentType === type.value
-                                                        ? 'text-teal-400'
-                                                        : 'text-indigo-400'
+                                                    ? 'text-teal-400'
+                                                    : 'text-indigo-400'
                                                     }`}
                                             />
                                             <span className="text-white">{type.label}</span>

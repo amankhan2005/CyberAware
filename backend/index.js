@@ -9,6 +9,7 @@ const expertRouter = require('./routers/expertrouter');   //importing expert rou
 const newsRouter = require('./routers/newsRouter'); //importing news router
 const QueryRouter = require('./routers/Queryrouter'); //importing Query router
 const incidentRouter = require('./routers/incidentRouter'); //importing incident router
+const contactRouter = require('./routes/contact'); //importing contact router
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -37,6 +38,7 @@ app.use('/articles', articleRouter);
 app.use('/news', newsRouter);
 app.use('/queries', QueryRouter);
 app.use('/incidents', incidentRouter);
+app.use('/contact', contactRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

@@ -1,7 +1,8 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
 const AdminLoginPage = () => {
   const router = useRouter();
@@ -10,6 +11,28 @@ const AdminLoginPage = () => {
     password: '',
     rememberMe: false
   });
+  
+  // Check if user is already logged in as admin
+  useEffect(() => {
+    const token = localStorage.getItem('admin-token') || localStorage.getItem('token');
+    
+    if (token) {
+      try {
+        // If using jwt-decode library:
+        const { exp, role } = JSON.parse(atob(token.split('.')[1]));
+        
+        // Check if token is valid and user is admin
+        if (exp * 1000 > Date.now() && role === 'admin') {
+          toast.success('Already logged in as admin');
+          router.push('/admin/dashboard');
+        }
+      } catch (error) {
+        // Token is invalid, clear it
+        localStorage.removeItem('admin-token');
+        localStorage.removeItem('token');
+      }
+    }
+  }, []);
   
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,14 +67,54 @@ const AdminLoginPage = () => {
     
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
+        // Call the API to authenticate the admin
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
       
-      // Here we would normally make an API call to authenticate the admin
-      // Simulating API call with setTimeout
-      setTimeout(() => {
-        console.log('Admin login submitted successfully', formData);
+      fetch(`${API_URL}/users/authenticate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
         setIsSubmitting(false);
-        router.push('/admin/dashboard'); // Redirect to admin dashboard
-      }, 1000);
+          if (data.token && data.user) {
+          // Check if the user is an admin
+          if (data.user.role === 'admin') {
+            // Store the token in localStorage
+            localStorage.setItem('admin-token', data.token);
+            localStorage.setItem('token', data.token);
+            
+            // Store basic user info
+            localStorage.setItem('admin-user', JSON.stringify({
+              id: data.user._id,
+              name: data.user.name,
+              email: data.user.email,
+              role: data.user.role
+            }));
+            
+            // Show success message
+            toast.success('Login successful');
+            
+            // Redirect to admin dashboard
+            router.push('/admin/dashboard');
+          } else {
+            setErrors({ auth: 'Access denied. Admin privileges required.' });
+          }
+        } else {
+          setErrors({ auth: data.message || 'Login failed. Please check your credentials.' });
+        }
+      })
+      .catch(error => {
+        console.error('Login error:', error);
+        setIsSubmitting(false);
+        setErrors({ auth: 'An error occurred during login. Please try again.' });
+      });
     } else {
       setErrors(validationErrors);
     }
@@ -81,6 +144,12 @@ const AdminLoginPage = () => {
 
         <div className="backdrop-blur-sm bg-gradient-to-br from-indigo-800/80 to-indigo-900/80 rounded-xl border border-indigo-700/40 p-6 md:p-8 w-full max-w-md">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {errors.auth && (
+              <div className="bg-red-900/50 border border-red-700 text-white px-4 py-3 rounded-lg" role="alert">
+                <p>{errors.auth}</p>
+              </div>
+            )}
+            
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-indigo-200 mb-1">

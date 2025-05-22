@@ -1,13 +1,15 @@
-import React from 'react'
-import Navbar from './AdminNavbar';
+'use client';
+import React from 'react';
+import AdminNavbar from './AdminNavbar';
+import AdminGuard from '../../components/AdminGuard';
 
 const Layout = ({ children }) => {
     return (
-        <>
-            {/* <Navbar /> */}
-            {children}
-        </>
-    )
-}
+        <AdminGuard>
+            <AdminNavbar />
+            <main>{children}</main>
+        </AdminGuard>
+    );
+};
 
 export default Layout;

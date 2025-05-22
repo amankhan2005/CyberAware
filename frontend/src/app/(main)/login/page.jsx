@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 
 const Login = () => {
   const router = useRouter();
-
   const loginForm = useFormik({
     initialValues: {
       email: '',
@@ -16,11 +15,28 @@ const Login = () => {
       try {
         const response = await axios.post('http://localhost:5000/users/authenticate', values);
         toast.success('Login Successful');
+
+        // Store token and user data
         localStorage.setItem('token', response.data.token);
-        // localStorage.setItem('user', JSON.stringify(response.data.token));
-        router.push('/');
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+
+        // Handle role-based redirection
+        const { role } = response.data.user;
+
+        switch (role) {
+          case 'admin':
+            router.push('/admin/dashboard');
+            break;
+          case 'expert':
+            router.push('/expert/dashboard');
+            break;
+          default:
+            router.push('/user/profile');
+            break;
+        }
       } catch (err) {
-        toast.error('Login Failed');
+        console.error(err);
+        toast.error(err.response?.data?.message || 'Login Failed');
       }
     },
   });
