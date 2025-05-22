@@ -4,6 +4,7 @@
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import AskQuestion from "@/components/AskQuestion";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -29,14 +30,11 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="theme-color" content="#0f172a" />
       </head>
-      <body
-        className={`antialiased text-black`}
-      >
+      <body className={`antialiased text-black`} >
         <Toaster position="top-center" />
-        {/* <ImageSlider /> */}
-        {/* <Navbar /> */}
         {children}
         <Footer />
+        <AskQuestion />
         <Toaster />
       </body>
     </html>
