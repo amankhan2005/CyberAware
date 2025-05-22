@@ -11,7 +11,6 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 const ExpertLoginPage = () => {
   const router = useRouter();
-
   const loginForm = useFormik({
     initialValues: {
       email: '',
@@ -20,8 +19,15 @@ const ExpertLoginPage = () => {
     onSubmit: (values) => {
       axios.post(`${API_BASE_URL}/experts/login`, values)
         .then((response) => {
-          toast.success('Login Successful');
+          // Clear any previously stored tokens to avoid conflicts
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          
+          // Store the expert token
           localStorage.setItem('expert-token', response.data.token);
+          toast.success('Login Successful');
+          
+          // Navigate to dashboard
           router.push('/expert/dashboard');
         })
         .catch((error) => {

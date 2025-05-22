@@ -137,7 +137,7 @@ router.post('/respond/:id', (req, res) => {
 // Update query status
 router.patch('/updatestatus/:id', (req, res) => {
     const { status } = req.body;
-    if (!status || !['pending', 'in_progress', 'resolved'].includes(status)) {
+    if (!status || !['pending', 'in_progress', 'resolved', 'closed'].includes(status)) {
         return res.status(400).json({
             success: false,
             message: 'Invalid status'
@@ -164,6 +164,85 @@ router.patch('/updatestatus/:id', (req, res) => {
             res.status(500).json({
                 success: false,
                 message: 'Error updating query status',
+                error: err.message
+            });
+        });
+});
+
+// Update query priority
+router.patch('/updatepriority/:id', (req, res) => {
+    const { priority } = req.body;
+    if (!priority || !['low', 'medium', 'high', 'urgent'].includes(priority)) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid priority'
+        });
+    }
+
+    Query.findByIdAndUpdate(
+        req.params.id, 
+        { priority: priority }, 
+        { new: true, runValidators: false }
+    )
+        .then(updatedQuery => {
+            if (!updatedQuery) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Query not found'
+                });
+            }
+            
+            res.json({
+                success: true,
+                data: updatedQuery
+            });
+        })
+        .catch(err => {
+            console.error('Error updating query priority:', err);
+            res.status(500).json({
+                success: false,
+                message: 'Error updating query priority',
+                error: err.message
+            });
+        });
+});
+
+// Answer a query (add solution)
+router.post('/answer/:id', (req, res) => {
+    const { solution } = req.body;
+    if (!solution) {
+        return res.status(400).json({
+            success: false,
+            message: 'Solution is required'
+        });
+    }
+
+    Query.findByIdAndUpdate(
+        req.params.id,
+        { 
+            solution: solution,
+            status: 'resolved'
+        },
+        { new: true, runValidators: false }
+    )
+        .then(updatedQuery => {
+            if (!updatedQuery) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Query not found'
+                });
+            }
+
+            res.json({
+                success: true,
+                data: updatedQuery
+            });
+        })
+        .catch(err => {
+            console.error('Error answering query:', err);
+            res.status(500).json({
+                success: false,
+                message: 'Error answering query',
                 error: err.message
             });
         });

@@ -20,10 +20,28 @@ const querySchema = new Schema({
         ref: 'User',
         required: true
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    expertId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Expert'
+    },
     status: {
         type: String,
-        enum: ['pending', 'in_progress', 'resolved'],
+        enum: ['pending', 'in_progress', 'resolved', 'closed'],
         default: 'pending'
+    },
+    priority: {
+        type: String,
+        enum: ['low', 'medium', 'high', 'urgent'],
+        default: 'medium'
+    },
+    solution: {
+        type: String,
+        trim: true
     },
     responses: [{
         message: {

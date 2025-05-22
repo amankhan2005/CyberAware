@@ -7,15 +7,15 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faFileAlt, 
-  faEye, 
-  faThumbsUp, 
-  faQuestion, 
-  faPen, 
-  faEdit, 
-  faClipboardList, 
-  faBook, 
+import {
+  faFileAlt,
+  faEye,
+  faThumbsUp,
+  faQuestion,
+  faPen,
+  faEdit,
+  faClipboardList,
+  faBook,
   faCalendarAlt,
   faComments,
   faExclamationTriangle,
@@ -70,39 +70,58 @@ const ExpertDashboard = () => {
       urgent: 'bg-red-100 text-red-800'
     };
     return colors[priority] || 'bg-gray-100 text-gray-800';
-  };
-
-  useEffect(() => {
-    const fetchDashboardData = async () => {      try {
+  }; useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
         const token = localStorage.getItem('expert-token');
         if (!token) {
           router.push('/expert_login');
           return;
         }
 
-        const decodedToken = jwtDecode(token);
-        setExpertData(decodedToken);
+        let expertId;
+        // Decode token and check if it's valid
+        try {
+          const decodedToken = jwtDecode(token);
+
+          // Check if token is expired
+          if (decodedToken.exp && decodedToken.exp * 1000 < Date.now()) {
+            console.error('Expert token has expired');
+            localStorage.removeItem('expert-token');
+            router.push('/expert_login');
+            return;
+          }
+
+          setExpertData(decodedToken);
+          expertId = decodedToken._id;
+        } catch (tokenError) {
+          console.error('Error decoding token:', tokenError);
+          localStorage.removeItem('expert-token');
+          router.push('/expert_login');
+          return;
+        }
 
         const config = {
           headers: { Authorization: `Bearer ${token}` }
-        };
-
-        // Fetch expert's articles
-        const articlesRes = await axios.get(`${API_BASE_URL}/articles/expert/${decodedToken._id}`, config);
+        };        // Fetch expert's articles
+        const articlesRes = await axios.get(`${API_BASE_URL}/articles/expert/${expertId}`, config);
         setArticles(articlesRes.data || []);
 
         // Fetch pending queries
-        const queriesRes = await axios.get(`${API_BASE_URL}/queries/expert/${decodedToken._id}`, config);
-        setQueries(queriesRes.data || []);
+        const queriesRes = await axios.get(`${API_BASE_URL}/queries/expert/${expertId}`, config);
+        // The API returns { success: true, data: [...] } structure
+        const queriesData = queriesRes.data?.data || [];
+        setQueries(queriesData);
 
         // Calculate statistics
         const stats = {
           articlesCount: articlesRes.data?.length || 0,
           totalViews: articlesRes.data?.reduce((sum, article) => sum + (article.views || 0), 0) || 0,
           totalLikes: articlesRes.data?.reduce((sum, article) => sum + (article.likes?.length || 0), 0) || 0,
-          queriesAnswered: queriesRes.data?.filter(query => query.solution)?.length || 0
+          queriesAnswered: queriesData.filter(query => query.solution)?.length || 0
         };
-        setStatistics(stats);      } catch (error) {
+        setStatistics(stats);
+      } catch (error) {
         console.error('Error fetching dashboard data:', error);
         // Only show error toast if there was an actual API error
         if (error.response) {
@@ -131,15 +150,15 @@ const ExpertDashboard = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
 
-      await axios.post(`${API_BASE_URL}/queries/answer/${selectedQuery._id}`, 
-        { solution: solution.trim() },
+      await axios.post(`${API_BASE_URL}/queries/respond/${selectedQuery._id}`,
+        { message: solution.trim() }, // The backend expects 'message', not 'solution'
         config
       );
 
       // Update queries list
-      setQueries(queries.map(q => 
-        q._id === selectedQuery._id 
-          ? { ...q, solution: solution.trim() } 
+      setQueries(queries.map(q =>
+        q._id === selectedQuery._id
+          ? { ...q, solution: solution.trim() }
           : q
       ));
 
@@ -168,14 +187,14 @@ const ExpertDashboard = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
 
-      await axios.patch(`${API_BASE_URL}/queries/${queryId}/status`, 
+      await axios.patch(`${API_BASE_URL}/queries/${queryId}/status`,
         { status: newStatus },
         config
       );
 
-      setQueries(queries.map(q => 
-        q._id === queryId 
-          ? { ...q, status: newStatus } 
+      setQueries(queries.map(q =>
+        q._id === queryId
+          ? { ...q, status: newStatus }
           : q
       ));
 
@@ -193,14 +212,14 @@ const ExpertDashboard = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
 
-      await axios.patch(`${API_BASE_URL}/queries/${queryId}/priority`, 
+      await axios.patch(`${API_BASE_URL}/queries/${queryId}/priority`,
         { priority: newPriority },
         config
       );
 
-      setQueries(queries.map(q => 
-        q._id === queryId 
-          ? { ...q, priority: newPriority } 
+      setQueries(queries.map(q =>
+        q._id === queryId
+          ? { ...q, priority: newPriority }
           : q
       ));
 
@@ -223,7 +242,7 @@ const ExpertDashboard = () => {
     <div className="min-h-screen relative bg-gradient-to-br from-indigo-950 to-black text-white">
       {/* Subtle geometric pattern overlay */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{ 
+        <div className="absolute inset-0" style={{
           backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 0V4h-2V0h-4v2h4v4h2V2h4V0h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 0V4H4V0H0v2h4v4h2V2h4V0H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
           backgroundSize: '60px 60px'
         }}></div>
@@ -238,7 +257,7 @@ const ExpertDashboard = () => {
             </span>
           </h1>
           <p className="text-slate-300 max-w-2xl mx-auto">
-            Welcome back, <span className="text-teal-400 font-semibold">{expertData?.firstName} {expertData?.lastName}</span>. 
+            Welcome back, <span className="text-teal-400 font-semibold">{expertData?.firstName} {expertData?.lastName}</span>.
             Manage your articles, respond to queries, and share your cybersecurity knowledge.
           </p>
         </div>
@@ -256,7 +275,7 @@ const ExpertDashboard = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-indigo-900/40 backdrop-blur-sm rounded-xl border border-indigo-800/30 p-6 shadow-xl">
             <div className="flex items-center">
               <div className="p-3 rounded-full bg-indigo-800/50 mr-4">
@@ -268,7 +287,7 @@ const ExpertDashboard = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-indigo-900/40 backdrop-blur-sm rounded-xl border border-indigo-800/30 p-6 shadow-xl">
             <div className="flex items-center">
               <div className="p-3 rounded-full bg-indigo-800/50 mr-4">
@@ -280,7 +299,7 @@ const ExpertDashboard = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-indigo-900/40 backdrop-blur-sm rounded-xl border border-indigo-800/30 p-6 shadow-xl">
             <div className="flex items-center">
               <div className="p-3 rounded-full bg-indigo-800/50 mr-4">
@@ -362,9 +381,9 @@ const ExpertDashboard = () => {
                 <div key={article._id} className="bg-indigo-900/30 backdrop-blur-sm border border-indigo-800/30 rounded-xl overflow-hidden shadow-lg">
                   {article.image && (
                     <div className="h-40 overflow-hidden">
-                      <img 
-                        src={article.image} 
-                        alt={article.title} 
+                      <img
+                        src={article.image}
+                        alt={article.title}
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                       />
                     </div>
@@ -381,7 +400,7 @@ const ExpertDashboard = () => {
                     </div>
                     <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">{article.title}</h3>
                     <p className="text-indigo-300 text-sm mb-4 line-clamp-2">{article.description}</p>
-                    
+
                     <div className="flex justify-between items-center">
                       <div className="flex space-x-3">
                         <span className="text-indigo-400 text-sm flex items-center">
@@ -409,7 +428,7 @@ const ExpertDashboard = () => {
               ))}
             </div>
           )}
-          
+
           {articles.length > 4 && (
             <div className="mt-6 text-center">
               <Link href="/expert/manage_article" className="inline-block px-6 py-3 bg-indigo-900/50 border border-indigo-700/40 text-teal-400 rounded-lg transition-all duration-300 hover:bg-indigo-800/50 hover:border-teal-500/30 text-sm font-medium">
@@ -430,15 +449,15 @@ const ExpertDashboard = () => {
             <div className="bg-indigo-900/30 backdrop-blur-sm border border-indigo-800/30 rounded-xl overflow-hidden shadow-lg">
               <div className="overflow-x-auto">
                 <table className="w-full table-auto">                  <thead>
-                    <tr className="bg-indigo-950/50 text-left">
-                      <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">User</th>
-                      <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Query</th>
-                      <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Date</th>
-                      <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Priority</th>
-                      <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Action</th>
-                    </tr>
-                  </thead>
+                  <tr className="bg-indigo-950/50 text-left">
+                    <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">User</th>
+                    <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Query</th>
+                    <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Priority</th>
+                    <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-xs font-medium text-indigo-300 uppercase tracking-wider">Action</th>
+                  </tr>
+                </thead>
                   <tbody className="divide-y divide-indigo-800/30">
                     {queries.slice(0, 5).map((query) => (
                       <tr key={query._id} className="hover:bg-indigo-800/20">
@@ -475,27 +494,27 @@ const ExpertDashboard = () => {
                           </select>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-indigo-300">{query.solution ? (
-                            <Link 
-                              href={`/expert/queries/${query._id}`}
-                              className="text-teal-400 hover:text-teal-300"
-                            >
-                              View Answer
-                            </Link>
-                          ) : (
-                            <button
-                              onClick={() => setSelectedQuery(query)}
-                              className="text-teal-400 hover:text-teal-300"
-                            >
-                              Answer Query
-                            </button>
-                          )}
+                          <Link
+                            href={`/expert/queries/${query._id}`}
+                            className="text-teal-400 hover:text-teal-300"
+                          >
+                            View Answer
+                          </Link>
+                        ) : (
+                          <button
+                            onClick={() => setSelectedQuery(query)}
+                            className="text-teal-400 hover:text-teal-300"
+                          >
+                            Answer Query
+                          </button>
+                        )}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              
+
               {/* Answer Query Modal */}
               {selectedQuery && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -541,7 +560,7 @@ const ExpertDashboard = () => {
                 </div>
               )}
             </div>
-            
+
             {queries.length > 5 && (
               <div className="mt-6 text-center">
                 <Link href="/expert/queries" className="inline-block px-6 py-3 bg-indigo-900/50 border border-indigo-700/40 text-teal-400 rounded-lg transition-all duration-300 hover:bg-indigo-800/50 hover:border-teal-500/30 text-sm font-medium">

@@ -2,12 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAllQueries, updateQueryStatus, updateQueryPriority } from '@/services/queryService';
+import { getAllQueries, updateQueryStatus, updateQueryPriority, answerQuery } from '@/services/queryService';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
-import axios from 'axios';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export default function ExpertQueriesPage() {
     const router = useRouter();
@@ -19,18 +16,16 @@ export default function ExpertQueriesPage() {
     const [selectedPriority, setSelectedPriority] = useState('');
     const [selectedQuery, setSelectedQuery] = useState(null);
     const [solution, setSolution] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const fetchQueries = async () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);    const fetchQueries = async () => {
         try {
             setLoading(true);
             const response = await getAllQueries(currentPage, 10, {
                 search: searchTerm,
                 status: selectedStatus,
                 priority: selectedPriority
-            });
+            }, true); // true for expert authentication
             setQueries(response.data);
-            setTotalPages(response.totalPages);
+            setTotalPages(response.pagination?.pages || 1);
         } catch (error) {
             toast.error(error.message || 'Failed to fetch queries');
         } finally {
@@ -40,21 +35,17 @@ export default function ExpertQueriesPage() {
 
     useEffect(() => {
         fetchQueries();
-    }, [currentPage, searchTerm, selectedStatus, selectedPriority]);
-
-    const handleStatusChange = async (queryId, newStatus) => {
+    }, [currentPage, searchTerm, selectedStatus, selectedPriority]);    const handleStatusChange = async (queryId, newStatus) => {
         try {
-            await updateQueryStatus(queryId, newStatus);
+            await updateQueryStatus(queryId, newStatus, true); // true for expert authentication
             toast.success('Status updated successfully');
             fetchQueries();
         } catch (error) {
             toast.error(error.message || 'Failed to update status');
         }
-    };
-
-    const handlePriorityChange = async (queryId, newPriority) => {
+    };    const handlePriorityChange = async (queryId, newPriority) => {
         try {
-            await updateQueryPriority(queryId, newPriority);
+            await updateQueryPriority(queryId, newPriority, true); // true for expert authentication
             toast.success('Priority updated successfully');
             fetchQueries();
         } catch (error) {
@@ -67,20 +58,10 @@ export default function ExpertQueriesPage() {
         if (!solution.trim()) {
             toast.error('Please provide a solution');
             return;
-        }
-
-        setIsSubmitting(true);
+        }        setIsSubmitting(true);
         try {
-            const token = localStorage.getItem('expert-token');
-            const config = {
-                headers: { Authorization: `Bearer ${token}` }
-            };
-
-            await axios.post(`${API_BASE_URL}/queries/answer/${selectedQuery._id}`, 
-                { solution: solution.trim() },
-                config
-            );
-
+            await answerQuery(selectedQuery._id, solution.trim(), true); // true for expert authentication
+            
             // Update queries list
             await fetchQueries();
             

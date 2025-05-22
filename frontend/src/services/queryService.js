@@ -1,9 +1,14 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
+// Helper function to get the appropriate token
+const getAuthToken = (isExpert = false) => {
+    return isExpert ? localStorage.getItem('expert-token') : localStorage.getItem('token');
+};
 
 // Get all queries with pagination and filters
-export const getAllQueries = async (page = 1, limit = 10, filters = {}) => {
+export const getAllQueries = async (page = 1, limit = 10, filters = {}, isExpert = false) => {
     try {
         const response = await axios.get(`${API_URL}/queries/getall`, {
             params: {
@@ -12,7 +17,7 @@ export const getAllQueries = async (page = 1, limit = 10, filters = {}) => {
                 ...filters
             },
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${getAuthToken(isExpert)}`
             }
         });
         return response.data;
@@ -64,11 +69,11 @@ export const addResponse = async (queryId, responseData) => {
 };
 
 // Update query status
-export const updateQueryStatus = async (queryId, status) => {
+export const updateQueryStatus = async (queryId, status, isExpert = false) => {
     try {
         const response = await axios.patch(`${API_URL}/queries/updatestatus/${queryId}`, { status }, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${getAuthToken(isExpert)}`
             }
         });
         return response.data;
@@ -78,11 +83,25 @@ export const updateQueryStatus = async (queryId, status) => {
 };
 
 // Update query priority
-export const updateQueryPriority = async (queryId, priority) => {
+export const updateQueryPriority = async (queryId, priority, isExpert = false) => {
     try {
         const response = await axios.patch(`${API_URL}/queries/updatepriority/${queryId}`, { priority }, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${getAuthToken(isExpert)}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
+// Answer a query (expert functionality)
+export const answerQuery = async (queryId, solution, isExpert = true) => {
+    try {
+        const response = await axios.post(`${API_URL}/queries/answer/${queryId}`, { solution }, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken(isExpert)}`
             }
         });
         return response.data;
