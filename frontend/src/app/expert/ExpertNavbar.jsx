@@ -79,11 +79,9 @@ const ExpertNavbar = () => {
                                     <span className="text-white font-medium">E</span>
                                 </div>
                             </button>
-                        </div>
-
-                        {/* Dropdown Menu */}
+                        </div>                        {/* Dropdown Menu */}
                         {isUserMenuOpen && (
-                            <div className="origin-top-right absolute z-[9999] right-0 mt-2 w-48 rounded-md shadow-lg bg-indigo-950/95 backdrop-blur-sm ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="origin-top-right absolute z-[999999] right-0 mt-2 w-48 rounded-md shadow-xl bg-indigo-950/95 backdrop-blur-sm border border-indigo-800/30 focus:outline-none">
                                 <div className="py-1" role="menu" aria-orientation="vertical">
                                     <Link
                                         href="/expert/profile"

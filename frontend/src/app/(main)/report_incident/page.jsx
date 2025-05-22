@@ -138,99 +138,102 @@ const ReportIncident = () => {
         </div>
 
         <div className="bg-indigo-950/40 backdrop-blur-sm rounded-xl border border-indigo-800/30 shadow-xl p-8">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4" encType="multipart/form-data">
-          <div>
-            <label className="block text-sm font-semibold mb-1">Name / नाम</label>
-            <input
-              type="text"
-              name="name"              placeholder="Enter your name"
-              className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white placeholder-indigo-300"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold mb-1">Contact / संपर्क (Phone number)</label>
-            <input
-              type="tel"
-              name="contact"              placeholder="Phone number (10+ digits)"
-              className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white placeholder-indigo-300"
-              value={formData.contact}
-              onChange={handleChange}
-              required
-              pattern="[0-9]{10,}"
-              title="Phone number must be at least 10 digits"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold mb-1">State / राज्य</label>
-            <select
-              name="state"
-              className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white"
-              value={formData.state}
-              onChange={handleChange}
-              required
-            >
-              <option value="">-- Select State / राज्य चुनें --</option>
-              {Object.keys(indiaData).map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-semibold mb-1">District / जिला</label>
-            <select
-              name="district"
-              className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white"
-              value={formData.district}
-              onChange={handleChange}
-              disabled={!districts.length}
-              required
-            >
-              <option value="">-- Select District / जिला चुनें --</option>
-              {districts.map((district) => (
-                <option key={district} value={district}>
-                  {district}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-semibold mb-1">Description / विवरण</label>
-            <textarea
-              name="description"
-              placeholder="Explain what happened / क्या हुआ बताएं"
-              className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white placeholder-indigo-300 min-h-[8rem] resize-y"
-              value={formData.description}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label className="text-sm font-semibold mb-1 flex items-center gap-2">
-              Attachment / फाइल अपलोड करें <FiPaperclip className="text-xl" />
-            </label>
-            <div className="relative">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4" encType="multipart/form-data">
+            <div>
+              <label className="block text-sm font-semibold mb-1">Name / नाम</label>
               <input
-                type="file"
-                name="attachment"
-                accept=".jpg,.jpeg,.png,.pdf"
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white placeholder-indigo-300"
+                value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700"
               />
             </div>
-          </div>
-          <button
-            type="submit"
-            className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-teal-500 to-indigo-500 text-white font-semibold hover:from-teal-600 hover:to-indigo-600 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] focus:ring-2 focus:ring-indigo-500/50 outline-none"
-          >
-            Submit / सबमिट करें
-          </button>
-        </form>      </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1">Contact / संपर्क (Phone number)</label>
+              <input
+                type="tel"
+                name="contact"
+                placeholder="Phone number (10+ digits)"
+                className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white placeholder-indigo-300"
+                value={formData.contact}
+                onChange={handleChange}
+                required
+                pattern="[0-9]{10,}"
+                title="Phone number must be at least 10 digits"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1">State / राज्य</label>
+              <select
+                name="state"
+                className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white"
+                value={formData.state}
+                onChange={handleChange}
+                required
+              >
+                <option value="">-- Select State / राज्य चुनें --</option>
+                {Object.keys(indiaData).map((state) => (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1">District / जिला</label>
+              <select
+                name="district"
+                className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white"
+                value={formData.district}
+                onChange={handleChange}
+                disabled={!districts.length}
+                required
+              >
+                <option value="">-- Select District / जिला चुनें --</option>
+                {districts.map((district) => (
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1">Description / विवरण</label>
+              <textarea
+                name="description"
+                placeholder="Explain what happened / क्या हुआ बताएं"
+                className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white placeholder-indigo-300 min-h-[8rem] resize-y"
+                value={formData.description}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1 flex items-center gap-2">
+                Attachment / फाइल अपलोड करें <FiPaperclip className="text-xl" />
+              </label>
+              <div className="relative">
+                <input
+                  type="file"
+                  name="attachment"
+                  accept=".jpg,.jpeg,.png,.pdf"
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2.5 rounded-lg bg-indigo-950/50 border border-indigo-700/40 focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/20 transition-all duration-300 outline-none text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700"
+                />
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-teal-500 to-indigo-500 text-white font-semibold hover:from-teal-600 hover:to-indigo-600 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] focus:ring-2 focus:ring-indigo-500/50 outline-none"
+            >
+              Submit / सबमिट करें
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
