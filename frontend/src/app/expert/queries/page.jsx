@@ -5,16 +5,21 @@ import { useRouter } from 'next/navigation';
 import { getAllQueries, updateQueryStatus, updateQueryPriority } from '@/services/queryService';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
+import axios from 'axios';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export default function ExpertQueriesPage() {
     const router = useRouter();
     const [queries, setQueries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [totalPages, setTotalPages] = useState(1);    const [searchTerm, setSearchTerm] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedPriority, setSelectedPriority] = useState('');
+    const [selectedQuery, setSelectedQuery] = useState(null);
+    const [solution, setSolution] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const fetchQueries = async () => {
         try {
@@ -54,6 +59,39 @@ export default function ExpertQueriesPage() {
             fetchQueries();
         } catch (error) {
             toast.error(error.message || 'Failed to update priority');
+        }
+    };
+
+    const handleQuerySubmit = async (e) => {
+        e.preventDefault();
+        if (!solution.trim()) {
+            toast.error('Please provide a solution');
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const token = localStorage.getItem('expert-token');
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+
+            await axios.post(`${API_BASE_URL}/queries/answer/${selectedQuery._id}`, 
+                { solution: solution.trim() },
+                config
+            );
+
+            // Update queries list
+            await fetchQueries();
+            
+            toast.success('Query answered successfully');
+            setSelectedQuery(null);
+            setSolution('');
+        } catch (error) {
+            console.error('Error answering query:', error);
+            toast.error('Failed to submit answer');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -155,8 +193,17 @@ export default function ExpertQueriesPage() {
                                                     </span>
                                                 ))}
                                             </div>
-                                        </div>
-                                        <div className="flex flex-col items-end gap-2 ml-4">
+                                        </div>                                        <div className="flex flex-col items-end gap-2 ml-4">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                {!query.solution && (
+                                                    <button
+                                                        onClick={() => setSelectedQuery(query)}
+                                                        className="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors text-sm"
+                                                    >
+                                                        Answer Query
+                                                    </button>
+                                                )}
+                                            </div>
                                             <select
                                                 value={query.status}
                                                 onChange={(e) => handleStatusChange(query._id, e.target.value)}
@@ -209,9 +256,64 @@ export default function ExpertQueriesPage() {
                                     {page}
                                 </button>
                             ))}
-                        </div>
-                    )}
+                        </div>                    )}
                 </div>
+
+                {/* Answer Query Modal */}
+                {selectedQuery && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                        <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 w-full max-w-2xl">
+                            <div className="flex justify-between items-start mb-4">
+                                <h3 className="text-xl font-bold text-white">Answer Query</h3>
+                                <button
+                                    onClick={() => {
+                                        setSelectedQuery(null);
+                                        setSolution('');
+                                    }}
+                                    className="text-gray-400 hover:text-white"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                            <div className="mb-4">
+                                <p className="text-gray-400 mb-2">User's Query:</p>
+                                <p className="text-white bg-gray-700 p-4 rounded-lg">{selectedQuery.message || selectedQuery.doubt}</p>
+                            </div>
+                            <form onSubmit={handleQuerySubmit}>
+                                <div className="mb-4">
+                                    <label className="block text-gray-400 mb-2">Your Solution:</label>
+                                    <textarea
+                                        value={solution}
+                                        onChange={(e) => setSolution(e.target.value)}
+                                        className="w-full bg-gray-700 border border-gray-600 rounded-lg p-4 text-white min-h-[150px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Type your solution here..."
+                                        required
+                                    />
+                                </div>
+                                <div className="flex justify-end space-x-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setSelectedQuery(null);
+                                            setSolution('');
+                                        }}
+                                        className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                                        disabled={isSubmitting}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? 'Submitting...' : 'Submit Answer'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

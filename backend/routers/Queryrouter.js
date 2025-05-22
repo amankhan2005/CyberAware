@@ -23,7 +23,7 @@ router.post('/create', validate(schemas.query), (req, res) => {
 
 // Get all queries (with filters and pagination)
 router.get('/getall', (req, res) => {
-    const { status, search, page = 1, limit = 10 } = req.query;
+    const { status, search, page = 1, limit = 10, expertId } = req.query;
     const query = {};
 
     if (status) {
@@ -31,6 +31,9 @@ router.get('/getall', (req, res) => {
     }
     if (search) {
         query.$text = { $search: search };
+    }
+    if (expertId) {
+        query.expertId = expertId;
     }
 
     Promise.all([
@@ -194,6 +197,28 @@ router.delete('/delete/:id', (req, res) => {
                 error: err.message
             });
         });
+});
+
+// Get queries assigned to an expert
+router.get('/expert/:expertId', async (req, res) => {
+    try {
+        const queries = await Query.find({ 
+            expertId: req.params.expertId 
+        })
+        .sort({ createdAt: -1 })
+        .populate('userId', 'name email');
+
+        res.json({
+            success: true,
+            data: queries
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching expert queries',
+            error: err.message
+        });
+    }
 });
 
 module.exports = router;

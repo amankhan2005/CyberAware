@@ -1,7 +1,8 @@
 'use client'
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -67,9 +68,17 @@ const UserNavbar = () => {
                     role="menuitem"
                   >
                     Your Profile
-                  </Link>
-                  <button
-                    onClick={() => {/* Add logout logic here */}}
+                  </Link>                  <button
+                    onClick={async () => {
+                        try {
+                            localStorage.removeItem('user');
+                            toast.success('You have successfully logged out');
+                            setIsUserMenuOpen(false);
+                            window.location.href = '/login';
+                        } catch (error) {
+                            console.error('Navigation error:', error);
+                        }
+                    }}
                     className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-indigo-900/50"
                     role="menuitem"
                   >

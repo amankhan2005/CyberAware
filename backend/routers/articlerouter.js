@@ -131,8 +131,12 @@ router.get('/category/:category', async (req, res) => {
 router.get('/expert/:expertId', async (req, res) => {
   try {
     const articles = await Article.find({ 
-      expertId: req.params.expertId 
-    }).populate('expertId');
+      expertId: req.params.expertId,
+      isPublished: true
+    })
+    .populate('expertId')
+    .sort({ createdAt: -1 })
+    .select('-content');
     
     res.json(articles);
   } catch (err) {

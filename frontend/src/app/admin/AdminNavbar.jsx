@@ -1,9 +1,11 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
 const AdminNavbar = () => {
+    const router = useRouter();
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const pathname = usePathname();
 
@@ -120,17 +122,23 @@ const AdminNavbar = () => {
                                     >
                                         Your Profile
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                         href="/admin/settings"
                                         className="block px-4 py-2 text-sm text-slate-300 hover:bg-indigo-900/50 hover:text-teal-400"
                                         role="menuitem"
                                     >
                                         Settings
-                                    </Link>
-                                    <button
-                                        onClick={() => {
-                                            // Add logout logic here
-                                            console.log('Logout clicked');
+                                    </Link>                                   */}
+                                      <button
+                                        onClick={async () => {
+                                            try {
+                                                localStorage.removeItem('admin-token');
+                                                toast.success('You have successfully logged out');
+                                                setIsUserMenuOpen(false);
+                                                window.location.href = '/admin_login';
+                                            } catch (error) {
+                                                console.error('Navigation error:', error);
+                                            }
                                         }}
                                         className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-indigo-900/50"
                                         role="menuitem"
