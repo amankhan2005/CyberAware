@@ -88,19 +88,17 @@ const ReportIncident = () => {
         if (!token) {
             router.push('/login');
         }
-    }, []);
-
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black text-white">
+    }, []);    return (
+        <div className="min-h-screen bg-gradient-to-br from-indigo-950 to-black text-white relative pt-6">
             {/* Subtle geometric pattern overlay */}
-            <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0" style={{ 
+            <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="absolute inset-0" style={{
                     backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
                     backgroundSize: '60px 60px'
                 }}></div>
             </div>
 
-            <div className="relative max-w-4xl mx-auto px-6 py-12 z-10">
+            <div className="relative max-w-4xl mx-auto px-6 py-12 z-20">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl md:text-4xl font-extrabold mb-4">
                         <span className="bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
@@ -123,11 +121,10 @@ const ReportIncident = () => {
                                 {incidentTypes.map((type) => (
                                     <div
                                         key={type.value}
-                                        className={`relative rounded-lg border p-4 cursor-pointer transition-all duration-200 ${
-                                            formik.values.incidentType === type.value
+                                        className={`relative rounded-lg border p-4 cursor-pointer transition-all duration-200 ${formik.values.incidentType === type.value
                                                 ? 'border-teal-500 bg-teal-500/10'
                                                 : 'border-indigo-700/40 hover:border-teal-500/50'
-                                        }`}
+                                            }`}
                                         onClick={() => formik.setFieldValue('incidentType', type.value)}
                                     >
                                         <input
@@ -141,11 +138,10 @@ const ReportIncident = () => {
                                         <div className="flex items-center space-x-3">
                                             <FontAwesomeIcon
                                                 icon={type.icon}
-                                                className={`w-5 h-5 ${
-                                                    formik.values.incidentType === type.value
+                                                className={`w-5 h-5 ${formik.values.incidentType === type.value
                                                         ? 'text-teal-400'
                                                         : 'text-indigo-400'
-                                                }`}
+                                                    }`}
                                             />
                                             <span className="text-white">{type.label}</span>
                                         </div>
