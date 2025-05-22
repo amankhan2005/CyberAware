@@ -1,9 +1,28 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if user is logged in on component mount and when localStorage changes
+  useEffect(() => {
+    const checkUserLoggedIn = () => {
+      const token = localStorage.getItem('token');
+      setIsLoggedIn(!!token);
+    };
+
+    // Check on initial render
+    checkUserLoggedIn();
+
+    // Add event listener for storage changes (in case user logs in/out in another tab)
+    window.addEventListener('storage', checkUserLoggedIn);
+    
+    return () => {
+      window.removeEventListener('storage', checkUserLoggedIn);
+    };
+  }, []);
 
   // Navigation items array with their paths
   const navItems = [
@@ -50,14 +69,24 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {/* CTA Button */}
-            <Link
-              href="/login"
-              className="px-4 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium relative overflow-hidden group"
-            >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-teal-400 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-x-0 group-hover:scale-x-100 origin-left"></span>
-              <span className="relative">Login</span>
-            </Link>
+            {/* CTA Button - Login or Profile */}
+            {isLoggedIn ? (
+              <Link
+                href="/user/profile"
+                className="px-4 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium relative overflow-hidden group"
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-teal-400 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-x-0 group-hover:scale-x-100 origin-left"></span>
+                <span className="relative">Profile</span>
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="px-4 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium relative overflow-hidden group"
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-teal-400 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-x-0 group-hover:scale-x-100 origin-left"></span>
+                <span className="relative">Login</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,13 +128,24 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <Link
-              href="/login"
-              className="mt-4 block px-4 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Login
-            </Link>
+            {/* Mobile Login/Profile Button */}
+            {isLoggedIn ? (
+              <Link
+                href="/user/profile"
+                className="mt-4 block px-4 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium text-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Profile
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="mt-4 block px-4 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white rounded-lg transition-all duration-300 hover:from-teal-400 hover:to-indigo-400 text-sm font-medium text-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Login
+              </Link>
+            )}
           </div>
         )}
       </div>

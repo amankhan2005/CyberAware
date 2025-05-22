@@ -16,9 +16,8 @@ const UserNavbar = () => {
   const pathname = usePathname();
 
   const isActive = (path) => pathname === path;
-
   return (
-    <nav className="bg-indigo-950/40 backdrop-blur-sm border-b border-indigo-800/30">
+    <nav className="bg-indigo-950 backdrop-blur-sm border-b border-indigo-800/30 relative z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
