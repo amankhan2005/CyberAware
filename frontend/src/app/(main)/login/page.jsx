@@ -17,7 +17,7 @@ const Login = () => {
         const response = await axios.post('http://localhost:5000/users/authenticate', values);
         toast.success('Login Successful');
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.token));
+        // localStorage.setItem('user', JSON.stringify(response.data.token));
         router.push('/');
       } catch (err) {
         toast.error('Login Failed');

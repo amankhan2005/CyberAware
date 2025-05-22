@@ -73,7 +73,8 @@ const QueriesPage = () => {
     const fetchQueries = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/queries/getall`);
+            const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+            const response = await axios.get(`${API_BASE_URL}/queries/getall`);
             if (response.data.success) {
                 setQueries(response.data.data);
             }

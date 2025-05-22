@@ -210,7 +210,7 @@ const ReportIncident = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold mb-1 flex items-center gap-2">
+            <label className="text-sm font-semibold mb-1 flex items-center gap-2">
               Attachment / फाइल अपलोड करें <FiPaperclip className="text-xl" />
             </label>
             <div className="relative">

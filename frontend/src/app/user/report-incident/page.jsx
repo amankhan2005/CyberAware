@@ -84,7 +84,7 @@ const ReportIncident = () => {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
         if (!token) {
             router.push('/login');
         }

@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 const navItems = [
   { name: 'Home', path: '/' },
-  { name: 'Profile', path: '/user/profile' },
+  // { name: 'Profile', path: '/user/profile' },
   { name: 'Report Incident', path: '/user/report-incident' },
   { name: 'Queries', path: '/user/queries' }
 ];
@@ -67,10 +67,11 @@ const UserNavbar = () => {
                     role="menuitem"
                   >
                     Your Profile
-                  </Link>                  <button
+                  </Link>                  
+                  <button
                     onClick={async () => {
                         try {
-                            localStorage.removeItem('user');
+                            localStorage.removeItem('token');
                             toast.success('You have successfully logged out');
                             setIsUserMenuOpen(false);
                             window.location.href = '/login';
