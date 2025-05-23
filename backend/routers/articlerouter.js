@@ -7,6 +7,8 @@ const Expert = require('../models/expertModel');
 router.post('/add', async (req, res) => {
   try {
     console.log('Received article data:', req.body);
+    console.log('Headers:', req.headers);
+    console.log('Content-Type:', req.headers['content-type']);
     
     // Validate required fields
     const { title, description, image, category, content, expertId } = req.body;
@@ -20,8 +22,7 @@ router.post('/add', async (req, res) => {
         }
       });
     }
-    
-    if (!title || !description || !image || !category || !content) {
+      if (!title || !description || !image || !category || !content) {
       console.error('Missing required fields:', {
         title: !!title,
         description: !!description, 
@@ -29,32 +30,64 @@ router.post('/add', async (req, res) => {
         category: !!category,
         content: !!content
       });
+
+      // Create errors object, filtering out undefined values
+      const errors = {
+        title: !title ? 'Title is required' : undefined,
+        description: !description ? 'Description is required' : undefined,
+        image: !image ? 'Image is required' : undefined,
+        category: !category ? 'Category is required' : undefined,
+        content: !content ? 'Content is required' : undefined
+      };
+
+      // Filter out undefined values
+      Object.keys(errors).forEach(key => errors[key] === undefined && delete errors[key]);
+
       return res.status(400).json({ 
         message: 'Missing required fields',
-        errors: {
-          title: !title ? 'Title is required' : undefined,
-          description: !description ? 'Description is required' : undefined,
-          image: !image ? 'Image is required' : undefined,
-          category: !category ? 'Category is required' : undefined,
-          content: !content ? 'Content is required' : undefined
-        }
+        errors
       });
     }
     
     // Check if expert exists
-    const expertExists = await Expert.findById(expertId);
-    if (!expertExists) {
-      console.error('Expert not found with ID:', expertId);
-      return res.status(404).json({ 
-        message: 'Expert not found',
+    console.log('Looking up expert with ID:', expertId);
+    console.log('Expert ID type:', typeof expertId);
+    
+    try {
+      const expertExists = await Expert.findById(expertId);
+      
+      if (!expertExists) {
+        console.error('Expert not found with ID:', expertId);
+        return res.status(404).json({ 
+          message: 'Expert not found',
+          errors: {
+            expertId: 'Invalid expert ID. Please login again.'
+          }
+        });
+      }
+      
+      console.log('Found expert:', expertExists.firstName, expertExists.lastName);
+    } catch (err) {
+      console.error('Error looking up expert:', err);
+      return res.status(400).json({ 
+        message: 'Invalid expert ID format',
         errors: {
-          expertId: 'Invalid expert ID. Please login again.'
+          expertId: 'Expert ID format is invalid. Please login again.'
         }
       });
     }
     
-    const newArticle = await new Article(req.body).save();
-    console.log('Article saved successfully:', newArticle._id);
+    // Prepare the article data
+    const articleData = {
+      ...req.body,
+      expertId: expertId  // Ensure we're using the validated expert ID
+    };
+    
+    console.log('Creating new article with data:', articleData);
+    
+    // Create and save the new article
+    const newArticle = await new Article(articleData).save();
+    console.log('Article saved successfully with ID:', newArticle._id);
     
     // Update the expert's articles array
     await Expert.findByIdAndUpdate(

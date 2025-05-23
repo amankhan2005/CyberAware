@@ -11,6 +11,7 @@ const BlogsAndArticles = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [expandedArticles, setExpandedArticles] = useState({});
   const [articles, setArticles] = useState([]);
+  const [expertNames, setExpertNames] = useState({});
 
   // Toggle article expansion
   const toggleArticle = (id) => {
@@ -36,27 +37,37 @@ const BlogsAndArticles = () => {
     }
   };
 
-  // Fetch expert name by ID
+  // Fetch expert name by ID and cache it
   const fetchExpertName = async (expertId) => {
+    if (!expertId) return 'Unknown Expert';
+    if (expertNames[expertId]) return expertNames[expertId];
     try {
-      const res = await axios.get(`http://localhost:5000/expert/getbyid/${expertId}`);
+      const res = await axios.get(`http://localhost:5000/experts/getbyid/${expertId}`);
       if (res.status === 200) {
-
-        return res.data.firstName; // Return the expert's name
+        const name = res.data.firstName || 'Unknown Expert';
+        setExpertNames((prev) => ({ ...prev, [expertId]: name }));
+        return name;
       } else {
-        console.error('Failed to fetch expert data');
         return 'Unknown Expert';
       }
-    } catch (error) {
-      console.error('Error fetching expert data:', error);
+    } catch {
       return 'Unknown Expert';
     }
   };
 
   useEffect(() => {
     fetchArticles();
-    fetchExpertName();
   }, []);
+
+  // Fetch expert names for all articles after articles are loaded
+  useEffect(() => {
+    const fetchAllExpertNames = async () => {
+      const ids = Array.from(new Set(articles.map((a) => a.expertId).filter(Boolean)));
+      await Promise.all(ids.map((id) => fetchExpertName(id)));
+    };
+    if (articles.length > 0) fetchAllExpertNames();
+    // eslint-disable-next-line
+  }, [articles]);
 
   // Filter articles based on search query and category
   const filteredArticles = articles.filter((article) => {
@@ -181,11 +192,8 @@ const BlogsAndArticles = () => {
                       </div>
                       <div className="flex items-center text-indigo-300 text-sm">
                         <FontAwesomeIcon icon={faUser} className="mr-1" />
-                        {/* Fetch and display expert name */}
                         <span>
-                          {article.firstName || (
-                            <span className="text-indigo-400">Loading...</span>
-                          )}
+                          {expertNames[article.expertId] || <span className="text-indigo-400">Loading...</span>}
                         </span>
                       </div>
                     </div>
