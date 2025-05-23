@@ -25,37 +25,31 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('personal');
-  const [securityTabLoaded, setSecurityTabLoaded] = useState(false);  
-  
-  useEffect(() => {
-    let isMounted = true;
-    let timeoutId = null;
+  const [securityTabLoaded, setSecurityTabLoaded] = useState(false);    useEffect(() => {
+    const isMounted = { current: true };
+    const timeoutId = { current: null };
+    const controller = new AbortController();
     
     const fetchUserData = async () => {
-      // Each request gets its own abort controller
-      const controller = new AbortController();
-      
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          if (isMounted.current) {
+            setError('Please login to access your profile');
+            setLoading(false);
+          }
+          return;
+        }        // Configure axios with default headers
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         // Try to get data from cache first for instant loading
         const cachedData = getProfileCache();
-        if (cachedData && isMounted) {
+        if (cachedData && isMounted.current) {
           setUserData(cachedData);
           setLoading(false);
           // Still fetch fresh data in the background
         }
-        
-        // Check for token
-        const token = localStorage.getItem('token');
-        if (!token) {
-          if (isMounted) {
-            setError('No user token found. Please login.');
-            setLoading(false);
-          }
-          return;
-        }
-        
-        // Set a fail-safe timeout
-        timeoutId = setTimeout(() => {
+          // Set a fail-safe timeout
+        timeoutId.current = setTimeout(() => {
           controller.abort();
         }, 5000);
         
@@ -64,8 +58,7 @@ const Profile = () => {
           const decoded = jwt_decode(token);
           const userId = decoded._id || decoded.id;
           
-          if (!userId) {
-            if (isMounted) {
+          if (!userId) {          if (isMounted.current) {
               setError('Invalid token.');
               setLoading(false);
             }
@@ -78,22 +71,22 @@ const Profile = () => {
             headers: { Authorization: `Bearer ${token}` },
             signal: controller.signal,
             timeout: 5000
-          });
-          
-          // Handle successful response
-          if (isMounted && res.data) {
-            setProfileCache(res.data);
-            setUserData(res.data);
+          });          // Handle successful response
+          if (isMounted.current && res.data) {
+            // Extract user data from response
+            const userData = res.data.user || res.data;
+            setProfileCache(userData);
+            setUserData(userData);
+            setLoading(false);
           }
-        } catch (error) {
-          // Don't log or handle errors if component unmounted or request canceled
-          if (!isMounted || axios.isCancel(error)) {
+        } catch (error) {          // Don't log or handle errors if component unmounted or request canceled
+          if (!isMounted.current || axios.isCancel(error)) {
             return;
           }
           
           console.error('Profile data fetch error:', error);
           
-          if (isMounted) {
+          if (isMounted.current) {
             if (error.code === 'ECONNABORTED' || (error.message && error.message.includes('timeout'))) {
               setError('Request timed out. Please check your connection and try again.');
             } else if (error.response && error.response.status === 401) {
@@ -102,35 +95,35 @@ const Profile = () => {
               setError('Failed to load profile data. Please try again later.');
             }
           }
-        }
-      } catch (err) {
+        }      } catch (err) {
         // Only set error state if component is still mounted
-        if (isMounted) {
+        if (isMounted.current) {
           console.error('Unexpected error:', err);
           setError('An unexpected error occurred. Please try again.');
         }
       } finally {
         // Clear timeout to prevent memory leaks
-        if (timeoutId) {
-          clearTimeout(timeoutId);
+        if (timeoutId.current) {
+          clearTimeout(timeoutId.current);
         }
         
         // Only update loading state if component is still mounted
-        if (isMounted) {
+        if (isMounted.current) {
           setLoading(false);
         }
-      }
-    };
+      }    };
     
+    // Only call fetchUserData once
     fetchUserData();
     
-    // Cleanup function - runs when component unmounts
+    // Single cleanup function that runs when component unmounts
     return () => {
-      isMounted = false;
-      if (timeoutId) {
-        clearTimeout(timeoutId);
+      isMounted.current = false;
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current);
       }
-  };
+      controller.abort();
+    };
   }, []);
 
   // Memoize the date formatting function to improve performance
